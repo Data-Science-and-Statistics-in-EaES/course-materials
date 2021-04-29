@@ -24,7 +24,12 @@ library(emo)
 
 class: middle
 
-# Hello world!
+# Gavin McNicol
+McNicol Lab @ UIC
+
+```{r echo=FALSE, out.width="30%", fig.align="left"}
+knitr::include_graphics("img/gavin-headshot.jpeg")
+```
 
 ---
 
