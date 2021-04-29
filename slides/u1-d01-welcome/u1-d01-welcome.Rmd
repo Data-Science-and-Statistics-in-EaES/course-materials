@@ -24,7 +24,7 @@ library(emo)
 
 class: middle
 
-# Gavin McNicol
+# Dr. Gavin McNicol
 McNicol Lab @ UIC
 
 ```{r echo=FALSE, out.width="30%", fig.align="left"}
@@ -56,6 +56,9 @@ A - While statistics $\ne$ data science, they are very closely related and have 
 
 **Q - Will we be doing computing?**   
 A - Yes.
+
+**Q - Will we be working with EaESy Data?**   
+A - *Yes!*
 ]
 
 ---
