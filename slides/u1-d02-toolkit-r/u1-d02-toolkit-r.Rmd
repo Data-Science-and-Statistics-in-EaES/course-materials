@@ -1,9 +1,10 @@
 ---
 title: "Meet the toolkit:<br>programming"
-subtitle: "<br><br> Data Science in a Box"
-author: "[datasciencebox.org](https://datasciencebox.org/)"
+subtitle: "<br><br> Data Science & Statistics"
+author: "[Gavin McNicol](https://github.com/gavinmcnicol)"
 output:
   xaringan::moon_reader:
+    self_contained: true
     css: ["../xaringan-themer.css", "../slides.css"]
     lib_dir: libs
     nature:
