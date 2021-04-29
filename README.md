@@ -1,14 +1,3 @@
----
-title: "EAES 494: Class Materials"
-author: "Gavin McNicol"
-date: "`r format(Sys.Date())`"
-output: github_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Data Science and Statistics in EAES
 
 Data Science in a Box contains the materials required to teach (or learn from) an introductory data science course using R, all of which are freely-available and open-source.
