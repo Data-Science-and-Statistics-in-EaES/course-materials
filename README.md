@@ -1,4 +1,4 @@
-## Data Science and Statistics in EAES
+## FALL 2021 Data Science and Statistics in EAES (EAES 494)
 
 Data Science in a Box contains the materials required to teach (or learn from) an introductory data science course using R, all of which are freely-available and open-source.
 They include course materials such as slide decks, homework assignments, guided labs, sample exams, a final project assignment, as well as materials for instructors such as pedagogical tips, information on computing infrastructure, technology stack, and course logistics.
