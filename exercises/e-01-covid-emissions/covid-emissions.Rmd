@@ -26,18 +26,14 @@ library(DT)
 
 The data we're using originally came from the (2020 Global Carbon Budget)[<https://doi.org/10.5194/essd-12-3269-2020>] which is a product of the (Global Carbon Project)[<https://doi.org/10.18160/gcp-2020>].
 The data comes in an Excel file called `National_Carbon_Emissions_2020v1.0.xlsx` and has already been added to this exercise folder.
-In the code chunk below we modify the data by joining the various data frames provided in the package to help you get started with the analysis.
+In the code chunk below, in the first line we first read the excel data in, select the correct tab `Territorial Emissions`, and remove 11 extraneous header rows.
+The next line renames the first column `Year`.
+The third line rearranges the country emission data for easier plotting.
+This will help you get started with the analysis.
 
 ```{r}
-unvotes <- un_votes %>%
-  mutate(country =
-           case_when(
-             country == "United Kingdom of Great Britain and Northern Ireland" ~ "UK & NI",
-             country == "United States of America"                             ~ "US",
-             TRUE                                                              ~ country
-           )) %>%
-  inner_join(un_roll_calls, by = "rcid") %>%
-  inner_join(un_roll_call_issues, by = "rcid")
+emissions <- readxl::read_excel("National_Carbon_Emissions_2020v1.0.xlsx", sheet = "Territorial Emissions", skip = 11) %>% rename("Year" = `...1`) %>% 
+  gather(key = "Country", value = "Emissions (Mt C per y)", 2:234)
 ```
 
 ## UN voting patterns
