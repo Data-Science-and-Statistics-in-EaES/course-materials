@@ -1,0 +1,87 @@
+---
+title: "COVID CO2 Emissions"
+author: "Gavin McNicol"
+output: html_document
+---
+
+## Introduction
+
+How much carbon dioxide (CO2) do different countries emit, how have their emissions changed over time, and how were they impacted by the COVID-related restrictions on travel and economic activity during 2020?
+Answering these questions (at a high level) is the focus of this analysis.
+
+### Packages
+
+We will use the R **tidyverse**, **lubridate**, and **scales** packages for data wrangling and visualization, and the **DT** package for interactive display of tabular output, and the **unvotes** package for the data.
+
+*Packages are pre-assembled collections of functions and objects (often data)*
+
+```{r load-packages, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(DT)
+```
+
+### Data
+
+The data we're using originally came from the (2020 Global Carbon Budget)[<https://doi.org/10.5194/essd-12-3269-2020>] which is a product of the (Global Carbon Project)[<https://doi.org/10.18160/gcp-2020>].
+The data comes in an Excel file called `National_Carbon_Emissions_2020v1.0.xlsx` and has already been added to this exercise folder.
+In the code chunk below we modify the data by joining the various data frames provided in the package to help you get started with the analysis.
+
+```{r}
+unvotes <- un_votes %>%
+  mutate(country =
+           case_when(
+             country == "United Kingdom of Great Britain and Northern Ireland" ~ "UK & NI",
+             country == "United States of America"                             ~ "US",
+             TRUE                                                              ~ country
+           )) %>%
+  inner_join(un_roll_calls, by = "rcid") %>%
+  inner_join(un_roll_call_issues, by = "rcid")
+```
+
+## UN voting patterns
+
+Let's create a data visualisation that displays how the voting record of the UK & NI changed over time on a variety of issues, and compares it to two other countries: US and Turkey.
+
+We can easily change which countries are being plotted by changing which countries the code above `filter`s for.
+Note that the country name should be spelled and capitalized exactly the same way as it appears in the data.
+See the [Appendix](#appendix) for a list of the countries in the data.
+
+```{r plot-yearly-yes-issue, fig.width=10, fig.height=6, message=FALSE}
+unvotes %>%
+  filter(country %in% c("UK & NI", "US", "Turkey")) %>%
+  mutate(year = year(date)) %>%
+  group_by(country, year, issue) %>%
+  summarize(percent_yes = mean(vote == "yes")) %>%
+  ggplot(mapping = aes(x = year, y = percent_yes, color = country)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "loess", se = FALSE) +
+  facet_wrap(~issue) +
+  scale_y_continuous(labels = percent) +
+  labs(
+    title = "Percentage of 'Yes' votes in the UN General Assembly",
+    subtitle = "1946 to 2015",
+    y = "% Yes",
+    x = "Year",
+    color = "Country"
+  )
+```
+
+## References
+
+1.  David Robinson (2017). [unvotes](https://CRAN.R-project.org/package=unvotes): United Nations General Assembly Voting Data. R package version 0.2.0.
+2.  Erik Voeten "Data and Analyses of Voting in the UN General Assembly" Routledge Handbook of International Organization, edited by Bob Reinalda (published May 27, 2013).
+3.  Much of the analysis has been modeled on the examples presented in the [unvotes package vignette](https://cran.r-project.org/web/packages/unvotes/vignettes/unvotes.html).
+
+## Appendix {#appendix}
+
+Below is a list of countries in the dataset:
+
+```{r list-countries, echo=FALSE}
+unvotes %>% 
+  select(country) %>%
+  arrange(country) %>% 
+  distinct() %>%
+  datatable()
+```
