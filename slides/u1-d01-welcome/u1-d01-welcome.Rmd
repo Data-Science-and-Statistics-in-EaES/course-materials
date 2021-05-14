@@ -212,7 +212,7 @@ knitr::include_graphics("img/data-science-cycle/data-science-cycle.009.png")
 ---
 
 ```{r echo=FALSE, out.width="85%", fig.align="left"}
-knitr::include_graphics("img/unvotes/unvotes.gif")
+knitr::include_graphics("img/carbon-emissions/carbon-emissions.gif")
 ```
 
 ---
@@ -223,54 +223,80 @@ class: middle
 
 ---
 
-background-image: url("img/unvotes/unvotes-01.jpeg")
-
----
-
-class: inverse
-
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-02.jpeg")
+```{r echo=FALSE, out.width="100%", fig.align="center"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-01.gif")
 ```
 
 ---
 
 class: inverse
 
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-03.jpeg")
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-02.png")
 ```
 
 ---
 
 class: inverse
 
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-04.jpeg")
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-03.png")
 ```
 
 ---
 
 class: inverse
 
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-05.jpeg")
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-04.png")
 ```
 
 ---
 
 class: inverse
 
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-06.jpeg")
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-05.png")
 ```
 
 ---
 
 class: inverse
 
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-07.jpeg")
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-06.png")
+```
+
+---
+
+class: inverse
+
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-07.png")
+```
+
+---
+
+class: inverse
+
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-08.png")
+```
+
+---
+
+class: inverse
+
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-09.png")
+```
+
+---
+
+class: inverse
+
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-10.png")
 ```
 
 ---
@@ -278,65 +304,35 @@ knitr::include_graphics("img/unvotes/unvotes-07.jpeg")
 class: inverse
 
 ```{r echo=FALSE, out.width="90%"}
-knitr::include_graphics("img/unvotes/unvotes-08.jpeg")
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-11.png")
 ```
 
 ---
 
 class: inverse
 
-```{r echo=FALSE, out.width="90%"}
-knitr::include_graphics("img/unvotes/unvotes-09.jpeg")
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-12.png")
 ```
 
 ---
 
 class: inverse
 
-```{r echo=FALSE, out.width="90%"}
-knitr::include_graphics("img/unvotes/unvotes-10.jpeg")
-```
-
----
-
-class: inverse
-
-```{r echo=FALSE, out.width="90%"}
-knitr::include_graphics("img/unvotes/unvotes-11.jpeg")
-```
-
----
-
-class: inverse
-
-```{r echo=FALSE, out.width="90%"}
-knitr::include_graphics("img/unvotes/unvotes-12.jpeg")
-```
-
----
-
-class: inverse
-
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-13.jpeg")
-```
-
----
-
-class: inverse
-
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/unvotes/unvotes-14.jpeg")
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-13.png")
 ```
 
 ---
 
 .center[
 .large[
-[minecr.shinyapps.io/unvotes](https://minecr.shinyapps.io/unvotes/)
+Now, your turn!
+
+Open the **exercise-01 carbon emissions** project in RStudio Cloud!
 ]
 ]
 
-```{r echo=FALSE, out.width="65%"}
-knitr::include_graphics("img/unvotes/unvotes-15.png")
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-14.png")
 ```
