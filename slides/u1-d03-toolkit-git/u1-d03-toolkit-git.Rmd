@@ -1,21 +1,18 @@
 ---
 title: "Meet the toolkit:<br>version control and collaboration"
 subtitle: "<br><br> Data Science & Statistics"
-author: "[Gavin McNicol](https://github.com/gavinmcnicol)"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     self_contained: true
-    css: ["../xaringan-themer.css", "../slides.css"]
     lib_dir: libs
     nature:
       ratio: "16:9"
+      highlightStyle: github
       highlightLines: true
-      highlightStyle: solarized-light
       countIncrementalSlides: false
 ---
-
-```{r child = "../setup.Rmd"}
-```
 
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
