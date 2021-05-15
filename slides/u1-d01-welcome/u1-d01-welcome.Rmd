@@ -212,7 +212,7 @@ knitr::include_graphics("img/data-science-cycle/data-science-cycle.009.png")
 ---
 
 ```{r echo=FALSE, out.width="85%", fig.align="left"}
-knitr::include_graphics("img/carbon-emissions/carbon-emissions.gif")
+knitr::include_graphics("img/carbon-emissions/carbon-emissions.png")
 ```
 
 ---
@@ -224,7 +224,7 @@ class: middle
 ---
 
 ```{r echo=FALSE, out.width="100%", fig.align="center"}
-knitr::include_graphics("img/carbon-emissions/carbon-emissions-01.gif")
+knitr::include_graphics("img/carbon-emissions/carbon-emissions-01.png")
 ```
 
 ---
