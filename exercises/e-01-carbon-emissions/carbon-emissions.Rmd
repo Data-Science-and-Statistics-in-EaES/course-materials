@@ -15,9 +15,9 @@ Answering these questions (at a high level) is the focus of this analysis.
 
 ### Packages
 
-We will use the R **tidyverse**, **lubridate**, and **scales** packages for data wrangling and visualization, and the **DT** package for interactive display of tabular output, and the **unvotes** package for the data.
+We will use the R **tidyverse**, **lubridate**, and **scales** packages for data wrangling and visualization, and the **DT** package for interactive display of tabular output, and **Global Carbon Project** excel files for the data.
 
-*Packages are pre-assembled collections of functions and objects (often data)*
+\*\*Packages are pre-assembled collections of functions and objects (often data)\*
 
 ```{r load-packages, warning=FALSE, message=FALSE}
 library(tidyverse)
