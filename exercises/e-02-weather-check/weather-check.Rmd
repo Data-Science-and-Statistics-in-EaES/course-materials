@@ -9,6 +9,8 @@ output:
 ---
 
 In this mini analysis we work with the data used in the FiveThirtyEight story titled ["Where People Go to Check the Weather"](https://fivethirtyeight.com/features/weather-forecast-news-app-habits/).
+The Github source for the data and variables descriptions are [here](https://github.com/fivethirtyeight/data/tree/master/weather-check).
+
 Your task is to fill in the blanks denoted by `___`.
 
 ## Data and packages
@@ -20,97 +22,109 @@ library(fivethirtyeight)
 library(tidyverse)
 ```
 
-The dataset contains internet survey results on where `r nrow(weather_check)` people go to check the weather forecast.
+The dataset contains Survey Monkey Poll results from April 6 to April 10, 2015, on where `r nrow(weather_check)` people go to check the weather forecast.
 Only `r sum(weather_check$ck_weather == TRUE)/nrow(weather_check)*100`% of respondents were checked the weather daily.
 
 ```{r}
 weather_check_daily <- weather_check %>% 
   filter(ck_weather == TRUE)
+weather_check_daily
 ```
 
 There are `___` respondents who check the weather daily.
 
 The `weather_check` variables we'll focus on are the following:
 
--   `weather_source`: Budget in 2013 inflation adjusted dollars
--   `age`: Domestic gross (US) in 2013 inflation adjusted dollars
--   `hhold_income`: Total International (i.e., worldwide) gross in 2013 inflation adjusted dollars
+-   `weather_source`: One of "The Weather Channel", "Local TV News", "Radio weather", "Internet search", "The default weather app on your phone", "Newsletter", "Newspaper", "A specific website or app (please provide the answer)"
+-   Notice that if the lats option "A specific website or app" is selected, then the respondent must provide a written answer which gets saved in `weather_source_site`
+-   `age`: Age range of respondent (18-29, 30-44, 45-59, 60+)
+-   `hhold_income`: Response to "How much total combined money did all members of your HOUSEHOLD earn last year?"
 
 And we'll also use the `region` and `female` variable for **grouping**.
 
 ## Analysis
 
-Let's take a look at how median budget and gross vary by whether the movie passed the Bechdel test, which is stored in the `binary` variable.
+Let's take a look at the different `weather_source` responses, and how frequently each of them appeared:
 
 ```{r message = FALSE}
-bechdel90_13 %>%
-  group_by(binary) %>%
-  summarise(med_budget = median(budget_2013),
-            med_domgross = median(domgross_2013, na.rm = TRUE),
-            med_intgross = median(intgross_2013, na.rm = TRUE))
+weather_check_daily %>%
+  group_by(weather_source) %>%
+  summarise(weather_source_count = n()) 
 ```
 
-Next, let's take a look at how median budget and gross vary by a more detailed indicator of the Bechdel test result.
-This information is stored in the `clean_test` variable, which takes on the following values:
-
--   `ok` = passes test
--   `dubious`
--   `men` = women only talk about men
--   `notalk` = women don't talk to each other
--   `nowomen` = fewer than two women
+Next, let's take a look at the different `weather_source_site` responses (which site respondents used if they used "a specific website or app").
+Once you complete and run the code chunk below, what do you notice about the written responses that relates to the goals of this course?
+(Hint: Are these data responses in a standard format?)
 
 ```{r message = FALSE}
-bechdel90_13 %>%
+weather_check_daily %>%
   #group_by(___) %>%
-  summarise(med_budget = median(budget_2013),
-            med_domgross = median(domgross_2013, na.rm = TRUE),
-            med_intgross = median(intgross_2013, na.rm = TRUE))
+  summarise(weather_source_count = n())
 ```
 
-In order to evaluate how return on investment varies among movies that pass and fail the Bechdel test, we'll first create a new variable called `roi` as the ratio of the gross to budget.
+Next, we might wonder how the `weather_source` varies with `age` range of the respondent:
 
 ```{r}
-bechdel90_13 <- bechdel90_13 %>%
-  mutate(roi = (intgross_2013 + domgross_2013) / budget_2013)
+weather_check_daily %>%
+  #group_by(___, ___) %>%
+  summarise(weather_source_count = n())
 ```
 
-Let's see which movies have the highest return on investment.
+Notice that creating these count summaries of the data is fast, and can be done with just one or two lines of code!
+
+Next, we might wonder how the `weather_source` varies with `hhold_income` range of the respondent:
 
 ```{r}
-bechdel90_13 %>%
-  arrange(desc(roi)) %>% 
-  select(title, roi, year)
+weather_check_daily %>%
+  #group_by(___, ___) %>%
+  summarise(weather_source_count = n())
 ```
 
-Below is a visualization of the return on investment by test result, however it's difficult to see the distributions due to a few extreme observations.
+There are `___` combinations of responses here (`length(weather_check_daily$weather_source)` x `length(weather_check_daily$hhold_income)`) so it's hard to see which combinations are most frequent.
+
+We can arrange the responses from most frequent to least frequent using: (note the first three lines are the same)
+
+```{r}
+weather_check_daily %>%
+  #group_by(___, ___) %>%
+  summarise(weather_source_count = n()) %>% 
+  #arrange(desc(___))
+```
+
+You might also ask whether use of a particular weather source varies between male and female respondents.
+
+First, let's assign the frequency data we need as a new object:
+
+```{r}
+weather_check_counts <- weather_check_daily %>%
+  group_by(female, weather_source) %>%
+  summarise(weather_source_count = n())
+```
+
+Next, let's pass the new data object to a the `ggplot` plotting function:
 
 ```{r warning = FALSE}
-ggplot(data = bechdel90_13, 
-       mapping = aes(x = clean_test, y = roi, color = binary)) +
-  geom_boxplot() +
-  labs(title = "Return on investment vs. Bechdel test result",
-       x = "Detailed Bechdel result",
-       y = "___",
-       color = "Binary Bechdel result")
+# ggplot(data = ___, 
+#        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
+#   geom_point() +
+#   labs(title = "Weather source vs. respondent female",
+#        x = "Weather source",
+#        y = "___",
+#        color = "Female") +
+#   coord_flip()
 ```
 
-What are those movies with *very* high returns on investment?
-
-```{r}
-bechdel90_13 %>%
-  filter(roi > 400) %>%
-  select(title, budget_2013, domgross_2013, year)
-```
-
-Zooming in on the movies with `roi < ___` provides a better view of how the medians across the categories compare:
+What about patterns with age?
+Complete the code chunk below:
 
 ```{r warning = FALSE}
-ggplot(data = bechdel90_13, mapping = aes(x = clean_test, y = roi, color = binary)) +
+ggplot(data = weather_check_counts, 
+       mapping = aes(x = weather_source, y = weather_source_count, color = age)) +
   geom_boxplot() +
-  labs(title = "Return on investment vs. Bechdel test result",
+  labs(title = "Weather source vs. age",
        subtitle = "___", # Something about zooming in to a certain level
-       x = "Detailed Bechdel result",
-       y = "Return on investment",
-       color = "Binary Bechdel result") +
-  coord_cartesian(ylim = c(0, 15))
+       x = "Weather source",
+       y = "___",
+       color = "___") +
+  coord_flip()
 ```
