@@ -28,11 +28,13 @@ library(lubridate)
 .pull-left[
 ### .gray[Course operation]
 .gray[
-- introds.org
-- Learn
-- Zoom
-- Teams
-- Piazza
+- Blackboard
+  - Syllabus
+  - Lectures
+  - Exercises
+  - Labs and Homework
+  - Final Project
+  - Grades*
 ]
 ]
 .pull-right[
