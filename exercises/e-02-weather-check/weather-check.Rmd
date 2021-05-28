@@ -1,5 +1,5 @@
 ---
-title: "Science & Politics"
+title: "Weather Check"
 author: "Gavin McNicol"
 date: "`r Sys.Date()`"
 output:
@@ -8,7 +8,7 @@ output:
     toc_float: yes
 ---
 
-In this mini analysis we work with the data used in the FiveThirtyEight story titled ["The Dollar-And-Cents Case Against Hollywood's Exclusion of Women"](https://fivethirtyeight.com/features/the-dollar-and-cents-case-against-hollywoods-exclusion-of-women/).
+In this mini analysis we work with the data used in the FiveThirtyEight story titled ["Where People Go to Check the Weather"](https://fivethirtyeight.com/features/weather-forecast-news-app-habits/).
 Your task is to fill in the blanks denoted by `___`.
 
 ## Data and packages
@@ -20,23 +20,23 @@ library(fivethirtyeight)
 library(tidyverse)
 ```
 
-The dataset contains information on `r nrow(science-giving)` movies released between `r min(bechdel$year)` and `r max(bechdel$year)`.
-However we'll focus our analysis on movies released between 1990 and 2013.
+The dataset contains internet survey results on where `r nrow(weather_check)` people go to check the weather forecast.
+Only `r sum(weather_check$ck_weather == TRUE)/nrow(weather_check)*100`% of respondents were checked the weather daily.
 
 ```{r}
-bechdel90_13 <- bechdel %>% 
-  filter(between(year, 1990, 2013))
+weather_check_daily <- weather_check %>% 
+  filter(ck_weather == TRUE)
 ```
 
-There are `___` such movies.
+There are `___` respondents who check the weather daily.
 
-The financial variables we'll focus on are the following:
+The `weather_check` variables we'll focus on are the following:
 
--   `budget_2013`: Budget in 2013 inflation adjusted dollars
--   `domgross_2013`: Domestic gross (US) in 2013 inflation adjusted dollars
--   `intgross_2013`: Total International (i.e., worldwide) gross in 2013 inflation adjusted dollars
+-   `weather_source`: Budget in 2013 inflation adjusted dollars
+-   `age`: Domestic gross (US) in 2013 inflation adjusted dollars
+-   `hhold_income`: Total International (i.e., worldwide) gross in 2013 inflation adjusted dollars
 
-And we'll also use the `binary` and `clean_test` variables for **grouping**.
+And we'll also use the `region` and `female` variable for **grouping**.
 
 ## Analysis
 
