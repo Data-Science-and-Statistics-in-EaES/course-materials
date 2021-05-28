@@ -23,12 +23,11 @@ library(tidyverse)
 ```
 
 The dataset contains Survey Monkey Poll results from April 6 to April 10, 2015, on where `r nrow(weather_check)` people go to check the weather forecast.
-Only `r sum(weather_check$ck_weather == TRUE)/nrow(weather_check)*100`% of respondents were checked the weather daily.
+Only `r sum(weather_check$ck_weather == TRUE)/nrow(weather_check)*100`% of respondents checked the weather daily.
 
 ```{r}
 weather_check_daily <- weather_check %>% 
   filter(ck_weather == TRUE)
-weather_check_daily
 ```
 
 There are `___` respondents who check the weather daily.
@@ -36,8 +35,11 @@ There are `___` respondents who check the weather daily.
 The `weather_check` variables we'll focus on are the following:
 
 -   `weather_source`: One of "The Weather Channel", "Local TV News", "Radio weather", "Internet search", "The default weather app on your phone", "Newsletter", "Newspaper", "A specific website or app (please provide the answer)"
--   Notice that if the lats option "A specific website or app" is selected, then the respondent must provide a written answer which gets saved in `weather_source_site`
+
+    -   Notice that if the lats option "A specific website or app" is selected, then the respondent must provide a written answer which gets saved in `weather_source_site`
+
 -   `age`: Age range of respondent (18-29, 30-44, 45-59, 60+)
+
 -   `hhold_income`: Response to "How much total combined money did all members of your HOUSEHOLD earn last year?"
 
 And we'll also use the `region` and `female` variable for **grouping**.
@@ -80,28 +82,28 @@ weather_check_daily %>%
   summarise(weather_source_count = n())
 ```
 
-There are `___` combinations of responses here (`length(weather_check_daily$weather_source)` x `length(weather_check_daily$hhold_income)`) so it's hard to see which combinations are most frequent.
+There are `___` combinations of responses here so it's hard to see which combinations are most frequent.
 
 We can arrange the responses from most frequent to least frequent using: (note the first three lines are the same)
 
 ```{r}
-weather_check_daily %>%
-  #group_by(___, ___) %>%
-  summarise(weather_source_count = n()) %>% 
-  #arrange(desc(___))
+# weather_check_daily %>%
+#   # group_by(___, ___) %>%
+#   # summarise(weather_source_count = n()) %>% 
+#   # arrange(desc(___))
 ```
 
 You might also ask whether use of a particular weather source varies between male and female respondents.
 
 First, let's assign the frequency data we need as a new object:
 
-```{r}
+```{r message = FALSE}
 weather_check_counts <- weather_check_daily %>%
   group_by(female, weather_source) %>%
   summarise(weather_source_count = n())
 ```
 
-Next, let's pass the new data object to a the `ggplot` plotting function:
+Next, let's pass the new data object to a the `ggplot` plotting function: Remove the `#`s (i.e. uncomment the code) and complete the code chunk below:
 
 ```{r warning = FALSE}
 # ggplot(data = ___, 
@@ -115,16 +117,16 @@ Next, let's pass the new data object to a the `ggplot` plotting function:
 ```
 
 What about patterns with age?
-Complete the code chunk below:
+Remove the `#`s (i.e. uncomment the code) and complete the code chunk below:
 
 ```{r warning = FALSE}
-ggplot(data = weather_check_counts, 
-       mapping = aes(x = weather_source, y = weather_source_count, color = age)) +
-  geom_boxplot() +
-  labs(title = "Weather source vs. age",
-       subtitle = "___", # Something about zooming in to a certain level
-       x = "Weather source",
-       y = "___",
-       color = "___") +
-  coord_flip()
+# ggplot(data = weather_check_counts,
+#        mapping = aes(x = weather_source, y = weather_source_count, color = age)) +
+#   geom_boxplot() +
+#   labs(title = "Weather source vs. age",
+#        subtitle = "___", # Something about zooming in to a certain level
+#        x = "Weather source",
+#        y = "___",
+#        color = "___") +
+#   coord_flip()
 ```
