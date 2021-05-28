@@ -11,7 +11,8 @@ output:
 In this mini analysis we work with the data used in the FiveThirtyEight story titled ["Where People Go to Check the Weather"](https://fivethirtyeight.com/features/weather-forecast-news-app-habits/).
 The Github source for the data and variables descriptions are [here](https://github.com/fivethirtyeight/data/tree/master/weather-check).
 
-Your task is to fill in the blanks denoted by `___`.
+Your task is to fill in the blanks denoted by `___` in the main text and in the code chunks.
+To allow you to knit the document before you have filled in the `___` blanks, I have used `#` to "comment-out" some lines and chunks of code.
 
 ## Data and packages
 
@@ -40,7 +41,7 @@ The `weather_check` variables we'll focus on are the following:
 
 -   `age`: Age range of respondent (18-29, 30-44, 45-59, 60+)
 
--   `hhold_income`: Response to "How much total combined money did all members of your HOUSEHOLD earn last year?"
+-   `hhold_income`: Response to "How much total combined money did all members of your household earn last year?"
 
 And we'll also use the `region` and `female` variable for **grouping**.
 
@@ -98,7 +99,7 @@ You might also ask whether use of a particular weather source varies between mal
 First, let's assign the frequency data we need as a new object:
 
 ```{r message = FALSE}
-weather_check_counts <- weather_check_daily %>%
+weather_check_female_counts <- weather_check_daily %>%
   group_by(female, weather_source) %>%
   summarise(weather_source_count = n())
 ```
@@ -107,7 +108,7 @@ Next, let's pass the new data object to a the `ggplot` plotting function: Remove
 
 ```{r warning = FALSE}
 # ggplot(data = ___, 
-#        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
+#        mapping = aes(x = weather_source, y = weather_source_count, color = female)) +
 #   geom_point() +
 #   labs(title = "Weather source vs. respondent female",
 #        x = "Weather source",
@@ -117,16 +118,23 @@ Next, let's pass the new data object to a the `ggplot` plotting function: Remove
 ```
 
 What about patterns with age?
+
+```{r message = FALSE}
+weather_check_age_counts <- weather_check_daily %>%
+  group_by(age, weather_source) %>%
+  summarise(weather_source_count = n())
+```
+
 Remove the `#`s (i.e. uncomment the code) and complete the code chunk below:
 
 ```{r warning = FALSE}
-# ggplot(data = weather_check_counts,
-#        mapping = aes(x = weather_source, y = weather_source_count, color = age)) +
-#   geom_boxplot() +
+# ggplot(data = weather_check_age_counts,
+#        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
+#   geom_point() +
 #   labs(title = "Weather source vs. age",
 #        subtitle = "___", # Something about zooming in to a certain level
 #        x = "Weather source",
 #        y = "___",
-#        color = "___") +
+#        color = "age") +
 #   coord_flip()
 ```

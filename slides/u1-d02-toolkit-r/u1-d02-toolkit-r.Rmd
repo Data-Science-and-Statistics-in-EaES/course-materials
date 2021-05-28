@@ -350,8 +350,8 @@ Mitchell O'Hara-Wild, [useR! 2018 feature wall](https://www.mitchelloharawild.co
 ---
 
 .your-turn[
-.light-blue[.hand[Your turn:]] `AE 02 - Bechdel + R Markdown`
-- [The Bechdel test](https://en.wikipedia.org/wiki/Bechdel_test) asks whether a work of fiction features at least two women who talk to each other about something other than a man, and there must be two women named characters.
-- Go to [RStudio Cloud](https://rstudio.cloud/) and start the assignment `AE 02 - Bechdel + R Markdown`. 
-- Open and knit the R Markdown document `bechdel.Rmd`, review the document, and fill in the blanks.
+.light-blue[.hand[Your turn:]] `e - 02 - Weather Check + R Markdown`
+- **Weather Check** is directory that contains the data behind the story Where People Go To Check The Weather. The source of the data is a Survey Monkey Audience poll commissioned by FiveThirtyEight and conducted from April 6 to April 10, 2015
+- Go to [RStudio Cloud](https://rstudio.cloud/) and start the assignment `e - 02 - Weather Check + R Markdown`. 
+- Open and knit the R Markdown document `weather-check.Rmd`, review the document, and fill in the blanks.
 ]

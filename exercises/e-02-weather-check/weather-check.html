@@ -249,7 +249,7 @@ div.tocify {
 
 
 <p>In this mini analysis we work with the data used in the FiveThirtyEight story titled <a href="https://fivethirtyeight.com/features/weather-forecast-news-app-habits/">“Where People Go to Check the Weather”</a>. The Github source for the data and variables descriptions are <a href="https://github.com/fivethirtyeight/data/tree/master/weather-check">here</a>.</p>
-<p>Your task is to fill in the blanks denoted by <code>___</code>.</p>
+<p>Your task is to fill in the blanks denoted by <code>___</code> in the main text and in the code chunks. To allow you to knit the document before you have filled in the <code>___</code> blanks, I have used <code>#</code> to “comment-out” some lines and chunks of code.</p>
 <div id="data-and-packages" class="section level2">
 <h2>Data and packages</h2>
 <p>We start with loading the packages we’ll use.</p>
@@ -266,7 +266,7 @@ library(tidyverse)</code></pre>
 <li>Notice that if the lats option “A specific website or app” is selected, then the respondent must provide a written answer which gets saved in <code>weather_source_site</code></li>
 </ul></li>
 <li><p><code>age</code>: Age range of respondent (18-29, 30-44, 45-59, 60+)</p></li>
-<li><p><code>hhold_income</code>: Response to “How much total combined money did all members of your HOUSEHOLD earn last year?”</p></li>
+<li><p><code>hhold_income</code>: Response to “How much total combined money did all members of your household earn last year?”</p></li>
 </ul>
 <p>And we’ll also use the <code>region</code> and <code>female</code> variable for <strong>grouping</strong>.</p>
 </div>
@@ -321,27 +321,31 @@ library(tidyverse)</code></pre>
 #   # arrange(desc(___))</code></pre>
 <p>You might also ask whether use of a particular weather source varies between male and female respondents.</p>
 <p>First, let’s assign the frequency data we need as a new object:</p>
-<pre class="r"><code>weather_check_counts &lt;- weather_check_daily %&gt;%
+<pre class="r"><code>weather_check_female_counts &lt;- weather_check_daily %&gt;%
   group_by(female, weather_source) %&gt;%
   summarise(weather_source_count = n())</code></pre>
 <p>Next, let’s pass the new data object to a the <code>ggplot</code> plotting function: Remove the <code>#</code>s (i.e. uncomment the code) and complete the code chunk below:</p>
 <pre class="r"><code># ggplot(data = ___, 
-#        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
+#        mapping = aes(x = weather_source, y = weather_source_count, color = female)) +
 #   geom_point() +
 #   labs(title = &quot;Weather source vs. respondent female&quot;,
 #        x = &quot;Weather source&quot;,
 #        y = &quot;___&quot;,
 #        color = &quot;Female&quot;) +
 #   coord_flip()</code></pre>
-<p>What about patterns with age? Remove the <code>#</code>s (i.e. uncomment the code) and complete the code chunk below:</p>
-<pre class="r"><code># ggplot(data = weather_check_counts,
-#        mapping = aes(x = weather_source, y = weather_source_count, color = age)) +
-#   geom_boxplot() +
+<p>What about patterns with age?</p>
+<pre class="r"><code>weather_check_age_counts &lt;- weather_check_daily %&gt;%
+  group_by(age, weather_source) %&gt;%
+  summarise(weather_source_count = n())</code></pre>
+<p>Remove the <code>#</code>s (i.e. uncomment the code) and complete the code chunk below:</p>
+<pre class="r"><code># ggplot(data = weather_check_age_counts,
+#        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
+#   geom_point() +
 #   labs(title = &quot;Weather source vs. age&quot;,
 #        subtitle = &quot;___&quot;, # Something about zooming in to a certain level
 #        x = &quot;Weather source&quot;,
 #        y = &quot;___&quot;,
-#        color = &quot;___&quot;) +
+#        color = &quot;age&quot;) +
 #   coord_flip()</code></pre>
 </div>
 
