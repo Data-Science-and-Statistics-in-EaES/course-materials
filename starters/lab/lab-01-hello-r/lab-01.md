@@ -53,7 +53,8 @@ with `plot-star` and `cor-star` to provide spaces to place the code for
 plotting and calculating the correlation coefficient. To finish, clean
 up the narrative by removing these instructions.
 
-Blah blah blah…
+I’m some text, you should replace me with more meaningful text… (Hint:
+describe what are you doing in the next code chunk)
 
 I’m some text, you should replace me with more meaningful text…
 
