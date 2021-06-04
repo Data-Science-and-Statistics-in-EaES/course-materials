@@ -1,6 +1,6 @@
 ---
 title: "HW 01 - Earthquakes"
-subtitle: "Meet the toolkit"
+author: "Gavin McNicol"
 output: 
   tufte::tufte_html:
     css: ../hw.css
@@ -21,8 +21,8 @@ library(openintro)
 library(ggrepel)
 ```
 
-```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo by Jovana Askrabic on Unsplash", eval = TRUE}
-knitr::include_graphics("img/jovana-askrabic-XYIQXLH_v0o-unsplash.jpg")
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 5, fig.cap = "Seismogram being recorded at Weston Observatory, MA (Wikipedia)", eval = TRUE}
+knitr::include_graphics("img/seismogram.jpeg")
 ```
 
 The goal of this assignment is to introduce you to R, RStudio, Git, and GitHub, which you'll be using throughout the course both to learn the data science concepts discussed in the course and to analyze real data and come to informed conclusions.
@@ -206,9 +206,9 @@ Note that these packages are also get loaded in your R Markdown environment when
 
 # Data
 
-The city of [Seattle, WA](https://en.wikipedia.org/wiki/Seattle) has an open data portal that includes pets registered in the city.
-For each registered pet, we have information on the pet's name and species.
-The data used in this exercise can be found in the **openintro** package, and it's called `seattlepets`.
+The World Almanac and Book of Facts (2011) has compiled records of notable earthquakes in the 20th century (1900-1999).
+For each earthquake, we have information on the date, strength, location, and death toll.
+The data used in this exercise can be found in the **openintro** package, and it's called `earthquakes`.
 Since the dataset is distributed with the package, we don't need to load it separately; it becomes available to us when we load the package.
 
 You can view the dataset as a spreadsheet using the `View()` function.
@@ -216,49 +216,49 @@ Note that you should not put this function in your R Markdown document, but inst
 When you run this in the console, you'll see the following **data viewer** window pop up.
 
 ```{r view-data}
-View(seattlepets)
+View(earthquakes)
 ```
 
 ```{r data.viewer, echo = FALSE, eval = TRUE, fig.align = "left"}
 knitr::include_graphics("img/view-data.png")
 ```
 
-You can find out more about the dataset by inspecting its documentation (which contains a **data dictionary**, name of each variable and its description), which you can access by running `?seattlepets` in the Console or using the Help menu in RStudio to search for `seattlepets`.
+You can find out more about the dataset by inspecting its documentation (which contains a **data dictionary**, name of each variable and its description), which you can access by running `?earthquakes` in the Console or using the Help menu in RStudio to search for `earthquakes`.
 
 # Exercises
 
-1.  According to the data dictionary, how many pets are included in this dataset?
+1.  According to the data dictionary, how many earthquakes are included in this dataset?
 
 🧶 ✅ ⬆️ *Write your answer in your R Markdown document under Exercise 1, knit the document, commit your changes with a commit message that says "Completed Exercise 1", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-2.  Again, according to the data dictionary, how many variables do we have for each pet?
+2.  Again, according to the data dictionary, how many variables do we have for each earthquake?
 
 🧶 ✅ ⬆️ *Write your answer in your R Markdown document under Exercise 1, knit the document, commit your changes with a commit message that says "Completed Exercise 2", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-3.  What are the three most common pet names in Seattle? To do this you will need to count the frequencies of each pet name and display the results in descending order of frequency so that you can easily see the top three most popular names. The following code does exactly that.
+3.  Which countries experienced the most notable earthquakes in the 20th century? To do this you will need to count the frequencies of `region` and display the results in descending order of frequency so that you can easily see the top three most earthquake-prone regions. The following code does exactly that.
 
 ```{marginfigure}
-The two lines of code can be read as "Start with the seattlepets data frame, and then count the animal_names, and display the results sorted in descending order. The "and then" in the previous sentence maps to %>%, the pipe operator, which takes what comes before it and plugs it in as the first argument of the function that comes after it.
+The two lines of code can be read as "Start with the earthquakes data frame, and then count the regions, and display the results sorted in descending order. The "and then" in the previous sentence maps to %>%, the pipe operator, which takes what comes before it and plugs it in as the first argument of the function that comes after it.
 ```
 
 ```{r}
-seattlepets %>%
-  count(animal_name, sort = TRUE)
+earthquakes %>%
+  count(region, sort = TRUE)
 ```
 
 🧶 ✅ ⬆️ *Write your answer in your R Markdown document under Exercise 3. In this exercise you will not only provide a written answer but also include some code and output. You should insert the code in the code chunk provided for you, knit the document to see the output, and then write your narrative for the answer based on the output of this function, and knit again to see your narrative, code, and output in the resulting document. Then, commit your changes with a commit message that says "Completed Exercise 3", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-Let's also look to see what the most common pet names are for various species.
-For this we need to first `group_by()` the `species`, and then do the same counting we did before.
+Let's also look to see what the most common areas are, which provides a more specific location like a city.
+For this we need to first `group_by()` the `area`, and then do the same counting we did before.
 
 ```{marginfigure}
-Looks like many of those NAs were cats. Poor unnamed kitties…
+It looks like eastern Turkey was hit by several notable earthquakes...
 ```
 
 ```{r species-names, eval=TRUE}
-seattlepets %>% 
-  group_by(species) %>%
-  count(animal_name, sort = TRUE)
+earthquakes %>% 
+  group_by(area) %>%
+  count(region, sort = TRUE)
 ```
 
 But this output isn't exactly what we wanted.
