@@ -11,7 +11,7 @@
 
 <meta name="author" content="Gavin McNicol" />
 
-<meta name="date" content="2021-05-28" />
+<meta name="date" content="2021-06-04" />
 
 <title>Weather Check</title>
 
@@ -243,7 +243,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Weather Check</h1>
 <h4 class="author">Gavin McNicol</h4>
-<h4 class="date">2021-05-28</h4>
+<h4 class="date">2021-06-04</h4>
 
 </div>
 
@@ -261,10 +261,10 @@ library(tidyverse)</code></pre>
 <p>There are <code>___</code> respondents who check the weather daily.</p>
 <p>The <code>weather_check</code> variables we’ll focus on are the following:</p>
 <ul>
-<li><p><code>weather_source</code>: One of “The Weather Channel”, “Local TV News”, “Radio weather”, “Internet search”, “The default weather app on your phone”, “Newsletter”, “Newspaper”, “A specific website or app (please provide the answer)”</p>
+<li><code>weather_source</code>: One of “The Weather Channel”, “Local TV News”, “Radio weather”, “Internet search”, “The default weather app on your phone”, “Newsletter”, “Newspaper”, “A specific website or app (please provide the answer)”</li>
+</ul>
+<p><em>Notice that if the last option “A specific website or app” is selected, then the respondent must provide a written answer which gets saved in</em> <code>weather_source_site</code></p>
 <ul>
-<li>Notice that if the lats option “A specific website or app” is selected, then the respondent must provide a written answer which gets saved in <code>weather_source_site</code></li>
-</ul></li>
 <li><p><code>age</code>: Age range of respondent (18-29, 30-44, 45-59, 60+)</p></li>
 <li><p><code>hhold_income</code>: Response to “How much total combined money did all members of your household earn last year?”</p></li>
 </ul>
@@ -289,36 +289,24 @@ library(tidyverse)</code></pre>
 ## 8 The Weather Channel                                                    122
 ## 9 &lt;NA&gt;                                                                     6</code></pre>
 <p>Next, let’s take a look at the different <code>weather_source_site</code> responses (which site respondents used if they used “a specific website or app”). Once you complete and run the code chunk below, what do you notice about the written responses that relates to the goals of this course? (Hint: Are these data responses in a standard format?)</p>
-<pre class="r"><code>weather_check_daily %&gt;%
-  #group_by(___) %&gt;%
-  summarise(weather_source_count = n())</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   weather_source_count
-##                  &lt;int&gt;
-## 1                  746</code></pre>
+<pre class="r"><code># weather_check_daily %&gt;%
+#   group_by(___) %&gt;%
+#   summarise(weather_source_count = n())</code></pre>
 <p>Next, we might wonder how the <code>weather_source</code> varies with <code>age</code> range of the respondent:</p>
-<pre class="r"><code>weather_check_daily %&gt;%
-  #group_by(___, ___) %&gt;%
-  summarise(weather_source_count = n())</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   weather_source_count
-##                  &lt;int&gt;
-## 1                  746</code></pre>
+<pre class="r"><code># weather_check_daily %&gt;%
+#   group_by(___, ___) %&gt;%
+#   summarise(weather_source_count = n())</code></pre>
 <p>Notice that creating these count summaries of the data is fast, and can be done with just one or two lines of code!</p>
 <p>Next, we might wonder how the <code>weather_source</code> varies with <code>hhold_income</code> range of the respondent:</p>
-<pre class="r"><code>weather_check_daily %&gt;%
-  #group_by(___, ___) %&gt;%
-  summarise(weather_source_count = n())</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   weather_source_count
-##                  &lt;int&gt;
-## 1                  746</code></pre>
-<p>There are <code>___</code> combinations of responses here so it’s hard to see which combinations are most frequent.</p>
-<p>We can arrange the responses from most frequent to least frequent using: (note the first three lines are the same)</p>
 <pre class="r"><code># weather_check_daily %&gt;%
-#   # group_by(___, ___) %&gt;%
-#   # summarise(weather_source_count = n()) %&gt;% 
-#   # arrange(desc(___))</code></pre>
+#   group_by(___, ___) %&gt;%
+#   summarise(weather_source_count = n())</code></pre>
+<p>There are <code>___</code> combinations of responses here so it’s hard to see which combinations are most frequent.</p>
+<p>We can arrange the responses from most frequent to least frequent using:</p>
+<pre class="r"><code># weather_check_daily %&gt;%
+#   group_by(___, ___) %&gt;%
+#   summarise(weather_source_count = n()) %&gt;% 
+#   arrange(desc(___))</code></pre>
 <p>You might also ask whether use of a particular weather source varies between male and female respondents.</p>
 <p>First, let’s assign the frequency data we need as a new object:</p>
 <pre class="r"><code>weather_check_female_counts &lt;- weather_check_daily %&gt;%
@@ -342,7 +330,7 @@ library(tidyverse)</code></pre>
 #        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
 #   geom_point() +
 #   labs(title = &quot;Weather source vs. age&quot;,
-#        subtitle = &quot;___&quot;, # Something about zooming in to a certain level
+#        subtitle = &quot;___&quot;, 
 #        x = &quot;Weather source&quot;,
 #        y = &quot;___&quot;,
 #        color = &quot;age&quot;) +

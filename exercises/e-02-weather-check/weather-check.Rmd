@@ -37,7 +37,7 @@ The `weather_check` variables we'll focus on are the following:
 
 -   `weather_source`: One of "The Weather Channel", "Local TV News", "Radio weather", "Internet search", "The default weather app on your phone", "Newsletter", "Newspaper", "A specific website or app (please provide the answer)"
 
-    -   Notice that if the lats option "A specific website or app" is selected, then the respondent must provide a written answer which gets saved in `weather_source_site`
+*Notice that if the last option "A specific website or app" is selected, then the respondent must provide a written answer which gets saved in* `weather_source_site`
 
 -   `age`: Age range of respondent (18-29, 30-44, 45-59, 60+)
 
@@ -60,17 +60,17 @@ Once you complete and run the code chunk below, what do you notice about the wri
 (Hint: Are these data responses in a standard format?)
 
 ```{r message = FALSE}
-weather_check_daily %>%
-  #group_by(___) %>%
-  summarise(weather_source_count = n())
+# weather_check_daily %>%
+#   group_by(___) %>%
+#   summarise(weather_source_count = n())
 ```
 
 Next, we might wonder how the `weather_source` varies with `age` range of the respondent:
 
 ```{r}
-weather_check_daily %>%
-  #group_by(___, ___) %>%
-  summarise(weather_source_count = n())
+# weather_check_daily %>%
+#   group_by(___, ___) %>%
+#   summarise(weather_source_count = n())
 ```
 
 Notice that creating these count summaries of the data is fast, and can be done with just one or two lines of code!
@@ -78,20 +78,20 @@ Notice that creating these count summaries of the data is fast, and can be done 
 Next, we might wonder how the `weather_source` varies with `hhold_income` range of the respondent:
 
 ```{r}
-weather_check_daily %>%
-  #group_by(___, ___) %>%
-  summarise(weather_source_count = n())
+# weather_check_daily %>%
+#   group_by(___, ___) %>%
+#   summarise(weather_source_count = n())
 ```
 
 There are `___` combinations of responses here so it's hard to see which combinations are most frequent.
 
-We can arrange the responses from most frequent to least frequent using: (note the first three lines are the same)
+We can arrange the responses from most frequent to least frequent using:
 
 ```{r}
 # weather_check_daily %>%
-#   # group_by(___, ___) %>%
-#   # summarise(weather_source_count = n()) %>% 
-#   # arrange(desc(___))
+#   group_by(___, ___) %>%
+#   summarise(weather_source_count = n()) %>% 
+#   arrange(desc(___))
 ```
 
 You might also ask whether use of a particular weather source varies between male and female respondents.
@@ -132,7 +132,7 @@ Remove the `#`s (i.e. uncomment the code) and complete the code chunk below:
 #        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
 #   geom_point() +
 #   labs(title = "Weather source vs. age",
-#        subtitle = "___", # Something about zooming in to a certain level
+#        subtitle = "___", 
 #        x = "Weather source",
 #        y = "___",
 #        color = "age") +
