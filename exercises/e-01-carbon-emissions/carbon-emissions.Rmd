@@ -49,7 +49,7 @@ emissions <- readxl::read_excel("National_Carbon_Emissions_2020v1.0.xlsx", sheet
 
 ## Territory CO2 Emissions
 
-Let's create a data visualization that displays how the CO2 emissions of the USA changed over time on a variety of issues, and compares it to three other countries: the United Kingdom, China, and Venezuela.
+Let's create a data visualization that displays how the CO2 emissions of the USA changed over time, and compares it to two other countries: the United Kingdom and China.
 
 We can easily change which countries are being plotted by changing which countries the code above `filter`s for.
 Note that the country name should be spelled and capitalized exactly the same way as it appears in the data.
