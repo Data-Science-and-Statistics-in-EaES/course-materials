@@ -261,91 +261,94 @@ earthquakes %>%
   count(region, sort = TRUE)
 ```
 
-But this output isn't exactly what we wanted.
-We wanted to know the most common cat and dog names, but there are barely any cats present in this output!
-This is because there are more dogs than cats in the dataset overall.
-We can confirm this by counting the various species in the data.
+We can also look to see what the most common months for earthquake are.
+We need `month` this time...
 
-```{marginfigure}
-6 pigs in the city? Ok… But we'll continue with cats and dogs.
+```{r earthquakes, eval=TRUE}
+earthquakes %>% 
+  count(month, sort = TRUE)
 ```
 
-```{r species, eval=TRUE}
-seattlepets %>%
-  count(species, sort = TRUE)
-```
-
-Let's search for the top 5 cat and dog names.
+What if we just wanted to look at the top three months for earthquakes?
 To do this, we can use the `slice_max()` function.
 The first argument in the function is the variable we want to select the highest values of, which is `n`.
-The second argument is the number of rows to select, which is `n = 5` for the top 5.
+The second argument is the number of rows to select, which is `n = 3` for the top 3.
 It may be a bit confusing that both of these are `n`, but this is because we already have a variable called `n` in the data frame.
 
-```{r species-names-top5, eval=TRUE}
-seattlepets %>% 
-  group_by(species) %>%
-  count(animal_name, sort = TRUE) %>% 
-  slice_max(n, n = 5)
+```{r earthquakes-top3, eval=TRUE}
+earthquakes %>% 
+  count(month, sort = TRUE) %>% 
+  slice_max(n, n = 3) 
 ```
 
-1.  Based on the previous output we can easily identify the most common cat and dog names in Seattle, but the output is sorted by `n` (the frequencies) as opposed to being organized by the `species`. Build on the pipeline to arrange the results so that they're arranged by `species` first, and then `n`. This means you will need to add one more step to the pipeline, and you have two options: `arrange(species, n)` or `arrange(n, species)`. You should try both and decide which one organizes the output by species and then ranks the names in order of frequency for each species.
+Notice that R returns 4 rows because there are two months that had an equal number of earthquakes.
+Remember this is because `slice_max()` returns the top three values of `n`, which could include multiple months for one value.
+
+This time let's search for the top 5 most common earthquake intensities using the `count()` and `slice_max()` functions.
+Remember earthquake magnitude is expressed on the Richter scale so we can use the variable `richter` in this dataset.
+
+```{r earthquakes-top10, eval=TRUE}
+earthquakes %>% 
+  count(richter, sort = TRUE) %>% 
+  slice_max(n, n = 5) 
+```
+
+1.  Based on the previous output we can easily identify the most common intensities for notable earthquakes in the 20th century but the output is sorted by `n` (the frequencies) as opposed to being organized by `richter`. Build on the pipeline to arrange the results so that they're arranged by `richter`. This means you will need to add one more step to the pipeline using `arrange()`.
 
 🧶 ✅ ⬆️ *Write your answer in your R Markdown document under Exercise 4. In this exercise you're asked to complete the code provided for you. You should insert the code in the code chunk provided for you, knit the document to see the output, and then write your narrative for the answer based on the output of this function, and knit again to see your narrative, code, and output in the resulting document. Then, commit your changes with a commit message that says "Completed Exercise 4", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-The following visualization plots the proportion of dogs with a given name versus the proportion of cats with the same name.
-The 20 most common cat and dog names are displayed.
-The diagonal line on the plot is the $x = y$ line; if a name appeared on this line, the name's popularity would be exactly the same for dogs and cats.
+The following visualization plots the `richter` magnitude of earthquakes versus the `year`, showing a time series plot.
+The straight red line on the plot is the average magnitude over the century `mean(earthquakes$richter)`.
 
-```{r eval = TRUE, echo = FALSE, fig.fullwidth = TRUE}
-# data prep
-name_props <- seattlepets %>% 
-  filter(
-    !is.na(animal_name),
-    species %in% c("Dog", "Cat")
-    ) %>%
-  group_by(species) %>% 
-  count(animal_name, sort = TRUE) %>%
-  mutate(prop = n / sum(n))
-    
-cat_name_props <- name_props %>%
-  filter(species == "Cat") %>%
-  rename(cat_prop = prop) %>%
-  slice(1:30)
-
-dog_name_props <- name_props %>%
-  filter(species == "Dog") %>%
-  rename(dog_prop = prop) %>%
-  slice(1:30)
-    
-comb_name_props <- inner_join(cat_name_props, dog_name_props, 
-                              by = "animal_name") %>%
-  ungroup() %>%
-  select(animal_name, cat_prop, dog_prop)
-    
+```{r eval = TRUE, echo = FALSE, warning = FALSE, fig.fullwidth = TRUE}
 # create viz
-ggplot(comb_name_props, aes(x = cat_prop, y = dog_prop)) +
-  geom_abline(intercept = 0, 
-              color = COL["lgray","full"], 
-              alpha = 0.8, 
-              size = 1.5) +
-  geom_text_repel(aes(label = animal_name), 
+ggplot(earthquakes, aes(x = year, y = richter)) +
+  geom_text_repel(aes(label = region), 
+                  segment.color = COL["gray","full"], 
+                  seed = 291252, max.iter = 10000) +
+  geom_hline(yintercept = mean(earthquakes$richter), alpha = 0.5, color = "red") +
+  geom_point(color = COL["blue","full"], alpha = 0.8) +
+  theme_minimal() +
+  labs(x = "Year", y = "Earthquake magnitude") +
+  xlim(1900, 1999) +
+  ylim(1,10) 
+```
+
+1.  Does the relationship between the two variables (earthquake magnitude vs. year of the 20th century) seem to be positive, negative, or no relationship? What does this mean in context of the data?
+
+The next visualization plots the death toll (`deaths`) of earthquakes versus the `year`, showing another time series plot.
+
+```{r eval = TRUE, echo = FALSE, warning = FALSE, fig.fullwidth = TRUE}
+# create viz
+ggplot(earthquakes, aes(x = year, y = deaths)) +
+  geom_text_repel(aes(label = region), 
                   segment.color = COL["gray","full"], 
                   seed = 291252, max.iter = 10000) +
   geom_point(color = COL["blue","full"], alpha = 0.8) +
   theme_minimal() +
-  labs(x = "Proportion of cats", y = "Proportion of dogs") +
-  xlim(0.002, 0.01) +
-  ylim(0.002, 0.01) +
-  ggimage::geom_emoji(
-      image = "1f436", aes(x = 0.003, y = 0.009), size = 0.1
-      ) +
-  ggimage::geom_emoji(
-      image = "1f431", aes(x = 0.009, y = 0.003), size = 0.1
-      )
+  labs(x = "Year", y = "Death Toll") +
+  xlim(1900, 1999) +
+  ylim(10, 700000) 
 ```
 
-1.  What names are more common for cats than dogs? The ones above the line or the ones below the line?
-2.  Is the relationship between the two variables (proportion of cats with a given name and proportion of dogs with a given name) positive or negative? What does this mean in context of the data?
+1.  Looking at this and the previous visualization, do you think it is likely that the death toll can be predicted simply by the magnitude of the earthquake?
+
+The final visualization plots the death toll (`deaths`) of earthquakes versus the `richter` magnitude, showing a scatter plot.
+
+```{r eval = TRUE, echo = FALSE, warning = FALSE, fig.fullwidth = TRUE}
+# create viz
+ggplot(earthquakes, aes(x = richter, y = deaths)) +
+  geom_text_repel(aes(label = region), 
+                  segment.color = COL["gray","full"], 
+                  seed = 291252, max.iter = 10000) +
+  geom_point(color = COL["blue","full"], alpha = 0.8) +
+  theme_minimal() +
+  labs(x = "Earthquake magnitude", y = "Death Toll") +
+  xlim(1, 10) +
+  ylim(10, 700000) 
+```
+
+1.  Does this final visualization give you more or less confidence in your last response about the relationship between earthquake magnitude and death toll?
 
 🧶 ✅ ⬆️ *Now is a good time to commit and push your changes to GitHub with an appropriate commit message. Commit and push all changed files so that your Git pane is cleared up afterwards. Make sure that your last push to the repo comes before the deadline. You should confirm that what you committed and pushed are indeed in your repo that we will see by visiting your repo on GitHub.*
 
