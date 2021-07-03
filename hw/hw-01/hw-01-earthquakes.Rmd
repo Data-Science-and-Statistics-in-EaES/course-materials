@@ -204,7 +204,7 @@ knitr::include_graphics("img/load-packages-chunk.png")
 
 Note that these packages are also get loaded in your R Markdown environment when you **Knit** your R Markdown document.
 
-# Data
+# Earthquake Data
 
 The World Almanac and Book of Facts (2011) has compiled records of notable earthquakes in the 20th century (1900-1999).
 For each earthquake, we have information on the date, strength, location, and death toll.
