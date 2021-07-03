@@ -72,7 +72,7 @@ knitr::include_graphics("img/github-logo.png")
 ```
 - GitHub is the home for your Git-based projects on the internet -- like DropBox but much, much better
 
-- We will use GitHub as a platform for web hosting and collaboration (and as our course management system!)
+- We will use GitHub as a platform for web hosting and collaboration
 ]
 
 ---

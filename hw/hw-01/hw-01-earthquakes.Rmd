@@ -202,6 +202,13 @@ You should also load these packages in your Console, which you can do by sending
 knitr::include_graphics("img/load-packages-chunk.png")
 ```
 
+# LOAD-PACAKGES chunk to run
+
+```{r load-packages, echo = F, message = F}
+library(tidyverse)
+library(openintro)
+```
+
 Note that these packages are also get loaded in your R Markdown environment when you **Knit** your R Markdown document.
 
 # Earthquake Data
