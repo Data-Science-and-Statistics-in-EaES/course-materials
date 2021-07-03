@@ -223,7 +223,7 @@ View(earthquakes)
 knitr::include_graphics("img/view-data.png")
 ```
 
-You can find out more about the dataset by inspecting its documentation (which contains a **data dictionary**, name of each variable and its description), which you can access by running `?earthquakes` in the Console or using the Help menu in RStudio to search for `earthquakes`.
+You can find out more about the dataset by inspecting its documentation (which contains a **data dictionary**, name of each variable and its description), which you can access by running `??earthquakes` in the Console or using the Help menu in RStudio to search for `earthquakes`.
 
 # Exercises
 
