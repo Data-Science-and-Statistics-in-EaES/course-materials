@@ -1,20 +1,18 @@
 ---
 title: "Visualising data with ggplot2"
-subtitle: "<br><br> Data Science in a Box"
-author: "[datasciencebox.org](https://datasciencebox.org/)"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
+    self_contained: true
     lib_dir: libs
     nature:
       ratio: "16:9"
+      highlightStyle: github
       highlightLines: true
-      highlightStyle: solarized-light
       countIncrementalSlides: false
 ---
-
-```{r child = "../setup.Rmd"}
-```
 
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
