@@ -1,20 +1,18 @@
 ---
 title: "Visualising numerical data"
-subtitle: "<br><br> Data Science in a Box"
-author: "[datasciencebox.org](https://datasciencebox.org/)"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
+    self_contained: true
     lib_dir: libs
     nature:
       ratio: "16:9"
+      highlightStyle: github
       highlightLines: true
-      highlightStyle: solarized-light
       countIncrementalSlides: false
 ---
-
-```{r child = "../setup.Rmd"}
-```
 
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -149,7 +147,7 @@ class: middle
 
 ## Histogram
 
-```{r message = TRUE, out.width = "50%"}
+```{r message = TRUE, out.width = "30%"}
 ggplot(loans, aes(x = loan_amount)) +
   geom_histogram()
 ```
@@ -159,23 +157,19 @@ ggplot(loans, aes(x = loan_amount)) +
 ## Histograms and binwidth
 
 .panelset[
-.panel[.panel-name[binwidth = 1000]
+.panel[.panel-name[binwidth = 1000].pull-left[
 ```{r out.width = "50%"}
 ggplot(loans, aes(x = loan_amount)) +
   geom_histogram(binwidth = 1000)
 ```
 ]
-.panel[.panel-name[binwidth = 5000]
+]
+.panel[.panel-name[binwidth = 5000].pull-right[
 ```{r out.width = "50%"}
 ggplot(loans, aes(x = loan_amount)) +
   geom_histogram(binwidth = 5000)
 ```
 ]
-.panel[.panel-name[binwidth = 20000]
-```{r out.width = "50%"}
-ggplot(loans, aes(x = loan_amount)) +
-  geom_histogram(binwidth = 20000)
-```
 ]
 ]
 
@@ -184,9 +178,10 @@ ggplot(loans, aes(x = loan_amount)) +
 ## Customizing histograms
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "hist-custom", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "hist-custom", echo = FALSE, warning = FALSE, fig.width = 6, fig.height= 6}
 ```
+]
 ]
 .panel[.panel-name[Code]
 ```{r hist-custom, fig.show = "hide", warning = FALSE}
@@ -206,9 +201,10 @@ ggplot(loans, aes(x = loan_amount)) +
 ## Fill with a categorical variable
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "hist-fill", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "hist-fill", echo = FALSE, warning = FALSE, fig.width = 5, fig.height= 5}
 ```
+]
 ]
 .panel[.panel-name[Code]
 ```{r hist-fill, fig.show = "hide", warning = FALSE}
@@ -230,9 +226,10 @@ ggplot(loans, aes(x = loan_amount,
 ## Facet with a categorical variable
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "hist-facet", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "hist-facet", echo = FALSE, warning = FALSE, fig.width = 4, fig.height= 6}
 ```
+]
 ]
 .panel[.panel-name[Code]
 ```{r hist-facet, fig.show = "hide", warning = FALSE}
@@ -258,7 +255,7 @@ class: middle
 
 ## Density plot
 
-```{r}
+```{r fig.width = 8, fig.height= 6}
 ggplot(loans, aes(x = loan_amount)) +
   geom_density()
 ```
@@ -268,23 +265,19 @@ ggplot(loans, aes(x = loan_amount)) +
 ## Density plots and adjusting bandwidth
 
 .panelset[
-.panel[.panel-name[adjust = 0.5]
+.panel[.panel-name[adjust = 0.5].pull-left[
 ```{r out.width = "50%"}
 ggplot(loans, aes(x = loan_amount)) +
   geom_density(adjust = 0.5)
 ```
 ]
-.panel[.panel-name[adjust = 1]
+]
+.panel[.panel-name[adjust = 1].pull-right[
 ```{r out.width = "50%"}
 ggplot(loans, aes(x = loan_amount)) +
   geom_density(adjust = 1) # default bandwidth
 ```
 ]
-.panel[.panel-name[adjust = 2]
-```{r out.width = "50%"}
-ggplot(loans, aes(x = loan_amount)) +
-  geom_density(adjust = 2)
-```
 ]
 ]
 
@@ -293,9 +286,10 @@ ggplot(loans, aes(x = loan_amount)) +
 ## Customizing density plots
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "density-custom", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "density-custom", echo = FALSE, warning = FALSE, fig.width = 5, fig.height= 5}
 ```
+]
 ]
 .panel[.panel-name[Code]
 ```{r density-custom, fig.show = "hide", warning = FALSE}
@@ -315,9 +309,10 @@ ggplot(loans, aes(x = loan_amount)) +
 ## Adding a categorical variable
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "density-cat", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "density-cat", echo = FALSE, warning = FALSE, fig.width = 6, fig.height= 6}
 ```
+]
 ]
 .panel[.panel-name[Code]
 ```{r density-cat, fig.show = "hide", warning = FALSE}
@@ -345,7 +340,7 @@ class: middle
 
 ## Box plot
 
-```{r}
+```{r out.width = "30%"}
 ggplot(loans, aes(x = interest_rate)) +
   geom_boxplot()
 ```
@@ -354,7 +349,7 @@ ggplot(loans, aes(x = interest_rate)) +
 
 ## Box plot and outliers
 
-```{r}
+```{r out.width = "30%"}
 ggplot(loans, aes(x = annual_income)) +
   geom_boxplot()
 ```
@@ -364,9 +359,10 @@ ggplot(loans, aes(x = annual_income)) +
 ## Customizing box plots
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "box-custom", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "box-custom", echo = FALSE, warning = FALSE, fig.width = 6, fig.height= 6}
 ```
+]
 ]
 .panel[.panel-name[Code]
 ```{r box-custom, fig.show = "hide", warning = FALSE}
@@ -390,9 +386,10 @@ ggplot(loans, aes(x = interest_rate)) +
 ## Adding a categorical variable
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "box-cat", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "box-cat", echo = FALSE, warning = FALSE, fig.width = 6, fig.height= 6}
 ```
+]
 ]
 .panel[.panel-name[Code]
 ```{r box-cat, fig.show = "hide", warning = FALSE}
@@ -419,7 +416,7 @@ class: middle
 
 ## Scatterplot
 
-```{r warning = FALSE}
+```{r warning = FALSE, fig.width = 8, fig.height= 6}
 ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
   geom_point()
 ```
@@ -428,7 +425,7 @@ ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
 
 ## Hex plot
 
-```{r warning = FALSE}
+```{r warning = FALSE, fig.width = 8, fig.height= 6}
 ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
   geom_hex()
 ```
@@ -437,7 +434,7 @@ ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
 
 ## Hex plot
 
-```{r warning = FALSE}
+```{r warning = FALSE, fig.width = 8, fig.height= 6}
 ggplot(loans %>% filter(debt_to_income < 100), 
        aes(x = debt_to_income, y = interest_rate)) +
   geom_hex()
