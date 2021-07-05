@@ -51,8 +51,8 @@ ggplot(data = [dataset],
 
 Measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.
 
-.pull-left-narrow[
-```{r echo=FALSE, out.width="80%"}
+.pull-left[
+```{r echo=FALSE, out.width="60%"}
 knitr::include_graphics("img/penguins.png")
 ```
 ]
@@ -66,11 +66,12 @@ glimpse(penguins)
 ---
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "penguins", echo = FALSE, warning = FALSE, out.width = "70%", fig.width = 8}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "penguins", echo = FALSE, warning = FALSE, out.width = "80%", fig.width = 8}
 ```
 ]
-.panel[.panel-name[Code]
+]
+.panel[.panel-name[Code].pull-right[
 
 ```{r penguins, fig.show = "hide"}
 ggplot(data = penguins, 
@@ -82,6 +83,7 @@ ggplot(data = penguins,
        x = "Bill depth (mm)", y = "Bill length (mm)",
        colour = "Species")
 ```
+]
 ]
 ]
 
@@ -579,7 +581,7 @@ ggplot(penguins,
 .pull-left[
 **Mapping**
 
-```{r warning = FALSE, out.width = "100%"}
+```{r warning = FALSE, out.width = "80%"}
 ggplot(penguins,
        aes(x = bill_depth_mm,
            y = bill_length_mm,
@@ -591,7 +593,7 @@ ggplot(penguins,
 .pull-right[
 **Setting**
 
-```{r warning = FALSE, out.width = "100%"}
+```{r warning = FALSE, out.width = "80%"}
 ggplot(penguins,
        aes(x = bill_depth_mm,
            y = bill_length_mm)) + 
@@ -625,17 +627,19 @@ class: middle
 ---
 
 .panelset[
-.panel[.panel-name[Plot]
+.panel[.panel-name[Plot].pull-left[
 ```{r ref.label = "facet", echo = FALSE, warning = FALSE, out.width = "70%"}
 ```
 ]
-.panel[.panel-name[Code]
+]
+.panel[.panel-name[Code].pull-right[
 
 ```{r facet, fig.show = "hide"}
 ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
   geom_point() +
   facet_grid(species ~ island) #<<
 ```
+]
 ]
 ]
 
@@ -704,7 +708,7 @@ ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
 
 ## Facet and color
 
-.pull-left-narrow[
+.pull-left[
 ```{r facet-color-legend, fig.show = "hide", warning = FALSE}
 ggplot(
   penguins, 
@@ -716,8 +720,8 @@ ggplot(
   scale_color_viridis_d() #<<
 ```
 ]
-.pull-right-wide[
-```{r ref.label = "facet-color-legend", echo = FALSE, warning = FALSE, out.width = "100%"}
+.pull-right[
+```{r ref.label = "facet-color-legend", echo = FALSE, warning = FALSE, out.width = "90%"}
 ```
 ]
 
@@ -725,7 +729,7 @@ ggplot(
 
 ## Face and color, no legend
 
-.pull-left-narrow[
+.pull-left[
 ```{r facet-color-no-legend, fig.show = "hide", warning = FALSE}
 ggplot(
   penguins, 
@@ -738,7 +742,7 @@ ggplot(
   guides(color = FALSE) #<<
 ```
 ]
-.pull-right-wide[
-```{r ref.label = "facet-color-no-legend", echo = FALSE, warning = FALSE, out.width = "100%"}
+.pull-right[
+```{r ref.label = "facet-color-no-legend", echo = FALSE, warning = FALSE, out.width = "90%"}
 ```
 ]
