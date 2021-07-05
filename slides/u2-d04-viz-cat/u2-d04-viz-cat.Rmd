@@ -1,20 +1,18 @@
 ---
 title: "Visualising categorical data"
-subtitle: "<br><br> Data Science in a Box"
-author: "[datasciencebox.org](https://datasciencebox.org/)"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
+    self_contained: true
     lib_dir: libs
     nature:
       ratio: "16:9"
+      highlightStyle: github
       highlightLines: true
-      highlightStyle: solarized-light
       countIncrementalSlides: false
 ---
-
-```{r child = "../setup.Rmd"}
-```
 
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -56,7 +54,7 @@ class: middle
 
 ## Bar plot
 
-```{r}
+```{r out.width="40%"}
 ggplot(loans, aes(x = homeownership)) +
   geom_bar()
 ```
@@ -65,7 +63,7 @@ ggplot(loans, aes(x = homeownership)) +
 
 ## Segmented bar plot
 
-```{r}
+```{r out.width="40%"}
 ggplot(loans, aes(x = homeownership, 
                   fill = grade)) + #<<
   geom_bar()
@@ -75,7 +73,7 @@ ggplot(loans, aes(x = homeownership,
 
 ## Segmented bar plot
 
-```{r}
+```{r out.width="40%"}
 ggplot(loans, aes(x = homeownership, fill = grade)) +
   geom_bar(position = "fill") #<<
 ```
@@ -104,23 +102,24 @@ ggplot(loans, aes(x = homeownership, fill = grade)) +
 ## Customizing bar plots
 
 .panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "bar-custom", echo = FALSE, warning = FALSE}
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "bar-custom", echo = FALSE, warning = FALSE, out.width="90%"}
 ```
 ]
-.panel[.panel-name[Code]
-```{r bar-custom, fig.show = "hide", warning = FALSE}
+]
+.panel[.panel-name[Code].pull-right[
+```{r bar-custom, fig.show = "hide", warning = FALSE, out.width="90%"}
 ggplot(loans, aes(y = homeownership, #<<
                   fill = grade)) +
   geom_bar(position = "fill") +
-  labs( #<<
-    x = "Proportion", #<<
+  labs( x = "Proportion", #<<
     y = "Homeownership", #<<
     fill = "Grade", #<<
     title = "Grades of Lending Club loans", #<<
     subtitle = "and homeownership of lendee" #<<
   ) #<<
 ```
+]
 ]
 ]
 
@@ -141,7 +140,7 @@ class: middle
 
 ## Violin plots
 
-```{r warning = FALSE}
+```{r warning = FALSE, out.width="40%"}
 ggplot(loans, aes(x = homeownership, y = loan_amount)) +
   geom_violin()
 ```
@@ -150,10 +149,8 @@ ggplot(loans, aes(x = homeownership, y = loan_amount)) +
 
 ## Ridge plots
 
-```{r warning = FALSE}
+```{r warning = FALSE, out.width="30%"}
 library(ggridges)
 ggplot(loans, aes(x = loan_amount, y = grade, fill = grade, color = grade)) + 
   geom_density_ridges(alpha = 0.5)
 ```
-
----
