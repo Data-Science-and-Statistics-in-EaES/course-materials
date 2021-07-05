@@ -179,7 +179,7 @@ knitr::include_graphics("img/ggplot2-part-of-tidyverse.png")
 A grammar of graphics is a tool that enables us to concisely describe the components of a graphic
 ]
 .pull-right-wide[
-```{r echo=FALSE, out.width="100%"}
+```{r echo=FALSE, out.width="80%"}
 knitr::include_graphics("img/grammar-of-graphics.png")
 ```
 ]
@@ -190,7 +190,7 @@ knitr::include_graphics("img/grammar-of-graphics.png")
 
 ## Mass vs. height
 
-```{r mass-height, fig.width = 8, out.width = "50%"}
+```{r mass-height, fig.width = 8, out.width = "40%"}
 ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
   geom_point() +
   labs(title = "Mass vs. height of Starwars characters",
