@@ -1,5 +1,5 @@
 ---
-title: "HW 02 - Airbnb listings in Edinburgh"
+title: "HW 02 - Water and Sanitation"
 output: 
   tufte::tufte_html:
     css: ../hw.css
@@ -17,13 +17,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo by Madeleine Kohler on Unsplash", eval = TRUE}
-knitr::include_graphics("img/madeleine-kohler-90Qn643Pq9c-unsplash.jpg")
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Cover of The Last Tabboo (2008) Black and Fawcett. This book explores the development of sanitation over time and why improvements have lagged behind those in clean water access.", eval = TRUE}
+knitr::include_graphics("img/black-fawcett-last-tabboo.png")
 ```
 
-Once upon a time, people travelled all over the world, and some stayed in hotels and others chose to stay in other people's houses that they booked through Airbnb.
-Recent developments in Edinburgh regarding the growth of Airbnb and its impact on the housing market means a better understanding of the Airbnb listings is needed.
-Using data provided by Airbnb, we can explore how Airbnb availability and prices vary by neighbourhood.
+The COVID-19 pandemic has exposed our global vulnerability to infectious disease.
+Although COVID-19 was unusual in its impact in developed countries, death and sickness from infectious disease is much more common in less developed countries where over 700,000 people globally die each year from preventable infections.
+
+Over the last year, we were all asked to wash our hands frequently to limit the spread of COVID-19, but clean water and sanitation (toilet facilities) are essential for interventions such as hand washing to be effective.
+Using a 2020 datset provided by [Our World in Data](https://ourworldindata.org/water-sanitation-2020-update), we will explore trends over time in clean water and sanitation access around the world.
 
 # Getting started
 

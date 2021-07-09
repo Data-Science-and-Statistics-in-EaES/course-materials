@@ -1,15 +1,15 @@
 ---
-title: "HW 01 - Airbnb listings in Edinburgh"
-author: "Insert your name here"
-date: "Insert date here"
+title: "HW 02 - Water and Sanitation - Answer Key"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output: github_document
 ---
 
 ## Load packages and data
 
-```{r load-packages, message = FALSE}
+```{r load-packages-data, message = FALSE}
 library(tidyverse)
-library(dsbox)
+wat_san <- read_csv("data/water-and-sanitation.csv")
 ```
 
 ## Exercises
