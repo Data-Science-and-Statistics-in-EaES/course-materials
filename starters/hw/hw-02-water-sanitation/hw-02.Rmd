@@ -1,7 +1,7 @@
 ---
-title: "HW 02 - Water and Sanitation"
-author: "Insert your name here"
-date: "Insert date here"
+title: "HW 02 - Water and Sanitation - Answer Key"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output: github_document
 ---
 
@@ -16,40 +16,56 @@ wat_san <- read_csv("data/water-and-sanitation.csv")
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
+Insert your answer here...
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 2 here.
+Insert your answer here...
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 3 here.
+Insert your answer here...
 
-```{r prices-neighbourhoods}
-# remove this comment and add the code for Exercise 3 here
+```{r no-sanitation-years}
+
 ```
 
 ### Exercise 4
 
-Remove this text, and add your answer for Exercise 4 here.
+Insert your answer here...
 
-```{r top-5-median}
-# remove this comment and add the code for Exercise 4 here
-```
+```{r bottom-5-2000}
 
-```{r top-5-median-plot}
-# remove this comment and add the code for Exercise 4 here
-```
-
-```{r top-5-median-summary-stats}
-# remove this comment and add the code for Exercise 4 here
 ```
 
 ### Exercise 5
 
-Remove this text, and add your answer for Exercise 5 here.
+Insert your answer here...
 
-```{r review-scores-rating}
-# remove this comment and add the code for Exercise 5 here
+```{r all-2000-plot}
+
+```
+
+### Exercise 6
+
+Insert your answer here...
+
+```{r bottom-5-2020}
+
+```
+
+### Exercise 7
+
+Insert your answer here...
+
+```{r progress-summary}
+  
+```
+
+### Exercise 8
+
+Insert your answer here...
+
+```{r country-global-changes}
+
 ```

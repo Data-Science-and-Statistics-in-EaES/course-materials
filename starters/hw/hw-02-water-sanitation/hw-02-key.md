@@ -14,7 +14,7 @@ wat_san <- read_csv("data/water-and-sanitation.csv")
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
+There are 5118 observations in the dataset.
 
 ### Exercise 2
 

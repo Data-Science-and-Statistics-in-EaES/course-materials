@@ -153,7 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="getting-started" class="section level1">
 <h1>Getting started</h1>
 <p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>IMPORTANT:</strong> If there is no GitHub repo created for you for this assignment, it means I didn’t have your GitHub username as of when I assigned the homework. Please let me know your GitHub username asap, and I can create your repo.</span></span></p>
-<p>Go to the course GitHub organization and locate your homework repo, which should be named <code>hw-02-airbnb-edi-YOUR_GITHUB_USERNAME</code>. Grab the URL of the repo, and clone it in RStudio. First, open the R Markdown document <code>hw-02.Rmd</code> and Knit it. Make sure it compiles without errors. The output will be in the file markdown <code>.md</code> file with the same name.</p>
+<p>Go to the course GitHub organization and locate your homework repo, which should be named <code>hw-02-water-sanitation-YOUR_GITHUB_USERNAME</code>. Grab the URL of the repo, and clone it in RStudio. First, open the R Markdown document <code>hw-02.Rmd</code> and Knit it. Make sure it compiles without errors. The output will be in the file markdown <code>.md</code> file with the same name.</p>
 <div id="warm-up" class="section level2">
 <h2>Warm up</h2>
 <p>Before we introduce the data, let’s warm up with some simple exercises.</p>
@@ -164,18 +164,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Go to your repo on GitHub and confirm that your changes are visible in your Rmd <strong>and</strong> md files. If anything is missing, commit and push again.</li>
 </ul>
 </div>
-<div id="packages" class="section level2">
-<h2>Packages</h2>
-<p>We’ll use the <strong>tidyverse</strong> package for much of the data wrangling and visualisation and the data lives in the <strong>dsbox</strong> package. These packages are already installed for you. You can load them by running the following in your Console:</p>
+<div id="packages-and-data" class="section level2">
+<h2>Packages and Data</h2>
+<p>We’ll use the <strong>tidyverse</strong> package for much of the data wrangling and visualisation. This package is already installed for you. The data can be found in the <code>/data</code> folder of the starter repo you’ve just cloned. You can load the package and data by running the following in your Console:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dsbox)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>wat_san <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/water-and-sanitation.csv&quot;</span>)</span></code></pre></div>
 </div>
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p>The data can be found in the <strong>dsbox</strong> package, and it’s called <code>edibnb</code>. Since the dataset is distributed with the package, we don’t need to load it separately; it becomes available to us when we load the package.</p>
+<div id="viewing-data" class="section level2">
+<h2>Viewing Data</h2>
 <p>You can view the dataset as a spreadsheet using the <code>View()</code> function. Note that you should not put this function in your R Markdown document, but instead type it directly in the Console, as it pops open a new window (and the concept of popping open a window in a static document doesn’t really make sense…). When you run this in the console, you’ll see the following <strong>data viewer</strong> window pop up.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(edibnb)</span></code></pre></div>
-<p>You can find out more about the dataset by inspecting its documentation, which you can access by running <code>?edibnb</code> in the Console or using the Help menu in RStudio to search for <code>edibnb</code>. You can also find this information <a href="https://rstudio-education.github.io/dsbox/reference/edibnb.html">here</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(wat_san)</span></code></pre></div>
+<p><strong>NOTE</strong> Normally you can find out more about the dataset by inspecting its documentation, which you can access by running <code>?wat_san</code> in the Console or using the Help menu in RStudio to search for <code>wat_san</code>. However, this exercise (and many in this class) use custom dataset for this class, and not integrated into an R package.</p>
+<p>More information on this water and sanitation dataset and sanitation access level definitions are available at the <a href="https://ourworldindata.org/sanitation">Our World in data</a> webpage.</p>
 </div>
 </div>
 <div id="exercises" class="section level1">
@@ -183,15 +183,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> The Markdown Quick Reference sheet has an example of inline R code that might be helpful. You can access it from the Help menu in RStudio.</span></span></p>
 <ol style="list-style-type: decimal">
 <li>How many observations (rows) does the dataset have? Instead of hard coding the number in your answer, use inline code.</li>
-<li>Run <code>View(edibnb)</code> in your Console to view the data in the data viewer. What does each row in the dataset represent?</li>
+<li>Run <code>View(wat_san)</code> in your Console to view the data in the data viewer. What does each row in the dataset represent?</li>
 </ol>
 <p>🧶 ✅ ⬆️ <em>Knit,</em> <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 <p>Each column represents a variable. We can get a list of the variables in the data frame using the <code>names()</code> function.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(edibnb)</span></code></pre></div>
-<p>You can find descriptions of each of the variables in the help file for the dataset, which you can access by running <code>?edibnb</code> in your Console.</p>
-<p><label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Note:</strong> The plot will give a warning about some observations with non-finite values for price being removed. Don’t worry about the warning, it simply means that 199 listings in the data didn’t have prices available, so they can’t be plotted.</span></span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wat_san)</span></code></pre></div>
+<p>As the <code>?wat_san</code> function will not work (this dataset is not from an R package), we have provided a variable description list here:</p>
+<ul>
+<li><code>Entity</code>: Individual country name or <code>world</code></li>
+<li><code>Year</code>: Year of estimate</li>
+<li><code>water_</code>: Percent of population with a given level of water access</li>
+<li><code>sanitation_</code>: Percent of population with a given level of water access</li>
+<li><code>_improved</code>: Improved sanitation access (can be Safely Managed, Basic, or Limited)</li>
+<li><code>_safe</code>: Best form of improved sanitation (e.g., private toilet)</li>
+<li><code>_basic</code>: Intermediate form of improved sanitation (e.g., poorly maintained private toilet)</li>
+<li><code>_limited</code>: Worst form of improved sanitation (e.g., shared toilet)</li>
+<li><code>_unimproved</code>: Typically a poorly maintained pit latrine</li>
+<li><code>_none</code>: Open defecation (no sanitation)</li>
+</ul>
 <ol start="3" style="list-style-type: decimal">
-<li>Create a faceted histogram where each facet represents a neighbourhood and displays the distribution of Airbnb prices in that neighbourhood. Think critically about whether it makes more sense to stack the facets on top of each other in a column, lay them out in a row, or wrap them around. Along with your visualisation, include your reasoning for the layout you chose for your facets.</li>
+<li>Create a faceted histogram where each facet represents a year and displays the distribution of the percent of population with no sanitation access. Does it look like rates of open defecation (no sanitation) have changed between 2000 and 2020? What features of the distributions have changed over time, if any?</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ___)) <span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> ___) <span class="sc">+</span></span>
@@ -201,12 +212,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>ggplot()</code> is the function we are using to build our plot, in layers.</li>
 <li>In the first layer we always define the data frame as the first argument. Then, we define the mappings between the variables in the dataset and the <strong>aes</strong>thetics of the plot (e.g. x and y coordinates, colours, etc.).</li>
 <li>In the next layer we represent the data with <strong>geom</strong>etric shapes, in this case with a histogram. You should decide what makes a reasonable bin width for the histogram by trying out a few options.</li>
-<li>In the final layer we facet the data by neighbourhood.</li>
+<li>In the final layer we facet the data by Entity.</li>
 </ul>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 <ol start="4" style="list-style-type: decimal">
-<li>Use a single pipeline to identity the neighbourhoods with the top five median listing prices. Then, in another pipeline filter the data for these five neighbourhoods and make ridge plots of the distributions of listing prices in these five neighbourhoods. In a third pipeline calculate the minimum, mean, median, standard deviation, IQR, and maximum listing price in each of these neighbourhoods. Use the visualisation and the summary statistics to describe the distribution of listing prices in the neighbourhoods. (Your answer will include three pipelines, one of which ends in a visualisation, and a narrative.)</li>
-<li>Create a visualization that will help you compare the distribution of review scores (<code>review_scores_rating</code>) across neighbourhoods. You get to decide what type of visualisation to create and there is more than one correct answer! In your answer, include a brief interpretation of how Airbnb guests rate properties in general and how the neighbourhoods compare to each other in terms of their ratings.</li>
+<li><p>Use a single pipeline to identity the countries with the highest rates of open defecation in the year 2000, and arrange these in descending order. Compare the <code>water_none</code> and <code>sanitation_none</code> columns in the output. Does it appear that water and sanitation infrastructure are well-correlated, or not?</p></li>
+<li><p>Then, in another pipeline, filter the entire dataset (all countries) for the year 2000 and use a scatter plot to visualize the relationship between <code>water_none</code> and <code>sanitation_none</code>. Does this relationship support your previous response about a correlation between the variables, and why?</p></li>
+<li><p>In a third pipeline, identity the countries with the highest rates of open defecation in the year 2020, and arrange these in descending order. Have the countries changed between 2000 and 2020? If so, which have been added and which have been lost?</p></li>
+<li><p>In a final pipeline, calculate the minimum, mean, median, standard deviation, IQR, and maximum rates of <code>water_none</code> and <code>sanitation_none</code> in the year 2000 and the year 2020 for the 5 countries with the highest amount of open defecation. You’ll need to use <code>group_by</code> and remember to filter out the <code>Entity</code> “World”. What do you notice about the values between 2000 and 2020? What do you notice about the values for sanitation vs. water?</p></li>
+<li><p>Create a final visualization that selects a few entities and that will help you understand why the five countries with the highest rates of open defecation changed between 2000 and 2020. Include the entity “World” so that you can compare rates of change between individual countries and the world as a whole. Explore the use of different <code>geom_</code> to best visualize these trends. Comment on the rates of change in open defecation over time in some of the countries.</p></li>
 </ol>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
 </div>
