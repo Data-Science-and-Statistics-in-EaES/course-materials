@@ -1,0 +1,121 @@
+---
+title: "Lab 02 - Plastic waste - Answer Key"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+## Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse) 
+```
+
+```{r load-data, message=FALSE}
+plastic_waste <- read_csv("data/plastic-waste.csv")
+```
+
+## Exercises
+
+### Exercise 1
+
+Africa, South America, and Oceania have distributions with more values close to zero.
+Europe and North America have a larger number of observations (countries) with higher `plastic_waste_per_capita`, and Asia is intermediate.
+
+```{r plastic-waste-continent}
+plastic_waste %>% 
+  ggplot(aes(x = plastic_waste_per_cap)) + 
+  geom_histogram(binwidth = 0.2) + 
+  facet_wrap(~continent)
+```
+
+### Exercise 2
+
+```{r plastic-waste-density}
+ggplot(data = plastic_waste, 
+       mapping = aes(x = plastic_waste_per_cap, 
+                     color = continent, 
+                     fill = continent)) +
+  geom_density(alpha = 0.3)
+```
+
+### Exercise 3
+
+We defined `color` and `fill` by mapping to `continent` so that these aesthetics would vary consistently by continent groupings, in contrast, we wanted the `alpha` value to be applied consistently across all data so it was not mapped to a particular grouping variable.
+
+### Exercise 4
+
+The violin plots show the data distribution more clearly.
+For example, the Asia and Europe boxplots show the median approximately in the middle of the box, implying that they both have an even distribution, whereas the violin plots, show that the Asia distribution is skewed more towards lower values.
+
+```{r plastic-waste-violin}
+ggplot(data = plastic_waste, 
+       mapping = aes(x = continent, 
+                     y = plastic_waste_per_cap)) +
+  geom_violin()
+```
+
+### Exercise 5
+
+It appears that there is a rough positive correlation/relationship between `plastic_waste_per_cap` and `plastic_waste_per_cap`.
+However, the relationship appears to follow two different slopes.
+One set of countries appears to have a shallow relationship, where the amount of `mismanaged_plastic_waste_per_cap` increases slowly as `plastic_waste_per_cap` increases.
+In contrast, another set of countries has a steep relationship, where the amount of `mismanaged_plastic_waste_per_cap` increases quickly as `plastic_waste_per_cap` increases.
+Some countries show more intermediate relationships.
+
+```{r plastic-waste-mismanaged}
+ggplot(data = plastic_waste, 
+       mapping = aes(x = plastic_waste_per_cap, 
+                     y = mismanaged_plastic_waste_per_cap)) +
+  geom_point()
+```
+
+### Exercise 6
+
+It appears that the steeper relationship exists in Africa, Oceania and some Asian continent countries.
+Whereas the shallow relationship is observed for European, other Asian countries, and intemediate relatoiships are found in North and South America.
+
+```{r plastic-waste-mismanaged-continent}
+ggplot(data = plastic_waste, 
+       mapping = aes(x = plastic_waste_per_cap, 
+                     y = mismanaged_plastic_waste_per_cap,
+                     color = continent)) +
+  geom_point()
+```
+
+### Exercise 7
+
+There is no clear linear relationship in either plot.
+
+```{r plastic-waste-population-total}
+ggplot(data = plastic_waste, 
+       mapping = aes(x = total_pop, 
+                     y = plastic_waste_per_cap,
+                     color = continent)) +
+  geom_point()
+```
+
+```{r plastic-waste-population-coastal}
+ggplot(data = plastic_waste, 
+       mapping = aes(x = coastal_pop, 
+                     y = plastic_waste_per_cap,
+                     color = continent)) +
+  geom_point()
+```
+
+### Exercise 8
+
+There does appear to be a slight positive relationship between `plastic_waste_per_cap` and the proportion of the population that is coastal, however it appears the relationship is **not** linear but rather shows a step change at an intermediate proportion.
+
+```{r recreate-viz}
+plastic_waste_less_than_3 <- plastic_waste %>% 
+  filter(plastic_waste_per_cap < 3)
+
+ggplot(data = plastic_waste_less_than_3,
+       mapping = aes(x = coastal_pop/total_pop, 
+                     y = plastic_waste_per_cap)) +
+  geom_point(aes(color = continent)) + 
+  geom_smooth(color = "black") +
+  labs(x = "Coastal population proportion (Coastal / total population)",
+       y = "Plastic waste per capita")
+```
