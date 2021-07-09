@@ -746,3 +746,12 @@ ggplot(
 ```{r ref.label = "facet-color-no-legend", echo = FALSE, warning = FALSE, out.width = "90%"}
 ```
 ]
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

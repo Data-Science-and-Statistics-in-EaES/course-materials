@@ -355,3 +355,12 @@ Mitchell O'Hara-Wild, [useR! 2018 feature wall](https://www.mitchelloharawild.co
 - Go to [RStudio Cloud](https://rstudio.cloud/) and start the assignment `e - 02 - Weather Check + R Markdown`. 
 - Open and knit the R Markdown document `weather-check.Rmd`, review the document, and fill in the blanks.
 ]
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

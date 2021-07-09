@@ -439,3 +439,12 @@ ggplot(loans %>% filter(debt_to_income < 100),
        aes(x = debt_to_income, y = interest_rate)) +
   geom_hex()
 ```
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

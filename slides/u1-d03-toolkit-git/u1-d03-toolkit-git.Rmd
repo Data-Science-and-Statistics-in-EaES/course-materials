@@ -164,3 +164,12 @@ knitr::include_graphics("img/whole-game-04.png")
 .footnote[
 <sup>+</sup>Just like a real data scientist!
 ]
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

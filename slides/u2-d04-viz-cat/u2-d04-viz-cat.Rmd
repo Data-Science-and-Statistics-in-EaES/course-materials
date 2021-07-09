@@ -154,3 +154,12 @@ library(ggridges)
 ggplot(loans, aes(x = loan_amount, y = grade, fill = grade, color = grade)) + 
   geom_density_ridges(alpha = 0.5)
 ```
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

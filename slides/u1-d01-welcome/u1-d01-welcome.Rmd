@@ -49,7 +49,7 @@ knitr::include_graphics("img/gavin-headshot.jpeg")
 A - None.
 
 **Q - Is this an intro stat course?**  
-A - While statistics $\ne$ data science, they are very closely related and have tremendous of overlap. Hence, this course is a great way to get started with statistics. However this course is *not* your typical high school statistics course.
+A - While statistics $\ne$ data science, they are very closely related and have tremendous of overlap. Hence, this course is a great way to get started with statistics. However this course is *not* your typical college statistics course.
 
 **Q - Will we be doing computing?**   
 A - Yes.
@@ -333,3 +333,12 @@ Open the **exercise-01 carbon emissions** project in RStudio Cloud!
 ```{r echo=FALSE, out.width="60%"}
 knitr::include_graphics("img/carbon-emissions/carbon-emissions-14.png")
 ```
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

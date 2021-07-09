@@ -323,3 +323,12 @@ ggplot(student_survey, aes(x = fb_visits_per_day)) +
     x = "Number of times", y = NULL
     )
 ```
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]
