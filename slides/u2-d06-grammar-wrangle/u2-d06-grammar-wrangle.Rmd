@@ -412,3 +412,12 @@ ggplot(hotels,aes(x=hotel,y=deposit_type))+geom_bar()
 ggplot(hotels, aes(x = hotel, y = deposit_type)) + 
   geom_bar()
 ```
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]
