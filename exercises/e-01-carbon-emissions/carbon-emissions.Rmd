@@ -17,7 +17,7 @@ Answering these questions (at a high level) is the focus of this analysis.
 
 We will use the R **tidyverse**, **lubridate**, and **scales** packages for data wrangling and visualization, and the **DT** package for interactive display of tabular output, and **Global Carbon Project** excel files for the data.
 
-\*\*Packages are pre-assembled collections of functions and objects (often data)\*
+*Note: Packages are just pre-assembled collections of functions and objects (often data)*
 
 ```{r load-packages, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -38,10 +38,11 @@ In the code chunk below:
 -   the third line rearranges the country emission data for easier plotting.
 -   the final line converts the `emissions` data column to numerical values.
 
-This will help you get started with the analysis.
+This code chunk will help you get started with the analysis.
 
 ```{r message = F}
-emissions <- readxl::read_excel("National_Carbon_Emissions_2020v1.0.xlsx", sheet = "Territorial Emissions", skip = 11) %>% 
+emissions <- 
+  readxl::read_excel("National_Carbon_Emissions_2020v1.0.xlsx", sheet = "Territorial Emissions", skip = 11) %>% 
   rename("year" = `...1`) %>% 
   gather(key = "territory", value = "emissions", 2:234) %>% 
   mutate(emissions = as.numeric(emissions))
@@ -51,8 +52,9 @@ emissions <- readxl::read_excel("National_Carbon_Emissions_2020v1.0.xlsx", sheet
 
 Let's create a data visualization that displays how the CO2 emissions of the USA changed over time, and compares it to two other countries: the United Kingdom and China.
 
-We can easily change which countries are being plotted by changing which countries the code above `filter`s for.
-Note that the country name should be spelled and capitalized exactly the same way as it appears in the data.
+We can easily change which countries are being plotted by changing which countries the code below `filter`s for.
+
+*Note that the country name should be spelled and capitalized exactly the same way as it appears in the data.*
 
 See the [Appendix](#appendix) for a list of the countries in the data.
 
