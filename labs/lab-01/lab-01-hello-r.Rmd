@@ -75,7 +75,7 @@ knitr::include_graphics("img/github-auth-6.png")
 # Getting started
 
 Each of your assignments will begin with the following steps.
-You saw these once in class yesterday, they're outlined in detail here again.
+You saw these once in class on Monday, they're outlined in detail here again.
 Going forward each lab will start with a "Getting started" section but details will be a bit more sparse than this.
 You can always refer back to this lab for a detailed list of the steps involved for getting started with an assignment.
 
