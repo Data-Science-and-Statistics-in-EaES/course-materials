@@ -132,7 +132,6 @@ Remove the `#`s (i.e. uncomment the code) and complete the code chunk below:
 #        mapping = aes(x = weather_source, y = weather_source_count, color = ___)) +
 #   geom_point() +
 #   labs(title = "Weather source vs. age",
-#        subtitle = "___", 
 #        x = "Weather source",
 #        y = "___",
 #        color = "age") +
