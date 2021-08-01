@@ -22,7 +22,6 @@ library(skimr)
 ``` r
 # From TidyTuesday: https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-08/readme.md
 fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
-stocked <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/stocked.csv')
 ```
 
 ## Exercises
@@ -73,124 +72,87 @@ Data summary
 | grand\_total   |      31767 |           0.52 | 1411.86 | 3572.20 |    0 |   10 |  107.57 |  964.5 | 48821 | ▇▁▁▁▁ |
 | values         |      21916 |           0.67 |  513.97 | 1850.96 |  -31 |    0 |   17.00 |  217.0 | 48405 | ▇▁▁▁▁ |
 
-Now let’s take a look at an overview of the second dataset `stocked`.
-
-``` r
-skim(stocked)
-```
-
-|                                                  |         |
-|:-------------------------------------------------|:--------|
-| Name                                             | stocked |
-| Number of rows                                   | 56232   |
-| Number of columns                                | 31      |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |         |
-| Column type frequency:                           |         |
-| character                                        | 14      |
-| logical                                          | 3       |
-| numeric                                          | 14      |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |         |
-| Group variables                                  | None    |
-
-Data summary
-
-**Variable type: character**
-
-| skim\_variable | n\_missing | complete\_rate | min | max | empty | n\_unique | whitespace |
-|:---------------|-----------:|---------------:|----:|----:|------:|----------:|-----------:|
-| LAKE           |          0 |           1.00 |   2 |   2 |     0 |         6 |          0 |
-| STATE\_PROV    |          2 |           1.00 |   2 |   2 |     0 |         9 |          0 |
-| SITE           |         61 |           1.00 |   3 |  70 |     0 |      4212 |          0 |
-| ST\_SITE       |      37785 |           0.33 |   3 |  49 |     0 |      1394 |          0 |
-| STAT\_DIST     |       2050 |           0.96 |   2 |   4 |     0 |        86 |          0 |
-| LS\_MGMT       |      50731 |           0.10 |   1 |  11 |     0 |        42 |          0 |
-| SPECIES        |          0 |           1.00 |   3 |   3 |     0 |        18 |          0 |
-| STRAIN         |      13410 |           0.76 |   1 |  60 |     0 |       340 |          0 |
-| STAGE          |        250 |           1.00 |   1 |   3 |     0 |        16 |          0 |
-| MARK           |        321 |           0.99 |   2 |  40 |     0 |       162 |          0 |
-| LOT\_CODE      |      22134 |           0.61 |   1 |  74 |     0 |      6977 |          0 |
-| STOCK\_METH    |      12397 |           0.78 |   1 |  39 |     0 |        33 |          0 |
-| AGENCY         |          6 |           1.00 |   3 |  15 |     0 |        31 |          0 |
-| NOTES          |      28539 |           0.49 |   1 | 255 |     0 |     12873 |          0 |
-
-**Variable type: logical**
-
-| skim\_variable | n\_missing | complete\_rate | mean | count  |
-|:---------------|-----------:|---------------:|-----:|:-------|
-| LATITUDE       |      56232 |              0 |  NaN | :      |
-| LONGITUDE      |      56230 |              0 |    0 | FAL: 2 |
-| TAG\_NO        |      56232 |              0 |  NaN | :      |
-
-**Variable type: numeric**
-
-| skim\_variable | n\_missing | complete\_rate |       mean |         sd |   p0 |      p25 |      p50 |         p75 |     p100 | hist  |
-|:---------------|-----------:|---------------:|-----------:|-----------:|-----:|---------:|---------:|------------:|---------:|:------|
-| SID            |          0 |           1.00 | 8522639.03 | 9942287.02 |    1 | 15376.75 | 31096.50 | 20132395.25 | 20198457 | ▇▁▁▁▆ |
-| YEAR           |          0 |           1.00 |    1997.93 |      12.37 | 1950 |  1989.00 |  1999.00 |     2008.00 |     2018 | ▁▂▅▇▇ |
-| MONTH          |      11414 |           0.80 |       5.29 |       2.14 |    1 |     4.00 |     5.00 |        6.00 |       12 | ▂▇▂▁▂ |
-| DAY            |      13233 |           0.76 |      15.65 |       8.80 |    0 |     8.00 |    16.00 |       23.00 |       31 | ▇▇▇▇▇ |
-| GRID           |       3089 |           0.95 |    1056.89 |     637.00 |    0 |   607.00 |   905.00 |     1410.00 |     2806 | ▅▇▅▂▂ |
-| NO\_STOCKED    |          7 |           1.00 |   35368.30 |  151724.41 |    0 |  7213.00 | 15000.00 |    34600.00 | 16586200 | ▇▁▁▁▁ |
-| YEAR\_CLASS    |      17384 |           0.69 |    2001.34 |      15.12 |    0 |  1995.00 |  2003.00 |     2010.00 |     2018 | ▁▁▁▁▇ |
-| AGEMONTH       |      29511 |           0.48 |      13.60 |      10.53 |    0 |    10.00 |    15.00 |       16.00 |      180 | ▇▁▁▁▁ |
-| MARK\_EFF      |      50721 |           0.10 |      79.16 |      37.68 |    0 |    90.20 |    98.00 |       99.40 |      100 | ▂▁▁▁▇ |
-| TAG\_RET       |      53587 |           0.05 |      95.15 |      11.34 |    0 |    95.20 |    97.87 |       99.00 |      100 | ▁▁▁▁▇ |
-| LENGTH         |      30652 |           0.45 |     160.58 |     132.68 |    0 |   129.00 |   161.37 |      185.54 |    13780 | ▇▁▁▁▁ |
-| WEIGHT         |      13445 |           0.76 |     678.62 |     883.83 |    0 |   136.08 |   453.59 |      862.00 |    50268 | ▇▁▁▁▁ |
-| CONDITION      |      16868 |           0.70 |       0.83 |       1.66 |    0 |     0.00 |     0.00 |        1.00 |        7 | ▇▁▁▁▁ |
-| VALIDATION     |      10281 |           0.82 |       5.80 |       3.61 |    0 |     2.00 |     5.00 |        9.00 |       10 | ▆▁▅▁▇ |
-
 ### Exercise 2.
 
-Are people traveling on a whim? Let’s see…
+Which species and years are associated with the largest total U.S fish
+catches from Lake Michigan?
 
-Fill in the blanks for filtering for hotel bookings where the guest is
-**not** from the US (`country` code `"USA"`) and the `lead_time` is less
-than 1 day.
+Let’s see…
 
-**Note:** You will need to set `eval=TRUE` when you have an answer you
-want to try out.
+Fill in the blanks for filtering for Great Lakes annual fish catch where
+the region is from the US (`region` code `"U.S.Total"`) and the lake is
+Lake Michigan (`lake` code `Michigan`). Then pipe the results into the
+`slice_max()` function we have used before, so we can select the 5 years
+with the largest catch (coded as production `values`). Note: production
+`values` are rounded to the nearest thousand pounds.
+
+**Note:** You will need to set `eval=TRUE` in the r code chunk header
+when you have an answer you want to try out.
 
 ``` r
-hotels %>%
+fishing %>%
   filter(
-    country ____ "USA", 
-    lead_time ____ ____
-    )
+    lake ___ "___",
+    region ___ "U.S. Total"
+    ) %>% 
+  slice_max(
+    order_by = ___, 
+    n = 5
+      )
 ```
 
 ### Exercise 3.
 
-How many bookings involve at least 1 child **or** baby?
+How many very large (at least 10,000,000 lbs) fish catches were there
+before 1950, and which species were they catching in such large
+quantities?
 
 In the following chunk, replace
 
--   `[AT LEAST]` with the logical operator for “at least” (in two
-    places)
--   `[OR]` with the logical operator for “or”
+-   `[AT LEAST]` with the logical operator for “at least”
+-   `[LESS THAN]` with the logical operator for “less than”
+-   `[AND]` with the logical operator for “and”
 
 **Note:** You will need to set `eval=TRUE` when you have an answer you
 want to try out.
 
 ``` r
-hotels %>%
+fishing %>%
   filter(
-    children [AT LEAST] 1 [OR] babies [AT LEAST] 1
+    region ___ "U.S. Total",
+    year [LESS THAN] 1950 [AND] values [AT LEAST] 30000
     )
+levels(factor(fishing$species))
 ```
 
 ### Exercise 4.
 
-Do you think it’s more likely to find bookings with children or babies
-in city hotels or resort hotels? Test your intuition. Using `filter()`
-determine the number of bookings in resort hotels that have more than 1
-child **or** baby in the room? Then, do the same for city hotels, and
-compare the numbers of rows in the resulting filtered data frames.
+Do you think more fishes are caught in Lake Michigan now, compared to
+1975?
+
+Test your intuition with data…
+
+Using `filter()` determine the largest total U.S. catches from Lake
+Michigan in the years 2015 and 1975. Simplify your output by using
+`select()` to select only `year`, `species`, and `values`.
 
 ``` r
 # add code here
 # pay attention to correctness and code style
 ```
+
+Was your intuition correct?
+
+### Exercise 5.
+
+`Pacific Salmon` were introduced to the Great Lakes to reduce the large
+`Alewife` populations during the second half of the 20th century. Which
+year after 1975 did the total U.S. catch of `Alewife` drop below
+10,000,000 lbs?
+
+Using `filter()` determine the size of U.S. total catches of Alewife
+from Lake Michigan after 1975 that were less than 10,000,000 lbs, then
+use `arrange()` to identify the earliest year.
 
 ``` r
 # add code here
@@ -265,18 +227,6 @@ of variables in the second dataset), but we will be using a limited set
 of the variables for our analysis.
 
 ### fishing.csv
-
-| variable     | class     | description                                                         |
-|:-------------|:----------|:--------------------------------------------------------------------|
-| year         | double    | Year of measurement                                                 |
-| lake         | character | Lake Name                                                           |
-| species      | character | Species of fish                                                     |
-| grand\_total | double    | Grand total of observed                                             |
-| comments     | character | Comments from the dataset providers                                 |
-| region       | character | Region of the US/Canada, note there is some inconsistency           |
-| values       | double    | Production amounts have been rounded to the nearest thousand pounds |
-
-### stocked.csv
 
 | variable     | class     | description                                                         |
 |:-------------|:----------|:--------------------------------------------------------------------|

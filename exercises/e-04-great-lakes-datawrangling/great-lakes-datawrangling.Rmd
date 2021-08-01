@@ -18,7 +18,6 @@ library(skimr)
 ```{r load-data, message = FALSE, warning = FALSE}
 # From TidyTuesday: https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-08/readme.md
 fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
-stocked <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/stocked.csv')
 ```
 
 ## Exercises
@@ -36,60 +35,75 @@ A definition of all variables is given in the [Data dictionary] section at the e
 skim(fishing)
 ```
 
-Now let's take a look at an overview of the second dataset `stocked`.
-
-```{r stocked-skim}
-skim(stocked)
-```
-
 ### Exercise 2.
 
-Are people traveling on a whim?
+Which species and years are associated with the largest total U.S fish catches from Lake Michigan?
+
 Let's see...
 
-Fill in the blanks for filtering for hotel bookings where the guest is **not** from the US (`country` code `"USA"`) and the `lead_time` is less than 1 day.
+Fill in the blanks for filtering for Great Lakes annual fish catch where the region is from the US (`region` code `"U.S.Total"`) and the lake is Lake Michigan (`lake` code `Michigan`).
+Then pipe the results into the `slice_max()` function we have used before, so we can select the 5 years with the largest catch (coded as production `values`).
+Note: production `values` are rounded to the nearest thousand pounds.
 
-**Note:** You will need to set `eval=TRUE` when you have an answer you want to try out.
+**Note:** You will need to set `eval=TRUE` in the r code chunk header when you have an answer you want to try out.
 
-```{r travel-whim, eval=FALSE}
-hotels %>%
+```{r largest-catches, eval=FALSE}
+fishing %>%
   filter(
-    country ____ "USA", 
-    lead_time ____ ____
-    )
+    lake ___ "___",
+    region ___ "U.S. Total"
+    ) %>% 
+  slice_max(
+    order_by = ___, 
+    n = 5
+      )
 ```
 
 ### Exercise 3.
 
-How many bookings involve at least 1 child **or** baby?
+How many very large (at least 10,000,000 lbs) fish catches were there before 1950, and which species were they catching in such large quantities?
 
 In the following chunk, replace
 
--   `[AT LEAST]` with the logical operator for "at least" (in two places)
--   `[OR]` with the logical operator for "or"
+-   `[AT LEAST]` with the logical operator for "at least"
+-   `[LESS THAN]` with the logical operator for "less than"
+-   `[AND]` with the logical operator for "and"
 
 **Note:** You will need to set `eval=TRUE` when you have an answer you want to try out.
 
 ```{r some-children, eval=FALSE}
-hotels %>%
+fishing %>%
   filter(
-    children [AT LEAST] 1 [OR] babies [AT LEAST] 1
+    region ___ "U.S. Total",
+    year [LESS THAN] 1950 [AND] values [AT LEAST] 30000
     )
+levels(factor(fishing$species))
 ```
 
 ### Exercise 4.
 
-Do you think it's more likely to find bookings with children or babies in city hotels or resort hotels?
-Test your intuition.
-Using `filter()` determine the number of bookings in resort hotels that have more than 1 child **or** baby in the room?
-Then, do the same for city hotels, and compare the numbers of rows in the resulting filtered data frames.
+Do you think more fishes are caught in Lake Michigan now, compared to 1975?
 
-```{r resort-children}
+Test your intuition with data...
+
+Using `filter()` determine the largest total U.S. catches from Lake Michigan in the years 2015 and 1975.
+Simplify your output by using `select()` to select only `year`, `species`, and `values`.
+
+```{r 1975-comparison}
 # add code here
 # pay attention to correctness and code style
 ```
 
-```{r city-children}
+Was your intuition correct?
+
+### Exercise 5.
+
+`Pacific Salmon` were introduced to the Great Lakes to reduce the large `Alewife` populations during the second half of the 20th century.
+Which year after 1975 did the total U.S. catch of `Alewife` drop below 10,000,000 lbs?
+
+Using `filter()` determine the size of U.S. total catches of Alewife from Lake Michigan after 1975 that were less than 10,000,000 lbs, then use `arrange()` to identify the earliest year.
+
+```{r latest-year}
 # add code here
 # pay attention to correctness and code style
 ```
@@ -152,18 +166,6 @@ Below is the full data dictionary.
 Note that it is long (there are lots of variables in the second dataset), but we will be using a limited set of the variables for our analysis.
 
 ### fishing.csv
-
-| variable    | class     | description                                                         |
-|:------------|:----------|:--------------------------------------------------------------------|
-| year        | double    | Year of measurement                                                 |
-| lake        | character | Lake Name                                                           |
-| species     | character | Species of fish                                                     |
-| grand_total | double    | Grand total of observed                                             |
-| comments    | character | Comments from the dataset providers                                 |
-| region      | character | Region of the US/Canada, note there is some inconsistency           |
-| values      | double    | Production amounts have been rounded to the nearest thousand pounds |
-
-### stocked.csv
 
 | variable    | class     | description                                                         |
 |:------------|:----------|:--------------------------------------------------------------------|
