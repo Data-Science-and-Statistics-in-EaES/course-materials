@@ -1,20 +1,18 @@
 ---
 title: "Tidying data"
-subtitle: "<br><br> Data Science in a Box"
-author: "[datasciencebox.org](https://datasciencebox.org/)"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
+    self_contained: true
     lib_dir: libs
     nature:
       ratio: "16:9"
+      highlightStyle: github
       highlightLines: true
-      highlightStyle: solarized-light
       countIncrementalSlides: false
 ---
-
-```{r child = "../setup.Rmd"}
-```
 
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -259,18 +257,22 @@ purchases %>%
 
 ---
 
-class: middle
+class: top
 
-# Case study: Approval rating of Donald Trump
+# Case study: Deforestation rates in Brazil
+
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/deforestation.jpeg")
+```
 
 ---
 
-```{r echo=FALSE, out.width="70%"}
-knitr::include_graphics("img/trump-approval.png")
+```{r echo=FALSE, out.width="90%"}
+knitr::include_graphics("img/deforestation-trends-brazil.png")
 ```
 
 .footnote[
-Source: [FiveThirtyEight](https://projects.fivethirtyeight.com/trump-approval-ratings/adults/)
+Source: [Our World in Data](https://ourworldindata.org/forests-and-deforestation/)
 ]
 
 ---
@@ -278,65 +280,49 @@ Source: [FiveThirtyEight](https://projects.fivethirtyeight.com/trump-approval-ra
 ## Data
 
 ```{r include=FALSE}
-trump <- read_csv("data/trump/trump.csv")
+brazil_loss <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/brazil_loss.csv')
 ```
 
 ```{r}
-trump
+brazil_loss
 ```
 
 ---
 
 ## Goal
 
-.pull-left-wide[
-```{r echo=FALSE, out.width="100%"}
-trump %>%
+```{r echo=FALSE, out.width="50%"}
+brazil_loss %>% 
   pivot_longer(
-    cols = c(approval, disapproval),
-    names_to = "rating_type",
-    values_to = "rating_value"
-  ) %>%
-  ggplot(aes(x = date, y = rating_value, 
-             color = rating_type, group = rating_type)) +
+    4:14,
+    names_to = "fate",
+    values_to = "area"
+  ) %>% 
+   ggplot(aes(year, area, color = fate)) +
   geom_line() +
-  facet_wrap(~ subgroup) +
-  scale_color_manual(values = c("darkgreen", "orange")) + 
   labs( 
-    x = "Date", y = "Rating", 
+    x = "Year", y = "Area Deforested", 
     color = NULL, 
-    title = "How (un)popular is Donald Trump?", 
-    subtitle = "Estimates based on polls of all adults and polls of likely/registered voters", 
-    caption = "Source: FiveThirtyEight modeling estimates" 
+    title = "What are the causes of deforestation?", 
+    subtitle = "Loss of Brazilian forest due to specific types", 
+    caption = "Source: Our World in Data" 
   ) + 
-  theme_minimal() +
-  theme(legend.position = "bottom")
+  theme_minimal() 
 ```
-]
---
-.pull-right-narrow[
-**Aesthetic mappings:**  
-`r emo::ji("check")`  x = `date`  
-`r emo::ji("x")`      y = `rating_value`  
-`r emo::ji("x")`      color = `rating_type`
-
-**Facet:**  
-`r emo::ji("check")`  `subgroup` (Adults and Voters)
-]
 
 ---
 
 ## Pivot
 
 ```{r output.lines=11}
-trump_longer <- trump %>%
-  pivot_longer(
-    cols = c(approval, disapproval),
-    names_to = "rating_type",
-    values_to = "rating_value"
-  )
+brazil_loss_longer <- brazil_loss %>%  
+  pivot_longer( #<<
+    4:14, #<<
+    names_to = "fate", #<<
+    values_to = "area" #<< 
+  ) #<<
 
-trump_longer
+brazil_loss_longer
 ```
 
 ---
@@ -344,10 +330,9 @@ trump_longer
 ## Plot
 
 ```{r fig.asp = 0.5}
-ggplot(trump_longer, 
-       aes(x = date, y = rating_value, color = rating_type, group = rating_type)) +
-  geom_line() +
-  facet_wrap(~ subgroup)
+ggplot(brazil_loss_longer,#<<
+       aes(x = year, y = area, color = fate)) + #<<
+  geom_line()  #<<
 ```
 
 ---
@@ -355,25 +340,21 @@ ggplot(trump_longer,
 .panelset[
 
 .panel[.panel-name[Code]
-```{r "trump-plot", fig.show="hide"}
-ggplot(trump_longer, 
-       aes(x = date, y = rating_value, 
-           color = rating_type, group = rating_type)) +
+```{r "brazil-plot", fig.show="hide"}
+ggplot(brazil_loss_longer, aes(year, area, color = fate)) +
   geom_line() +
-  facet_wrap(~ subgroup) +
-  scale_color_manual(values = c("darkgreen", "orange")) + #<<
-  labs( #<<
-    x = "Date", y = "Rating", #<<
-    color = NULL, #<<
-    title = "How (un)popular is Donald Trump?", #<<
-    subtitle = "Estimates based on polls of all adults and polls of likely/registered voters", #<<
-    caption = "Source: FiveThirtyEight modeling estimates" #<<
-  ) #<<
+  labs(  #<<
+    x = "Year", y = "Area Deforested",  #<<
+    color = NULL,  #<<
+    title = "What are the causes of deforestation?",  #<<
+    subtitle = "Loss of Brazilian forest due to specific types",  #<<
+    caption = "Source: Our World in Data"  #<<
+  )  #<<
 ```
 ]
 
 .panel[.panel-name[Plot]
-```{r ref.label="trump-plot", echo = FALSE, out.width="75%"}
+```{r ref.label="brazil-plot", echo = FALSE, out.width="30%"}
 ```
 ]
 
@@ -384,28 +365,33 @@ ggplot(trump_longer,
 .panelset[
 
 .panel[.panel-name[Code]
-```{r "trump-plot-2", fig.show="hide"}
-ggplot(trump_longer, 
-       aes(x = date, y = rating_value, 
-           color = rating_type, group = rating_type)) +
+```{r "brazil-plot-2", fig.show="hide"}
+ggplot(brazil_loss_longer, aes(year, area, color = fate)) +
   geom_line() +
-  facet_wrap(~ subgroup) +
-  scale_color_manual(values = c("darkgreen", "orange")) + 
   labs( 
-    x = "Date", y = "Rating", 
+    x = "Year", y = "Area Deforested", 
     color = NULL, 
-    title = "How (un)popular is Donald Trump?", 
-    subtitle = "Estimates based on polls of all adults and polls of likely/registered voters", 
-    caption = "Source: FiveThirtyEight modeling estimates" 
+    title = "What are the causes of deforestation?", 
+    subtitle = "Loss of Brazilian forest due to specific types", 
+    caption = "Source: Our World in Data" 
   ) + 
-  theme_minimal() + #<<
-  theme(legend.position = "bottom") #<<
+  theme_minimal() #<<
 ```
 ]
 
 .panel[.panel-name[Plot]
-```{r ref.label="trump-plot-2", echo = FALSE, out.width="75%", fig.width=6}
+```{r ref.label="brazil-plot-2", echo = FALSE, out.width="30%", fig.width=6}
 ```
 ]
 
 ]
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]
+
