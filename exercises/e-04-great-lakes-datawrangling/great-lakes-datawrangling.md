@@ -72,6 +72,9 @@ Data summary
 | grand\_total   |      31767 |           0.52 | 1411.86 | 3572.20 |    0 |   10 |  107.57 |  964.5 | 48821 | ▇▁▁▁▁ |
 | values         |      21916 |           0.67 |  513.97 | 1850.96 |  -31 |    0 |   17.00 |  217.0 | 48405 | ▇▁▁▁▁ |
 
+**Note:** Remember you can also use `glimpse()` to take a look at a
+dataset.
+
 ### Exercise 2.
 
 Which species and years are associated with the largest total U.S fish
@@ -101,11 +104,33 @@ fishing %>%
       )
 ```
 
+**Tip:** If you are working with a large dataset like `fishing`, and
+there are character class variables (e.g., \`region\`\`), you can
+quickly see what different character strings (regions) are in the
+dataset by converting the characters to factors (i.e. categorical data),
+then looking at the levels. Here’s some code to try:
+
+``` r
+levels( factor( fishing$region ) )
+```
+
+    ##  [1] "Canada (ONT)"           "Georgian Bay (GB)"      "Green Bay (MI)"        
+    ##  [4] "Green Bay (WI)"         "Huron Proper (HP)"      "Illinois (IL)"         
+    ##  [7] "Indiana (IN)"           "MI State Total"         "Mich. Proper (MI)"     
+    ## [10] "Mich. Proper (WI)"      "Michigan (MI)"          "Minnesota (MN)"        
+    ## [13] "New York (NY)"          "North Channel (NC)"     "Ohio (OH)"             
+    ## [16] "Pennsylvania (PA)"      "Total Canada (ONT)"     "U.S. Huron Proper (HP)"
+    ## [19] "U.S. Saginaw Bay (SB)"  "U.S. Total"             "U.S. Total (MI)"       
+    ## [22] "U.S. Total (NY)"        "WI State Total"         "Wisconsin (WI)"
+
 ### Exercise 3.
 
 How many very large (at least 10,000,000 lbs) fish catches were there
 before 1950, and which species were they catching in such large
 quantities?
+
+**Note:** The `values` data are reported to the nearest whole 1,000 lbs,
+so add 3 zeros to any number in the `values` column.
 
 In the following chunk, replace
 
@@ -125,16 +150,31 @@ fishing %>%
 levels(factor(fishing$species))
 ```
 
+From here on, we’ll continue only using catch data from the “U.S. Total”
+`region`. To avoid having to filter each time, let’s create a new
+dataframe `fishing_us` from `fishing` that only includes the data we
+want:
+
+``` r
+fishing_us <- fishing %>% 
+  filter(
+    region == "U.S. Total"
+  )
+```
+
 ### Exercise 4.
 
-Do you think more fishes are caught in Lake Michigan now, compared to
-1975?
+Do you think annual U.S. fish catches are larger in Lake Michigan now,
+compared to 1975?
 
 Test your intuition with data…
 
 Using `filter()` determine the largest total U.S. catches from Lake
 Michigan in the years 2015 and 1975. Simplify your output by using
-`select()` to select only `year`, `species`, and `values`.
+`select()` to select only `year`, `species`, and `values`. Although we
+normally tidy up data by pivoting longer, as a final step, use
+`pivot_wider()` to allow you to compare the catch in 1975 with that in
+2015 in a single row.
 
 ``` r
 # add code here
@@ -145,26 +185,14 @@ Was your intuition correct?
 
 ### Exercise 5.
 
-`Pacific Salmon` were introduced to the Great Lakes to reduce the large
-`Alewife` populations during the second half of the 20th century. Which
-year after 1975 did the total U.S. catch of `Alewife` drop below
-10,000,000 lbs?
+Pacific Salmon species started being stocked in the Great lakes during
+the 1970s, for commercial fishing and to reduce the large `Alewife`
+populations. Calculate summary statistics (minimum, mean, median,
+maximum) for the size of the `Chinook Salmon` catch in Lake Michigan
+over all available years of data.
 
-Using `filter()` determine the size of U.S. total catches of Alewife
-from Lake Michigan after 1975 that were less than 10,000,000 lbs, then
-use `arrange()` to identify the earliest year.
-
-``` r
-# add code here
-# pay attention to correctness and code style
-```
-
-### Exercise 5.
-
-Create a frequency table of the number of `adults` in a booking. Display
-the results in descending order so the most common observation is on
-top. What is the most common number of adults in bookings in this
-dataset? Are there any surprising results?
+**Hint:** In addition to the functions you’ve used up til now, you’ll
+need to use the `summarize()` function.
 
 **Note:** Don’t forget to label your R chunk as well (where it says
 `label-me-1`). Your label should be short, informative, and shouldn’t
@@ -176,15 +204,16 @@ Markdown will give you an error about repeated R chunk labels.
 # pay attention to correctness and code style
 ```
 
+Look at the median value. Why could we have predicted the median value
+without doing the median calculation? Think about the number of years in
+the dataset…
+
 ### Exercise 6.
 
-Repeat Exercise 5, once for canceled bookings (`is_canceled` coded as 1)
-and once for not canceled bookings (`is_canceled` coded as 0). What does
-this reveal about the surprising results you spotted in the previous
-exercise?
+Use the maximum catch result you got in the last exercise to identify
+the `year` the largest `Chinook Salmon` catch was made in Lake Michigan.
 
-**Note:** Don’t forget to label your R chunk as well (where it says
-`label-me-2`).
+Remember to label the chunk again.
 
 ``` r
 # add code here
@@ -193,9 +222,19 @@ exercise?
 
 ### Exercise 7.
 
-Calculate minimum, mean, median, and maximum average daily rate (`adr`)
-grouped by `hotel` type so that you can get these statistics separately
-for resort and city hotels. Which type of hotel is higher, on average?
+In the 1980s, invasive mussel species were introduced to the Great
+Lakes, likely via ballast water discharges into the Lakes from large
+vessels. The mussels went on to radically change the ecology of the
+Lakes, including causing a collapse in the Great Lakes fisheries. Sum
+the total Lake Michigan catch (including all species) in the years 1975,
+1985, 1995, 2005, and 2015.
+
+**Hint:** You can filter using a vector of numbers (e.g., c(1, 2, 3,
+4)), rather than a single number using `%in%` where you would normally
+put the logical operator (e.g., `==`).
+
+What does the trend show? During which 10 year period was the largest
+change in fish catch?
 
 ``` r
 # add code here
@@ -204,20 +243,65 @@ for resort and city hotels. Which type of hotel is higher, on average?
 
 ### Exercise 8.
 
-We observe two unusual values in the summary statistics above – a
-negative minimum, and a very high maximum). What types of hotels are
-these? Locate these observations in the dataset and find out the arrival
-date (year and month) as well as how many people (adults, children, and
-babies) stayed in the room. You can investigate the data in the viewer
-to locate these values, but preferably you should identify them in a
-reproducible way with some code.
+Repeat the same exercise, but do not filter the data for Lake Michigan.
+Instead, calculate the total catch for each of the Great Lakes in the
+dataset. To make the trend more readable in table format, use
+`pivot_wider()` in the last step of your code.
 
-**Hint:** For example, you can `filter` for the given `adr` amounts and
-`select` the relevant columns.
+Are the trends the same for all the Great Lakes?
 
 ``` r
 # add code here
 # pay attention to correctness and code style
+
+fishing_us %>% 
+  filter(
+    year %in% c(1975, 1985, 1995, 2005, 2015)
+  ) %>% 
+  group_by(lake, year) %>% 
+  summarize(total_catch = sum(values, na.rm = TRUE)) %>% 
+  pivot_wider(
+    names_from = "lake",
+    values_from = "total_catch"
+  )
+```
+
+    ## `summarise()` has grouped output by 'lake'. You can override using the `.groups` argument.
+
+    ## # A tibble: 5 x 4
+    ##    year  Erie Michigan Superior
+    ##   <dbl> <dbl>    <dbl>    <dbl>
+    ## 1  1975  8215    45338    4710 
+    ## 2  1985  7361    35415    3739.
+    ## 3  1995  5093    14595    2791.
+    ## 4  2005  4823     7360    3324.
+    ## 5  2015  5731     3736    4657.
+
+### Exercise 9.
+
+We are currently only looking at total U.S. catch, however, a large part
+of Lake Superior and Lake Erie are in Canada. Repeat the calculation
+from the previous exercise, but this time, use the original dataset
+`fishing` and filter for both the `U.S. Total` and `Total Canada (ONT)`.
+What changes appear in the results, now that data from Ontario, Canada,
+are included?
+
+``` r
+# add code here
+# pay attention to correctness and code style
+```
+
+### Exercise 10.
+
+**Wrap up** Look closely at the different character strings used in the
+`species` data column by running the code chunk below. Do you think this
+dataset could be cleaned up more?
+
+**Note:** You will need to set `eval=TRUE` when you have an answer you
+want to try out.
+
+``` r
+levels( factor( fishing$species ) )
 ```
 
 ## Data dictionary
