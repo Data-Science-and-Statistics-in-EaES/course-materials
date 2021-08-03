@@ -27,7 +27,9 @@ satellites <- read.csv("UCS-Satellite-Database-1-1-2021.csv")
 glimpse(satellites)
 ```
 
-### Modify the following plot to change the color of all points to `"pink"`.
+### Exercise 1.
+
+Modify the following plot to change the color of all points to `"pink"`.
 
 ```{r scatterplot}
 ggplot(satellites, 
@@ -35,7 +37,10 @@ ggplot(satellites,
   geom_point(color = "#30509C")
 ```
 
-### Add labels for title, x and y axes, and size of points. Uncomment to see the effect.
+### Exercise 2.
+
+Add labels for title, x and y axes, and size of points.
+Uncomment to see the effect.
 
 ```{r scatterplot-labels}
 ggplot(satellites, 
@@ -49,7 +54,9 @@ ggplot(satellites,
     )
 ```
 
-### Pick a single categorical variable from the data set and make a bar plot of its distribution.
+### Exercise 3.
+
+Pick a single categorical variable from the data set and make a bar plot of its distribution.
 
 Pick one from:
 
@@ -68,7 +75,9 @@ ggplot(satellites, aes(___)) +
   coord_flip()
 ```
 
-### Pick a single numerical variable and make a histogram of it.
+### Exercise 4.
+
+Pick a single numerical variable and make a histogram of it.
 
 Pick one from:
 
@@ -84,7 +93,10 @@ Pick one from:
 
 ```
 
-### Pick a numerical variable and plot it against `orbial_class` () and make a visualisation (you pick the type!) to visualise the relationship between the two variables. Along with your code and output, provide an interpretation of the visualisation.
+### Exercise 5.
+
+Pick a numerical variable and plot it against `orbial_class` () and make a visualisation (you pick the type!) to visualise the relationship between the two variables.
+Along with your code and output, provide an interpretation of the visualisation.
 
 To help with the following interpretations, read the text from the **UCS Satellite Database User Guide** describing the different kind of orbits.
 
@@ -107,7 +119,10 @@ Nearly Circular Orbits are further classified by their altitude:
 
 ```
 
-### Pick `orbital_class` and a second categorical variable and make a visualisation to visualise the relationship between the two variables. Along with your code and output, provide an interpretation of the visualisation.
+### Exercise 6.
+
+Pick `orbital_class` and a second categorical variable and make a visualisation to visualise the relationship between the two variables.
+Along with your code and output, provide an interpretation of the visualisation.
 
 If the legend takes up a lot of space, you may need to use the *Show in New Window* button at the top right of the plot box to view the figure more clearly.
 
@@ -115,7 +130,9 @@ If the legend takes up a lot of space, you may need to use the *Show in New Wind
 
 ```
 
-### Pick two numerical variables, `orbit_class` and a second categorical variables and make a visualisation that incorportes all of them and provide an interpretation with your answer.
+### Exercise 7.
+
+Pick two numerical variables, `orbit_class` and a second categorical variables and make a visualisation that incorportes all of them and provide an interpretation with your answer.
 
 ```{r multi}
 
