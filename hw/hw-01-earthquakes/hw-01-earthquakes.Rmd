@@ -208,7 +208,7 @@ You should also load these packages in your Console, which you can do by sending
 knitr::include_graphics("img/load-packages-chunk.png")
 ```
 
-# LOAD-PACAKGES chunk to run
+# load-packages chunk to run
 
 ```{r load-packages, echo = F, message = F}
 library(tidyverse)
