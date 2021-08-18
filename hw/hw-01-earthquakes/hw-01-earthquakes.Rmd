@@ -73,17 +73,21 @@ Please go back to [Prerequisites] and complete them before continuing the assign
 
 # Workflow
 
-```{marginfigure}
-**IMPORTANT:** If there is no GitHub repo created for you for this assignment, it means I didn't have your GitHub username as of when I assigned the homework. Please let me know your GitHub username asap, and I can create your repo.
-```
+For the coursework each week (exercises, lab, and homework) you will start with a GitHub repo that I created for you which contains all the files you will need.
+**I will share the link to your weekly repo on the Weekly Content blackboard page, on Monday before class**.
+For week 1 the repo will be called *week-1-yourlastname*.
+This week during class you cloned (copied) this repo into RStudioCloud and worked on the exercises and lab.
+For ths homework, you will build upon the *hw-01-earthquakes-starter* Rmd file for your homework assignment.
 
-For each assignment in this course you will start with a GitHub repo that I created for you and that contains the starter documents you will build upon when working on your assignment.
 The first step is always to bring these files into RStudio so that you can edit them, run them, view your results, and interpret them.
-This action is called **cloning**.
+Since you already are looking at this homework 1 RMarkdown file, you have already accomplished all of this!
+However let's recap these steps because being able to do this is part of the first week's lesson!
 
-Then you will work in RStudio on the data analysis, making **commits** along the way (snapshots of your changes) and finally **push** all your work back to GitHub.
+First we need to copy the GItHub repo to RStudioCloud: This action is called **cloning**.
 
-The next few steps will walk you through the process of getting information of the repo to be cloned, cloning your repo in a new RStudio Cloud project, and getting started with the analysis.
+Then you work in RStudio on the data analysis, making **commits** along the way (snapshots of your changes) and finally **push** all your work back to GitHub.
+
+The next few steps will remind you of the process of getting information of the repo to be cloned, cloning your repo in a new RStudio Cloud project, and getting started with the analysis.
 
 ### Step 1. Get URL of repo to be cloned
 
@@ -120,6 +124,8 @@ knitr::include_graphics("img/new-project-from-git.png")
 
 # Hello RStudio!
 
+Let's remind ourselves of the RStudio working environment.
+
 RStudio is comprised of four panes.
 
 ```{r rstudio-anatomy, fig.fullwidth=TRUE, echo = FALSE, eval = TRUE}
@@ -141,7 +147,7 @@ The top portion of your R Markdown file (between the three dashed lines) is call
 
 ## Step 1. Update the YAML
 
-Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document.
+Open the R Markdown (Rmd) starter file in your week-1 materials, and change the author name to your name, and knit the document.
 
 ```{r yaml-raw-to-rendered, echo = FALSE, eval = TRUE, fig.align = "center"}
 knitr::include_graphics("img/yaml-raw-to-rendered.png")
