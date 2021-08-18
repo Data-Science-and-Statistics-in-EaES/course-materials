@@ -6,9 +6,9 @@ Welcome to EaES 494 Data Science and Statistics Fall 2021!
 
 Weekly Coursework:
 
--   In-Class Lectures + Exercises
--   Labs (complete in class)
--   Homework
+-   In-Class Lectures + Exercises (e.g., e-01-carbon-emissions)
+-   Labs (complete in class) (e.g., lab-01-hello-r)
+-   Homework (e.g., hw-01-earthquakes)
 -   Readings
 -   DataCamp Tutorials (chapters or courses)
 
