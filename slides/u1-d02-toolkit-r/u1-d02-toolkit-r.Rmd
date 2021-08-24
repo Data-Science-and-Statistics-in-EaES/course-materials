@@ -34,7 +34,6 @@ library(lubridate)
   - Exercises
   - Labs and Homework
   - Final Project
-  - Grades*
 ]
 ]
 .pull-right[
@@ -48,6 +47,14 @@ library(lubridate)
   - .gray[Git]
   - .gray[GitHub]
 ]
+
+---
+
+# Data science life cycle
+
+```{r echo=FALSE, out.width="90%", fig.align="left"}
+knitr::include_graphics("img/data-science-cycle.001.png")
+```
 
 ---
 
