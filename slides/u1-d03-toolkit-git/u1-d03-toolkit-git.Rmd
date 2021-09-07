@@ -28,13 +28,19 @@ library(lubridate)
 .pull-left[
 ### .gray[Course operation]
 .gray[
-- Blackboard
-  - Syllabus
+- **Blackboard**
+  - Syllabus 
+  - Weekly recap/announcements
+  - Weekly content updates
+- **In Class**
   - Lectures
-  - Exercises
-  - Labs and Homework
-  - Final Project
-  - Grades*
+  - Exercises (first practice)
+  - Labs (may complete in class)
+- **At home**
+  - Homework (try for yourself)
+  - Reading (statistics)
+  - DataCamp (the basics of R coding)
+  - Final Project (more later this semester)
 ]
 ]
 .pull-right[
@@ -48,6 +54,14 @@ library(lubridate)
   - .pink[Git]
   - .pink[GitHub]
 ]
+
+---
+
+class: middle
+
+# Learning outcomes: 
+
+ > Let's remind ourselves from the Syllabus!
 
 ---
 
@@ -149,20 +163,21 @@ knitr::include_graphics("img/whole-game-04.png")
 
 ## Tour: Git and GitHub
 
-- Create a GitHub account
+- Create a GitHub account 
 - Verify your GitHub email
 - Adjust your GitHub settings for a more pleasant GitHub experience
   - Settings > Emails > Uncheck "Keep my email address private"
   - Settings > Emails > Update name and photo
+  - **Create personal access token for pushing changes to Git**
 
 <br>
 
-*Next week...*
+*Next two classes...*
 
-*Work with R, RStudio, Git, and GitHub together!*<sup>+</sup>
+**GOAL: Work with R, RStudio, Git, and GitHub together for Lab 1 and Homework 1!**<sup>+</sup>
 
 .footnote[
-<sup>+</sup>Just like a real data scientist!
+<sup>+</sup>**Just like a real data scientist!**
 ]
 
 ---

@@ -108,7 +108,7 @@ class: middle
 .question[ 
 How would you describe the relationship between mass and height of Starwars characters?
 What other variables would help us understand data points that don't follow the overall trend?
-Who is the not so tall but really chubby character?
+Who is the not so tall but really heavy character?
 ]
 
 ```{r fig.width = 8, warning = FALSE, echo=FALSE, out.width = "50%"}
