@@ -152,8 +152,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Over the last year, we were all asked to wash our hands frequently to limit the spread of COVID-19, but clean water and sanitation (toilet facilities) are essential for interventions such as hand washing to be effective. Using a 2020 datset provided by <a href="https://ourworldindata.org/water-sanitation-2020-update">Our World in Data</a>, we will explore trends over time in clean water and sanitation access around the world.</p>
 <div id="getting-started" class="section level1">
 <h1>Getting started</h1>
-<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>IMPORTANT:</strong> If there is no GitHub repo created for you for this assignment, it means I didn’t have your GitHub username as of when I assigned the homework. Please let me know your GitHub username asap, and I can create your repo.</span></span></p>
-<p>Go to the course GitHub organization and locate your homework repo, which should be named <code>hw-02-water-sanitation-YOUR_GITHUB_USERNAME</code>. Grab the URL of the repo, and clone it in RStudio. First, open the R Markdown document <code>hw-02.Rmd</code> and Knit it. Make sure it compiles without errors. The output will be in the file markdown <code>.md</code> file with the same name.</p>
+<p>If you’re looking at this RMarkdown document in RStudio, then you’ve already cloned your Unit 2 repo from Github. Good job!</p>
+<p>As a brief reminder of the steps:</p>
+<ul>
+<li>Go to the course GitHub organization and look for your course materials repo, which should be named <code>unit-X-yourlastname</code>.</li>
+<li>Copy the URL of the repo using the green <code>Code</code> button, and copy/clone it into a <code>New Project from a GitHub Repo</code> in RStudio Cloud.</li>
+<li>Navigate to the exercise, lab, or homework folder using the <code>File Directory</code> pane.</li>
+<li>Open the R Markdown document <code>e/lab/hw.Rmd</code> and Knit it.</li>
+<li>Make sure it compiles without errors.</li>
+<li>The RMarkdown output will typically be in an <code>.html</code> file with the same name.</li>
+</ul>
 <div id="warm-up" class="section level2">
 <h2>Warm up</h2>
 <p>Before we introduce the data, let’s warm up with some simple exercises.</p>
@@ -161,7 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Update the YAML, changing the author name to your name, and <strong>knit</strong> the document.</li>
 <li>Commit your changes with a meaningful commit message.</li>
 <li>Push your changes to GitHub.</li>
-<li>Go to your repo on GitHub and confirm that your changes are visible in your Rmd <strong>and</strong> md files. If anything is missing, commit and push again.</li>
+<li>Go to your repo on GitHub and confirm that your changes are visible in your Rmd file. If anything is missing, commit and push again.</li>
 </ul>
 </div>
 <div id="packages-and-data" class="section level2">
@@ -180,12 +188,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="exercises" class="section level1">
 <h1>Exercises</h1>
-<p><label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> The Markdown Quick Reference sheet has an example of inline R code that might be helpful. You can access it from the Help menu in RStudio.</span></span></p>
+<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;"><strong>Hint:</strong> The Markdown Quick Reference sheet has an example of inline R code that might be helpful. You can access it from the Help menu in RStudio.</span></span></p>
 <ol style="list-style-type: decimal">
-<li>How many observations (rows) does the dataset have? Instead of hard coding the number in your answer, use inline code.</li>
+<li>How many observations (rows) does the dataset have? Instead of hard coding the number in your answer, use inline code to add the answer within your narrative response. (Remember, using a single backtick followed by <code>r</code> you can create inline code)</li>
 <li>Run <code>View(wat_san)</code> in your Console to view the data in the data viewer. What does each row in the dataset represent?</li>
 </ol>
+<p>Provide your exercise responses in the <code>hw-02.Rmd</code> starter file.</p>
 <p>🧶 ✅ ⬆️ <em>Knit,</em> <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+<p>–</p>
 <p>Each column represents a variable. We can get a list of the variables in the data frame using the <code>names()</code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wat_san)</span></code></pre></div>
 <p>As the <code>?wat_san</code> function will not work (this dataset is not from an R package), we have provided a variable description list here:</p>
@@ -194,19 +204,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>Year</code>: Year of estimate</li>
 <li><code>water_</code>: Percent of population with a given level of water access</li>
 <li><code>sanitation_</code>: Percent of population with a given level of water access</li>
+</ul>
+<p>The following variables are suffixes added to either <code>water_</code> or <code>sanitation_</code> to describe the service level available to people:</p>
+<ul>
 <li><code>_improved</code>: Improved sanitation access (can be Safely Managed, Basic, or Limited)</li>
 <li><code>_safe</code>: Best form of improved sanitation (e.g., private toilet)</li>
 <li><code>_basic</code>: Intermediate form of improved sanitation (e.g., poorly maintained private toilet)</li>
 <li><code>_limited</code>: Worst form of improved sanitation (e.g., shared toilet)</li>
 <li><code>_unimproved</code>: Typically a poorly maintained pit latrine</li>
-<li><code>_none</code>: Open defecation (no sanitation)</li>
+<li><code>_none</code>: No sanitation service (open defecation)</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li>Create a faceted histogram where each facet represents a year and displays the distribution of the percent of population with no sanitation access. Does it look like rates of open defecation (no sanitation) have changed between 2000 and 2020? What features of the distributions have changed over time, if any?</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ___)) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> ___) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>___)</span></code></pre></div>
+<p>Copy the code chunk below into the <code>hw-02.Rmd</code> starter file and complete it.</p>
 <p>Let’s de-construct this code:</p>
 <ul>
 <li><code>ggplot()</code> is the function we are using to build our plot, in layers.</li>
@@ -216,13 +227,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>Use a single pipeline to identity the countries with the highest rates of open defecation in the year 2000, and arrange these in descending order. Compare the <code>water_none</code> and <code>sanitation_none</code> columns in the output. Does it appear that water and sanitation infrastructure are well-correlated, or not?</p></li>
-<li><p>Then, in another pipeline, filter the entire dataset (all countries) for the year 2000 and use a scatter plot to visualize the relationship between <code>water_none</code> and <code>sanitation_none</code>. Does this relationship support your previous response about a correlation between the variables, and why?</p></li>
-<li><p>In a third pipeline, identity the countries with the highest rates of open defecation in the year 2020, and arrange these in descending order. Have the countries changed between 2000 and 2020? If so, which have been added and which have been lost?</p></li>
-<li><p>In a final pipeline, calculate the minimum, mean, median, standard deviation, IQR, and maximum rates of <code>water_none</code> and <code>sanitation_none</code> in the year 2000 and the year 2020 for the 5 countries with the highest amount of open defecation. You’ll need to use <code>group_by</code> and remember to filter out the <code>Entity</code> “World”. What do you notice about the values between 2000 and 2020? What do you notice about the values for sanitation vs. water?</p></li>
-<li><p>Create a final visualization that selects a few entities and that will help you understand why the five countries with the highest rates of open defecation changed between 2000 and 2020. Include the entity “World” so that you can compare rates of change between individual countries and the world as a whole. Explore the use of different <code>geom_</code> to best visualize these trends. Comment on the rates of change in open defecation over time in some of the countries.</p></li>
+<li>Use a single code chunk pipeline (<code>data %&gt;% filter by year %&gt;% arrange in descending order by sanitation_none</code>) to identity the countries with the highest rates of “no sanitation service” in the year 2000, and arrange these in descending order. Compare the <code>water_none</code> and <code>sanitation_none</code> columns in the output. Does it appear that water and sanitation infrastructure are well-correlated, or not?</li>
 </ol>
-<p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
+<p><strong>Hint</strong>: Remember the <code>slice_max()</code> function we used in the first week of class! If not, try <code>?slice_max()</code> to check what this function does and what the function <strong>arguments</strong> are.</p>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Then, in another code chunk pipeline, filter the dataset for the year 2000 and use a scatter plot to visualize the relationship between <code>water_none</code> and <code>sanitation_none</code>. Does this relationship support your previous response about a correlation between the variables, and why?</p></li>
+<li><p>In a third code chunk pipeline, identity the countries with the highest rates of “no sanitation service” in the year 2020, and arrange these in descending order. Have the countries changed between 2000 and 2020? If so, which have been added and which have been lost?</p></li>
+</ol>
+<p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+<p>–</p>
+<p>The next two exercises are more challenging so we have provided you some code to get you started. Copy the code chunk into your <code>hw-02.Rmd</code> and try to complete it. And don’t forget to add your clean text narrative providing your written answers too!</p>
+<ol start="7" style="list-style-type: decimal">
+<li>In a final pipeline, calculate the minimum, mean, median, standard deviation, IQR, and maximum rates of <code>water_none</code> and <code>sanitation_none</code> in the year 2000 and the year 2020 for the 5 countries with the highest amount of “no sanitation service”. You’ll need to use the function <code>group_by()</code> and remember to <code>filter()</code> out the <code>Entity</code> “World”, to remove it. What do you notice about the values between 2000 and 2020? What do you notice about the values for sanitation vs. water?</li>
+</ol>
+<p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+<ol start="8" style="list-style-type: decimal">
+<li>Create a final <strong>time series</strong> visualization that will help you understand why the five countries () with the highest rates of “no sanitation” changed between 2000 and 2020. Include the entity “World” so that you can compare rates of change between individual countries and the world as a whole. Map the <code>Entity</code> variable to an aesthetic so that individual countries can be distinguished. Explore the use of different <code>geom_</code> to best visualize these trends. Comment on the rates of change in “no sanitation service” over time in some of the countries.</li>
+</ol>
+<p><strong>Note</strong>: A time-series visualization is a plot that shows how a variable is changing over time (in our case, over multiple years/rows/observations in the dataset).</p>
+<p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the Rmd document on GitHub to make sure you’re happy with the final state of your work.</em></p>
 </div>
 
 
