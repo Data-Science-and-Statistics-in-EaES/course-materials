@@ -24,7 +24,7 @@ Each row in `wat_san` corresponds to a different year of water and sanitation ac
 
 ### Exercise 3
 
-Rates of open defecation appear have been reduced.
+Rates of "no sanitation" appear have been reduced.
 There are fewer outlier countries with very high rates, and the height of the lowest possible, 0-1% rate (depends on student choice of bin size for upper limit here), has increased since 2000.
 
 ```{r no-sanitation-years}
@@ -68,7 +68,7 @@ wat_san %>%
 
 ### Exercise 7
 
-Between 2000 and 2020, the summary statistics all decreased in values, indicating lower amounts of open defecation and lack of access to clean water.
+Between 2000 and 2020, the summary statistics all decreased in values, indicating lower amounts of "no sanitation" and lack of access to clean water.
 
 Overall, values for no sanitation are still higher than values for no water access.
 
@@ -96,7 +96,7 @@ wat_san %>%
 
 ### Exercise 8
 
-Cambodia and India both dropped out of the top 5 for open defecation because rates of open defecation dropped faster there than the world average, and much faster than in Chad and Niger, where rates stayed almost constant.
+Cambodia and India both dropped out of the top 5 for "no sanitation" because rates of open defecation dropped faster there than the world average, and much faster than in Chad and Niger, where rates stayed almost constant.
 
 ```{r country-global-changes}
 wat_san %>% 
