@@ -17,8 +17,7 @@ output:
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(openintro)
-loans_full_schema <- loans_full_schema %>%
-  mutate(grade = factor(grade, ordered = TRUE))
+forest_birds <- read.csv("data/forest.birds.csv")
 ```
 
 class: middle
@@ -48,19 +47,19 @@ class: middle
 
 ---
 
-## Data: Lending Club
+## Data: Forest Birds 
 
 .pull-left-wide[
 
-- Thousands of loans made through the Lending Club, which is a platform that allows individuals to lend to other individuals
+- Abundance of forest birds in 56 forest patches in Australia.
 
-- Not all loans are created equal -- ease of getting a loan depends on (apparent) ability to pay back the loan
+- Part of a study on the effects of **habitat fragmentation**, the process in which land development disrupts the native habitat of certain species. 
 
-- Data includes loans *made*, these are not loan applications
+- The dataset has variables on forest bird abundance in a forest patch (typically the response of interest) and features of patch.
 ]
 .pull-right-narrow[
 ```{r echo=FALSE, out.width = "100%"}
-knitr::include_graphics("img/lending-club.png")
+knitr::include_graphics("img/habitat-fragmentation.jpeg")
 ```
 ]
 
@@ -69,19 +68,9 @@ knitr::include_graphics("img/lending-club.png")
 ## Take a peek at data
 
 ```{r output.lines=18}
-library(openintro)
-glimpse(loans_full_schema)
-```
-
----
-
-## Selected variables
-
-```{r}
-loans <- loans_full_schema %>%
-  select(loan_amount, interest_rate, term, grade, 
-         state, annual_income, homeownership, debt_to_income)
-glimpse(loans)
+library(tidyverse)
+forest_birds <- read.csv("data/forest.birds.csv")
+glimpse(forest_birds)
 ```
 
 ---
@@ -93,14 +82,14 @@ glimpse(loans)
 .midi[
 variable        | description
 ----------------|-------------
-`loan_amount`   |	Amount of the loan received, in US dollars
-`interest_rate` |	Interest rate on the loan, in an annual percentage
-`term`	        | The length of the loan, which is always set as a whole number of months
-`grade`	        | Loan grade, which takes a values A through G and represents the quality of the loan and its likelihood of being repaid
-`state`         |	US state where the borrower resides
-`annual_income` |	Borrower’s annual income, including any second income, in US dollars
-`homeownership`	| Indicates whether the person owns, owns but has a mortgage, or rents
-`debt_to_income` | Debt-to-income ratio
+`abundance` |	Average number of forest birds observed in the patch, as calculated from several 20-min counts.
+`patch.area` |The area of the patch. Areas were measured in hectares; 1 hectare is 10,000 square meters.
+`year.of.isolation`	| The year the patch was isolated by fragmentation of local environment.
+`dist.nearest` | Distance to the nearest patch, measured in kilometers.
+`dist.larger` | Distance to the nearest patch that is larger than the current patch, measured in kilometers.
+`grazing.intensity` |	A score indicating the extent of livestock grazing. The categories are: "light", "less than average", "average", "moderately heavy", "heavy".
+`altitude` | Altitude of the patch, measured in meters.
+`yrs.isolation` | Number of years of isolation at the time study was conducted (1983).
 ]
 
 ---
@@ -111,14 +100,14 @@ variable        | description
 
 variable        | type
 ----------------|-------------
-`loan_amount`   |	numerical, continuous
-`interest_rate` |	numerical, continuous
-`term`	        | numerical, discrete
-`grade`	        | categorical, ordinal
-`state`         |	categorical, not ordinal
-`annual_income` |	numerical, continuous
-`homeownership`	| categorical, not ordinal
-`debt_to_income` | numerical, continuous
+`abundance`  |	numerical, continuous
+`patch.area` |	___, ___
+`year.of.isolation`	| numerical, ___
+`dist.nearest` | ___, ___
+`dist.larger` |	___, ___
+`grazing.intensity` |	___, ___
+`altitude`  | ___, ___
+`yrs.isolation` | ___, ___
 
 ---
 
@@ -135,20 +124,20 @@ class: middle
     - modality: unimodal, bimodal, multimodal, uniform
 - center: mean (`mean`), median (`median`), mode (not always useful)
 - spread: range (`range`), standard deviation (`sd`), inter-quartile range (`IQR`)
-- unusual observations
+- unusual observations (outliers)
 
 ---
 
 class: middle
 
-# Histogram
+# Histograms
 
 ---
 
 ## Histogram
 
 ```{r message = TRUE, out.width = "30%"}
-ggplot(loans, aes(x = loan_amount)) +
+ggplot(forest_birds, aes(x = abundance)) +
   geom_histogram()
 ```
 
@@ -157,17 +146,17 @@ ggplot(loans, aes(x = loan_amount)) +
 ## Histograms and binwidth
 
 .panelset[
-.panel[.panel-name[binwidth = 1000].pull-left[
+.panel[.panel-name[binwidth = 20].pull-left[
 ```{r out.width = "50%"}
-ggplot(loans, aes(x = loan_amount)) +
-  geom_histogram(binwidth = 1000)
+ggplot(forest_birds, aes(x = abundance)) +
+  geom_histogram(binwidth = 20)
 ```
 ]
 ]
-.panel[.panel-name[binwidth = 5000].pull-right[
+.panel[.panel-name[binwidth = 2].pull-right[
 ```{r out.width = "50%"}
-ggplot(loans, aes(x = loan_amount)) +
-  geom_histogram(binwidth = 5000)
+ggplot(forest_birds, aes(x = abundance)) +
+  geom_histogram(binwidth = 2)
 ```
 ]
 ]
@@ -185,12 +174,12 @@ ggplot(loans, aes(x = loan_amount)) +
 ]
 .panel[.panel-name[Code]
 ```{r hist-custom, fig.show = "hide", warning = FALSE}
-ggplot(loans, aes(x = loan_amount)) +
-  geom_histogram(binwidth = 5000) +
+ggplot(forest_birds, aes(x = abundance)) +
+  geom_histogram(binwidth = 2) +
   labs( #<<
-    x = "Loan amount ($)", #<<
+    x = "Abundance", #<<
     y = "Frequency", #<<
-    title = "Amounts of Lending Club loans" #<<
+    title = "Abundance of Forest Birds in 56 Forest Patches" #<<
   ) #<<
 ```
 ]
@@ -208,15 +197,15 @@ ggplot(loans, aes(x = loan_amount)) +
 ]
 .panel[.panel-name[Code]
 ```{r hist-fill, fig.show = "hide", warning = FALSE}
-ggplot(loans, aes(x = loan_amount, 
-                  fill = homeownership)) + #<<
-  geom_histogram(binwidth = 5000,
-                 alpha = 0.5) + #<<
-  labs(
-    x = "Loan amount ($)",
-    y = "Frequency",
-    title = "Amounts of Lending Club loans"
-  )
+ggplot(forest_birds, aes(x = abundance,
+                         fill = grazing.intensity)) +
+  geom_histogram(binwidth = 2,
+                 alpha = 0.5) +
+  labs( #<<
+    x = "Abundance", #<<
+    y = "Frequency", #<<
+    title = "Abundance of Forest Birds in 56 Forest Patches" #<<
+  ) #<<
 ```
 ]
 ]
@@ -233,14 +222,13 @@ ggplot(loans, aes(x = loan_amount,
 ]
 .panel[.panel-name[Code]
 ```{r hist-facet, fig.show = "hide", warning = FALSE}
-ggplot(loans, aes(x = loan_amount, fill = homeownership)) + 
-  geom_histogram(binwidth = 5000) +
-  labs(
-    x = "Loan amount ($)",
-    y = "Frequency",
-    title = "Amounts of Lending Club loans"
-  ) +
-  facet_wrap(~ homeownership, nrow = 3) #<<
+ggplot(forest_birds, aes(x = abundance)) +
+  geom_histogram(binwidth = 2) +
+  labs( #<<
+    x = "Abundance", #<<
+    y = "Frequency", #<<
+    title = "Abundance of Forest Birds in 56 Forest Patches") +
+  facet_wrap(~ grazing.intensity, nrow = 3) #<<
 ```
 ]
 ]
@@ -249,14 +237,14 @@ ggplot(loans, aes(x = loan_amount, fill = homeownership)) +
 
 class: middle
 
-# Density plot
+# Density plots
 
 ---
 
 ## Density plot
 
-```{r fig.width = 8, fig.height= 6}
-ggplot(loans, aes(x = loan_amount)) +
+```{r fig.width = 4, fig.height= 3}
+ggplot(forest_birds, aes(x = abundance)) +
   geom_density()
 ```
 
@@ -267,14 +255,14 @@ ggplot(loans, aes(x = loan_amount)) +
 .panelset[
 .panel[.panel-name[adjust = 0.5].pull-left[
 ```{r out.width = "50%"}
-ggplot(loans, aes(x = loan_amount)) +
+ggplot(forest_birds, aes(x = abundance)) +
   geom_density(adjust = 0.5)
 ```
 ]
 ]
 .panel[.panel-name[adjust = 1].pull-right[
 ```{r out.width = "50%"}
-ggplot(loans, aes(x = loan_amount)) +
+ggplot(forest_birds, aes(x = abundance)) +
   geom_density(adjust = 1) # default bandwidth
 ```
 ]
@@ -293,12 +281,12 @@ ggplot(loans, aes(x = loan_amount)) +
 ]
 .panel[.panel-name[Code]
 ```{r density-custom, fig.show = "hide", warning = FALSE}
-ggplot(loans, aes(x = loan_amount)) +
-  geom_density(adjust = 2) +
+ggplot(forest_birds, aes(x = abundance)) +
+  geom_density(adjust = 0.5) +
   labs( #<<
-    x = "Loan amount ($)", #<<
+    x = "Abundance", #<<
     y = "Density", #<<
-    title = "Amounts of Lending Club loans" #<<
+    title = "Abundance of Forest Birds in 56 Forest Patches" #<<
   ) #<<
 ```
 ]
@@ -316,15 +304,15 @@ ggplot(loans, aes(x = loan_amount)) +
 ]
 .panel[.panel-name[Code]
 ```{r density-cat, fig.show = "hide", warning = FALSE}
-ggplot(loans, aes(x = loan_amount, 
-                  fill = homeownership)) + #<<
-  geom_density(adjust = 2, 
-               alpha = 0.5) + #<<
+ggplot(forest_birds, aes(x = abundance, 
+                  fill = grazing.intensity)) + #<<
+  geom_density(adjust = 0.5, 
+               alpha = 0.3) + #<<
   labs(
-    x = "Loan amount ($)",
+    x = "Abundance",
     y = "Density",
-    title = "Amounts of Lending Club loans", 
-    fill = "Homeownership" #<<
+    title = "Abundance of Forest Birds in 56 Forest Patches", 
+    fill = "Grazing Intensity" #<<
   )
 ```
 ]
@@ -334,14 +322,14 @@ ggplot(loans, aes(x = loan_amount,
 
 class: middle
 
-# Box plot
+# Box plots
 
 ---
 
 ## Box plot
 
 ```{r out.width = "30%"}
-ggplot(loans, aes(x = interest_rate)) +
+ggplot(forest_birds, aes(x = abundance)) +
   geom_boxplot()
 ```
 
@@ -350,7 +338,7 @@ ggplot(loans, aes(x = interest_rate)) +
 ## Box plot and outliers
 
 ```{r out.width = "30%"}
-ggplot(loans, aes(x = annual_income)) +
+ggplot(forest_birds, aes(x = dist.nearest)) +
   geom_boxplot()
 ```
 
@@ -366,12 +354,12 @@ ggplot(loans, aes(x = annual_income)) +
 ]
 .panel[.panel-name[Code]
 ```{r box-custom, fig.show = "hide", warning = FALSE}
-ggplot(loans, aes(x = interest_rate)) +
+ggplot(forest_birds, aes(x = abundance)) +
   geom_boxplot() +
   labs(
-    x = "Interest rate (%)",
+    x = "Abundance",
     y = NULL,
-    title = "Interest rates of Lending Club loans"
+    title = "Abundance of Forest Birds in 56 Forest Patches"
   ) +
   theme( #<<
     axis.ticks.y = element_blank(), #<<
@@ -393,14 +381,14 @@ ggplot(loans, aes(x = interest_rate)) +
 ]
 .panel[.panel-name[Code]
 ```{r box-cat, fig.show = "hide", warning = FALSE}
-ggplot(loans, aes(x = interest_rate,
-                  y = grade)) + #<<
+ggplot(forest_birds, aes(x = abundance,
+                  y = grazing.intensity)) + #<<
   geom_boxplot() +
   labs(
-    x = "Interest rate (%)",
-    y = "Grade",
-    title = "Interest rates of Lending Club loans",
-    subtitle = "by grade of loan" #<<
+    x = "Abundance",
+    y = "Grazing Intensity",
+    title = "Abundance of Forest Birds in 56 Forest Patches",
+    subtitle = "by grazing intensity" #<<
   )
 ```
 ]
@@ -417,7 +405,7 @@ class: middle
 ## Scatterplot
 
 ```{r warning = FALSE, fig.width = 8, fig.height= 6}
-ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
+ggplot(forest_birds, aes(x = patch.area, y = altitude)) +
   geom_point()
 ```
 
@@ -426,7 +414,7 @@ ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
 ## Hex plot
 
 ```{r warning = FALSE, fig.width = 8, fig.height= 6}
-ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
+ggplot(forest_birds, aes(x = patch.area, y = altitude)) +
   geom_hex()
 ```
 
@@ -435,8 +423,8 @@ ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
 ## Hex plot
 
 ```{r warning = FALSE, fig.width = 8, fig.height= 6}
-ggplot(loans %>% filter(debt_to_income < 100), 
-       aes(x = debt_to_income, y = interest_rate)) +
+ggplot(forest_birds %>% filter(patch.area < 100), 
+       aes(x = patch.area, y = altitude)) +
   geom_hex()
 ```
 
