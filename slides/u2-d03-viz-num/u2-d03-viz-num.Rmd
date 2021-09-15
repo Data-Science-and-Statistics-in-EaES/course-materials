@@ -430,6 +430,22 @@ ggplot(forest_birds %>% filter(patch.area < 100),
 
 ---
 
+## Summary
+
+**ggplot2 geoms for numerical data**
+
+  - **histograms** (frequency plots) - good for an overview: `geom_histogram()`
+  
+  - **density plots** - a smooth overview: `geom_density()`
+  
+  - **box plots** - incorporates summary stats (e.g., median): `geom_boxplot()`
+  
+  - **scatter plots** - good for exploring associations: `geom_point()`
+  
+  - **hex plots** - explore associations in dense scatter plot: `geom_hex()`
+
+---
+
 .center[
 .large[
 This class content was built from the Data Science in a Box source materials.

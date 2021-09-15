@@ -17,8 +17,7 @@ output:
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(openintro)
-loans_full_schema <- loans_full_schema %>%
-  mutate(grade = factor(grade, ordered = TRUE))
+forest_birds <- read.csv("data/forest.birds.csv")
 ```
 
 class: middle
@@ -27,10 +26,37 @@ class: middle
 
 ---
 
-## Variables
+## Numerical Geoms Summary
 
-- **Numerical** variables can be classified as **continuous** or **discrete** based on whether or not the variable can take on an infinite number of values or only non-negative whole numbers, respectively.
-- If the variable is **categorical**, we can determine if it is **ordinal** based on whether or not the levels have a natural ordering.
+**ggplot2 geoms for numerical data**
+
+  - **histograms** (frequency plots) - good for an overview: `geom_histogram()`
+  
+  - **density plots** - a smooth overview: `geom_density()`
+  
+  - **box plots** - incorporates summary stats (e.g., median): `geom_boxplot()`
+  
+  - **scatter plots** - good for exploring associations: `geom_point()`
+  
+  - **hex plots** - explore associations in dense scatter plot: `geom_hex()`
+
+---
+
+## Data: Forest Birds 
+
+.pull-left-wide[
+
+- Abundance of forest birds in 56 forest patches in Australia.
+
+- Part of a study on the effects of **habitat fragmentation**, the process in which land development disrupts the native habitat of certain species. 
+
+- The dataset has variables on forest bird abundance in a forest patch (typically the response of interest) and features of patch.
+]
+.pull-right-narrow[
+```{r echo=FALSE, out.width = "80%"}
+knitr::include_graphics("img/habitat-fragmentation.jpeg")
+```
+]
 
 ---
 
@@ -38,10 +64,27 @@ class: middle
 
 ```{r}
 library(openintro)
-loans <- loans_full_schema %>%
-  select(loan_amount, interest_rate, term, grade, 
-         state, annual_income, homeownership, debt_to_income)
-glimpse(loans)
+forest_birds <- read.csv("data/forest.birds.csv")
+glimpse(forest_birds)
+```
+
+---
+
+### Create a new variable: `abundance_rating`
+
+```{r}
+forest_birds <- forest_birds %>% 
+  mutate(abundance_rating = ifelse(abundance > 30, "3 high", NA),
+         abundance_rating = ifelse(abundance <= 30 & abundance >= 10, "2 medium", abundance_rating),
+         abundance_rating = ifelse(abundance < 10, "1 low", abundance_rating)) 
+```
+
+---
+
+### Data 
+
+```{r}
+glimpse(forest_birds)
 ```
 
 ---
@@ -55,7 +98,7 @@ class: middle
 ## Bar plot
 
 ```{r out.width="40%"}
-ggplot(loans, aes(x = homeownership)) +
+ggplot(forest_birds, aes(x = abundance_rating)) +
   geom_bar()
 ```
 
@@ -64,8 +107,8 @@ ggplot(loans, aes(x = homeownership)) +
 ## Segmented bar plot
 
 ```{r out.width="40%"}
-ggplot(loans, aes(x = homeownership, 
-                  fill = grade)) + #<<
+ggplot(forest_birds, aes(x = abundance_rating, 
+                  fill = grazing.intensity)) + #<<
   geom_bar()
 ```
 
@@ -74,25 +117,25 @@ ggplot(loans, aes(x = homeownership,
 ## Segmented bar plot
 
 ```{r out.width="40%"}
-ggplot(loans, aes(x = homeownership, fill = grade)) +
+ggplot(forest_birds, aes(x = abundance_rating, fill = grazing.intensity)) +
   geom_bar(position = "fill") #<<
 ```
 
 ---
 
 .question[
-Which bar plot is a more useful representation for visualizing the relationship between homeownership and grade?
+Which bar plot is a more useful representation for visualizing the relationship between abundance and grazing intensity?
 ]
 
-.pull-left[
+  .pull-left[
 ```{r echo=FALSE, out.width = "100%"}
-ggplot(loans, aes(x = homeownership, fill = grade)) +
+ggplot(forest_birds, aes(x = abundance_rating, fill = grazing.intensity)) +
   geom_bar()
 ```
 ]
 .pull-right[
 ```{r echo=FALSE, out.width = "100%"}
-ggplot(loans, aes(x = homeownership, fill = grade)) +
+ggplot(forest_birds, aes(x = abundance_rating, fill = grazing.intensity)) +
   geom_bar(position = "fill")
 ```
 ]
@@ -109,15 +152,15 @@ ggplot(loans, aes(x = homeownership, fill = grade)) +
 ]
 .panel[.panel-name[Code].pull-right[
 ```{r bar-custom, fig.show = "hide", warning = FALSE, out.width="90%"}
-ggplot(loans, aes(y = homeownership, #<<
-                  fill = grade)) +
+ggplot(forest_birds, aes(y = abundance_rating, #<<
+                  fill = grazing.intensity)) +
   geom_bar(position = "fill") +
   labs( x = "Proportion", #<<
-    y = "Homeownership", #<<
-    fill = "Grade", #<<
-    title = "Grades of Lending Club loans", #<<
-    subtitle = "and homeownership of lendee" #<<
-  ) #<<
+    y = "Abundance Rating", #<<
+    fill = "Grazing Intensity", #<<
+    title = "Grazing intensity near forest patches", #<<
+    subtitle = "and bird abundance rating of patch" #<<
+  ) 
 ```
 ]
 ]
@@ -141,7 +184,7 @@ class: middle
 ## Violin plots
 
 ```{r warning = FALSE, out.width="40%"}
-ggplot(loans, aes(x = homeownership, y = loan_amount)) +
+ggplot(forest_birds, aes(x = grazing.intensity, y = abundance)) +
   geom_violin()
 ```
 
@@ -149,11 +192,36 @@ ggplot(loans, aes(x = homeownership, y = loan_amount)) +
 
 ## Ridge plots
 
-```{r warning = FALSE, out.width="30%"}
+.panelset[
+.panel[.panel-name[Plot].pull-left[
+```{r ref.label = "ridge-plot", echo = FALSE, warning = FALSE, message = F, out.width="90%"}
+```
+]
+]
+.panel[.panel-name[Code].pull-right[
+```{r ridge-plot, fig.show = "hide", warning = FALSE, message = F, out.width="90%"}
 library(ggridges)
-ggplot(loans, aes(x = loan_amount, y = grade, fill = grade, color = grade)) + 
+ggplot(forest_birds, aes(x = abundance, y = grazing.intensity, fill = grazing.intensity, color = grazing.intensity)) + 
   geom_density_ridges(alpha = 0.5)
 ```
+]
+]
+]
+
+
+---
+
+## Categorical (or Mixed) Geoms Summary
+
+
+  **ggplot2 geoms for categorical or mixed data**
+  
+  - **bar plots** - frequency plots by category: `geom_bar()` (segmented, axis flip)
+  
+  - **violin plots** - distribution by category (similar to box plots): `geom_violin()` 
+   
+  - **ridge plots** - distribution by category (similar to box plots): `geom_density_ridges()` `{ggridges}`
+
 
 ---
 
