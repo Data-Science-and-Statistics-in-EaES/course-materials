@@ -11,13 +11,23 @@ Young fish being discharged from pipe
 
 </div>
 
-Source: [Great Lakes
-Databse](http://www.glfc.org/great-lakes-databases.php)
-
 ``` r
 library(tidyverse)
 library(skimr)
 ```
+
+## Data
+
+The data for this exercise come from the [Great Lakes
+Database](http://www.glfc.org/great-lakes-databases.php) which provides
+information about fish caught annually (annual fish catches) in the
+Great Lakes (Michigan, Huron, Superior, Erie, Ontario) for the last
+\~150 years. The Great Lakes have been hit by numerous major ecological
+changes during this period, including invasion by alewife herring
+(1950s), introduction of pacific salmon (e.g., chinook; 1970s), and
+later invasion by quagga and zebra mussels (1990s). If you’re interested
+in this topic I would recommend the book *The Death and Life of the
+Great Lakes* by Dan Egan.
 
 ``` r
 # From TidyTuesday: https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-08/readme.md
@@ -25,6 +35,10 @@ fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 ```
 
 ## Exercises
+
+**Remember, for ungraded class exercises such as these, just complete
+the code chunks in this document and knit. Don’t commit or push your
+changes. You’re all working from the same repo.**
 
 ### Exercise 1.
 
@@ -268,7 +282,7 @@ fishing_us %>%
 
     ## `summarise()` has grouped output by 'lake'. You can override using the `.groups` argument.
 
-    ## # A tibble: 5 x 4
+    ## # A tibble: 5 × 4
     ##    year  Erie Michigan Superior
     ##   <dbl> <dbl>    <dbl>    <dbl>
     ## 1  1975  8215    45338    4710 
