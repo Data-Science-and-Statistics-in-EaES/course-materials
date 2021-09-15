@@ -26,6 +26,12 @@ class: middle
 
 ---
 
+```{r echo=FALSE, out.width="90%", fig.align="left"}
+knitr::include_graphics("img/data-science-cycle/data-science-cycle.004.png")
+```
+
+---
+
 ## Numerical Geoms Summary
 
 **ggplot2 geoms for numerical data**
