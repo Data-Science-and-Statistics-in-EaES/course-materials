@@ -58,26 +58,33 @@ knitr::include_graphics("img/dplyr-part-of-tidyverse.png")
 
 ---
 
-## Data: Hotel bookings
+## Data: Commercial Fish Production In The Great Lakes 1867-2015
 
-- Data from two hotels: one resort and one city hotel
-- Observations: Each row represents a hotel booking
-- Goal for original data collection: Development of prediction models to classify a hotel booking's likelihood to be cancelled ([Antonia et al., 2019](https://www.sciencedirect.com/science/article/pii/S2352340918315191#bib5))
+- Data on annual fish catch (weight in lbs) from the Great Lakes (Superior, Michigan, Huron, Erie, and Ontario)
+- Observations: Each row represents the annual catch for a particular species
 
-```{r message=FALSE}
-hotels <- read_csv("data/hotels.csv")
+```{r load-data, message = FALSE, warning = FALSE}
+catch_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
 ```
 
+.pull-right[
+```{r fishing, echo=FALSE, out.width="100%", caption = "Fish catch"}
+knitr::include_graphics("img/fishing.jpeg")
+```
+]
 .footnote[
-Source: [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-11/readme.md)
+Source: [Great Lakes Database](http://www.glfc.org/great-lakes-databases.php)
 ]
 
 ---
 
 ## First look: Variables
+```{r output.lines=9}
+names(catch_data)
+```
 
-```{r output.lines=18}
-names(hotels)
+```{r lakes, echo=FALSE, out.width="30%", caption = "Lake Michgan regions"}
+knitr::include_graphics("img/lake-michigan.png")
 ```
 
 ---
@@ -85,7 +92,7 @@ names(hotels)
 ## Second look: Overview
 
 ```{r output.lines=18}
-glimpse(hotels)
+glimpse(catch_data)
 ```
 
 ---
@@ -95,7 +102,7 @@ glimpse(hotels)
 View only `lead_time` (number of days between booking and arrival date):
 
 ```{r}
-select(hotels, lead_time)
+select(catch_data, values)
 ```
 
 ---
@@ -105,8 +112,8 @@ select(hotels, lead_time)
 .pull-left[
 ```{r eval=FALSE}
 select( #<<
-  hotels, 
-  lead_time
+  catch_data, 
+  values
   )
 ```
 ]
@@ -121,14 +128,14 @@ select( #<<
 .pull-left[
 ```{r eval=FALSE}
 select( 
-  hotels, #<<
-  lead_time
+  catch_data, #<<
+  values
   )
 ```
 ]
 .pull-right[
 - Start with the function (a verb): `select()`
-- First argument: data frame we're working with , `hotels`
+- First argument: data frame we're working with , `catch_data`
 ]
 
 ---
@@ -138,15 +145,15 @@ select(
 .pull-left[
 ```{r eval=FALSE}
 select( 
-  hotels, 
-  lead_time #<<
+  catch_data, 
+  values #<<
   )
 ```
 ]
 .pull-right[
 - Start with the function (a verb): `select()`
-- First argument: data frame we're working with , `hotels`
-- Second argument: variable we want to select, `lead_time`
+- First argument: data frame we're working with , `catch_data`
+- Second argument: variable we want to select, `values`
 ]
 
 ---
@@ -156,16 +163,16 @@ select(
 .pull-left[
 ```{r}
 select( 
-  hotels, 
-  lead_time
+  catch_data, 
+  values
   )
 ```
 ]
 .pull-right[
 - Start with the function (a verb): `select()`
-- First argument: data frame we're working with , `hotels`
-- Second argument: variable we want to select, `lead_time`
-- Result: data frame with `r nrow(hotels)` rows and 1 column
+- First argument: data frame we're working with , `catch_data`
+- Second argument: variable we want to select, `values`
+- Result: data frame with `r nrow(catch_data)` rows and 1 column
 ]
 
 ---
@@ -175,7 +182,7 @@ dplyr functions always expect a data frame and always yield a data frame.
 ]
 
 ```{r}
-select(hotels, lead_time)
+select(catch_data, values)
 ```
 
 ---
@@ -183,13 +190,13 @@ select(hotels, lead_time)
 ## Select multiple columns
 
 
-View only the `hotel` type and `lead_time`:
+View only the `year` type and `values`:
 
 --
 
 .pull-left[
 ```{r}
-select(hotels, hotel, lead_time)
+select(catch_data, year, values)
 ```
 ]
 --
@@ -206,8 +213,8 @@ What if we wanted to select these columns, and then arrange the data in descendi
 .pull-left[
 Select:
 ```{r}
-hotels %>%
-  select(hotel, lead_time)
+catch_data %>%
+  select(year, values)
 ```
 ]
 
@@ -215,9 +222,9 @@ hotels %>%
 .pull-right[
 Select, then arrange:
 ```{r}
-hotels %>%
-  select(hotel, lead_time) %>%
-  arrange(desc(lead_time))
+catch_data %>%
+  select(year, values) %>%
+  arrange(desc(values))
 ```
 ]
 
@@ -236,14 +243,14 @@ In programming, a pipe is a technique for passing information from one process t
 --
 
 .pull-left[
-- Start with the data frame `hotels`, and pass it to the `select()` function,
+- Start with the data frame `catch_data`, and pass it to the `select()` function,
 ]
 .pull-right[
 .small[
 ```{r}
-hotels %>% #<<
-  select(hotel, lead_time) %>%
-  arrange(desc(lead_time))
+catch_data %>% #<<
+  select(year, values) %>%
+  arrange(desc(values))
 ```
 ]
 ]
@@ -255,15 +262,15 @@ hotels %>% #<<
 In programming, a pipe is a technique for passing information from one process to another.
 
 .pull-left[
-- Start with the data frame `hotels`, and pass it to the `select()` function,
-- then we select the variables `hotel` and `lead_time`,
+- Start with the data frame `catch_data`, and pass it to the `select()` function,
+- then we select the variables `year` and `values`,
 ]
 .pull-right[
 .small[
 ```{r}
-hotels %>%
-  select(hotel, lead_time) %>% #<<
-  arrange(desc(lead_time))
+catch_data %>%
+  select(year, values) %>% #<<
+  arrange(desc(values))
 ```
 ]
 ]
@@ -275,16 +282,16 @@ hotels %>%
 In programming, a pipe is a technique for passing information from one process to another.
 
 .pull-left[
-- Start with the data frame `hotels`, and pass it to the `select()` function,
-- then we select the variables `hotel` and `lead_time`,
-- and then we arrange the data frame by `lead_time` in descending order.
+- Start with the data frame `catch_data`, and pass it to the `select()` function,
+- then we select the variables `year` and `values`,
+- and then we arrange the data frame by `values` in descending order.
 ]
 .pull-right[
 .small[
 ```{r}
-hotels %>%
-  select(hotel, lead_time) %>% 
-  arrange(desc(lead_time)) #<<
+catch_data %>%
+  select(year, values) %>% 
+  arrange(desc(values)) #<<
 ```
 ]
 ]
@@ -354,20 +361,20 @@ find("keys") %>%
 `r emo::ji("x")`
 
 ```{r error=TRUE}
-hotels +
-  select(hotel, lead_time)
+catch_data +
+  select(year, values)
 ```
 
 `r emo::ji("white_check_mark")`
 
 ```{r eval=FALSE}
-hotels %>%
-  select(hotel, lead_time)
+catch_data %>%
+  select(year, values)
 ```
 
 ```{r echo=FALSE, output.lines=6}
-hotels %>%
-  select(hotel, lead_time)
+catch_data %>%
+  select(year, values)
 ```
 ]
 
@@ -379,14 +386,14 @@ hotels %>%
 `r emo::ji("x")`
 
 ```{r error=TRUE}
-ggplot(hotels, aes(x = hotel, fill = deposit_type)) %>%
+ggplot(catch_data, aes(x = values, fill = region)) %>%
   geom_bar()
 ```
 
 `r emo::ji("white_check_mark")`
 
 ```{r out.width="25%"}
-ggplot(hotels, aes(x = hotel, fill = deposit_type)) +
+ggplot(catch_data, aes(x = values, fill = region)) +
   geom_bar()
 ```
 ]
@@ -403,13 +410,13 @@ Many of the styling principles are consistent across `%>%` and `+`:
 `r emo::ji("x")`
 
 ```{r eval=FALSE}
-ggplot(hotels,aes(x=hotel,y=deposit_type))+geom_bar()
+ggplot(catch_data,aes(x=region,y=values))+geom_bar()
 ```
 
 `r emo::ji("white_check_mark")`
 
 ```{r eval=FALSE}
-ggplot(hotels, aes(x = hotel, y = deposit_type)) + 
+ggplot(catch_data, aes(x = region, y = values)) + 
   geom_bar()
 ```
 
