@@ -48,7 +48,7 @@ library(tidyverse)
 What makes this data not tidy?
 ]
 
-```{r hyperwar-airplanes-on-hand, echo=FALSE, out.width="90%", fig.align = "center", caption = "WW2 Army Air Force combat aircraft", out.width = "70%"}
+```{r hyperwar-airplanes-on-hand, echo=FALSE, out.width="90%", fig.align = "center", caption = "WW2 Army Air Force combat aircraft", out.width = "90%"}
 knitr::include_graphics("img/hyperwar-airplanes-on-hand.png")
 ```
 
@@ -64,7 +64,7 @@ What makes this data not tidy?
 
 <br>
 
-```{r hiv-est-prevalence-15-49, echo=FALSE, out.width="95%", fig.align = "center", caption = "Estimated HIV prevalence among 15-49 year olds", out.width = "70%"}
+```{r hiv-est-prevalence-15-49, echo=FALSE, out.width="95%", fig.align = "center", caption = "Estimated HIV prevalence among 15-49 year olds", out.width = "100%"}
 knitr::include_graphics("img/hiv-est-prevalence-15-49.png")
 ```
 
@@ -80,7 +80,7 @@ What makes this data not tidy?
 
 <br>
 
-```{r us-general-economic-characteristic-acs-2017, echo=FALSE, out.width="95%", fig.align = "center", caption = "US General Economic Characteristics, ACS 2017", out.width = "85%"}
+```{r us-general-economic-characteristic-acs-2017, echo=FALSE, out.width="95%", fig.align = "center", caption = "US General Economic Characteristics, ACS 2017", out.width = "100%"}
 knitr::include_graphics("img/us-general-economic-characteristic-acs-2017.png")
 ```
 
