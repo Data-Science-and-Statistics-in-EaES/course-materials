@@ -2,7 +2,7 @@
 
 ### Exercise 2.
 
-fishing %>%
+catch_data %>%
   filter(
     lake == "Michigan",
     region == "U.S. Total"
@@ -14,15 +14,27 @@ fishing %>%
 
 ### Exercise 3.
 
-fishing %>%
+catch_data %>%
   filter(
     region == "U.S. Total",
-    year < 1950 & values >= 30000
-  )
+    year >= 1950
+  ) %>% 
+  arrange(desc(values)) %>% 
+  slice(1:5) %>% 
+  select(year, species, values)
 
 ### Exercise 4.
 
-fishing_us %>% 
+catch_data_us %>% 
+  filter(
+    lake == "Michigan",
+    year == 2015 | year == 1975
+  ) %>% 
+  arrange(desc(values)) %>% 
+  select(year, species, values) 
+
+
+catch_data_us %>% 
   filter(
     lake == "Michigan",
     year == 2015 | year == 1975
@@ -32,9 +44,9 @@ fishing_us %>%
   pivot_wider(names_from = "year",
               values_from = "values")
 
-### Exercise 5.
+### Exercise 7.
 
-fishing_us %>% 
+catch_data_us %>% 
   filter(
     species == "Chinook Salmon",
     lake == "Michigan"
@@ -46,18 +58,18 @@ fishing_us %>%
     maximum = max(values, na.rm = TRUE)
   )
 
-### Exercise 6.
+### Exercise 8.
 
-fishing_us %>% 
+catch_data_us %>% 
   filter(
     lake == "Michigan",
     species == "Chinook Salmon",
     values == 57
   ) 
 
-### Exercise 7.
+### Exercise 9.
 
-fishing_us %>% 
+catch_data_us %>% 
   filter(
     lake == "Michigan",
     year %in% c(1975, 1985, 1995, 2005, 2015)
@@ -65,31 +77,14 @@ fishing_us %>%
   group_by(year) %>% 
   summarize(total_catch = sum(values, na.rm = TRUE))
 
-### Exercise 8.
+### Exercise 10.
 
-fishing_us %>% 
+catch_data_us %>% 
   filter(
+    lake == "Michigan",
     year %in% c(1975, 1985, 1995, 2005, 2015)
   ) %>% 
-  group_by(lake, year) %>% 
-  summarize(total_catch = sum(values, na.rm = TRUE)) %>% 
-  pivot_wider(
-    names_from = "lake",
-    values_from = "total_catch"
-  )
-
-### Exercise 9.
-
-fishing %>% 
-  filter(
-    region %in% c("U.S. Total", "Total Canada (ONT)"),
-    year %in% c(1975, 1985, 1995, 2005, 2015)
-  ) %>% 
-  group_by(lake, year) %>% 
-  summarize(total_catch = sum(values, na.rm = TRUE)) %>% 
-  pivot_wider(
-    names_from = "lake",
-    values_from = "total_catch"
-  )
+  group_by(year) %>% 
+  summarize(total_catch = sum(values, na.rm = TRUE))
 
 

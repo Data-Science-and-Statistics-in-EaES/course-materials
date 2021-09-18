@@ -4,9 +4,9 @@ Gavin McNicol
 
 <div class="figure">
 
-<img src="img/stocking.jpeg" alt="Young fish being discharged from pipe" width="50%" />
+<img src="img/fishing.jpeg" alt="Fish catches in the Great Lakes" width="50%" />
 <p class="caption">
-Young fish being discharged from pipe
+Fish catches in the Great Lakes
 </p>
 
 </div>
@@ -21,8 +21,8 @@ library(skimr)
 The data for this exercise come from the [Great Lakes
 Database](http://www.glfc.org/great-lakes-databases.php) which provides
 information about fish caught annually (annual fish catches) in the
-Great Lakes (Michigan, Huron, Superior, Erie, Ontario) for the last
-\~150 years. The Great Lakes have been hit by numerous major ecological
+Great Lakes (Michigan, Huron, Superior, Erie, Ontario) for the last 150
+years. The Great Lakes have been hit by numerous major ecological
 changes during this period, including invasion by alewife herring
 (1950s), introduction of pacific salmon (e.g., chinook; 1970s), and
 later invasion by quagga and zebra mussels (1990s). If you’re interested
@@ -31,7 +31,7 @@ Great Lakes* by Dan Egan.
 
 ``` r
 # From TidyTuesday: https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-08/readme.md
-fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
+catch_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
 ```
 
 ## Exercises
@@ -42,8 +42,10 @@ changes. You’re all working from the same repo.**
 
 ### Exercise 1.
 
-Warm up! Take a look at an overview of the first dataset `fishing` with
-the `skim()` function.
+Warm up! Take a look at an overview of the first dataset `catch_data`
+with the `skim()` function. The `skim()` function provides even more
+information than the `glimpse()` function. Look at the output tables and
+think about what each column may be referring to.
 
 **Note:** I already gave you the answers to this exercise. You just need
 to knit the document and view the output. A definition of all variables
@@ -52,20 +54,20 @@ though you don’t need to familiarize yourself with all variables in
 order to work through these exercises.
 
 ``` r
-skim(fishing)
+skim(catch_data)
 ```
 
-|                                                  |         |
-|:-------------------------------------------------|:--------|
-| Name                                             | fishing |
-| Number of rows                                   | 65706   |
-| Number of columns                                | 7       |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |         |
-| Column type frequency:                           |         |
-| character                                        | 4       |
-| numeric                                          | 3       |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |         |
-| Group variables                                  | None    |
+|                                                  |             |
+|:-------------------------------------------------|:------------|
+| Name                                             | catch\_data |
+| Number of rows                                   | 65706       |
+| Number of columns                                | 7           |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |             |
+| Column type frequency:                           |             |
+| character                                        | 4           |
+| numeric                                          | 3           |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |             |
+| Group variables                                  | None        |
 
 Data summary
 
@@ -103,11 +105,13 @@ Lake Michigan (`lake` code `Michigan`). Then pipe the results into the
 with the largest catch (coded as production `values`). Note: production
 `values` are rounded to the nearest thousand pounds.
 
-**Note:** You will need to set `eval=TRUE` in the r code chunk header
-when you have an answer you want to try out.
+**Note:** You will need to change `eval=FALSE` to `eval=TRUE` in the top
+line of the chunk for any code chunks you want to run (evaluate).
+
+Hint: The boolean (logical) operator for “equals to” is `==`.
 
 ``` r
-fishing %>%
+catch_data %>%
   filter(
     lake ___ "___",
     region ___ "U.S. Total"
@@ -125,7 +129,8 @@ dataset by converting the characters to factors (i.e. categorical data),
 then looking at the levels. Here’s some code to try:
 
 ``` r
-levels( factor( fishing$region ) )
+factor(catch_data$region) %>%  # first converts the region variable from character to factor class
+  levels() # then looks at what levels the factor variable takes (i.e. the different categories)
 ```
 
     ##  [1] "Canada (ONT)"           "Georgian Bay (GB)"      "Green Bay (MI)"        
@@ -139,29 +144,27 @@ levels( factor( fishing$region ) )
 
 ### Exercise 3.
 
-How many very large (at least 10,000,000 lbs) fish catches were there
-before 1950, and which species were they catching in such large
-quantities?
+What were the largest fish catches before 1950?
+
+1.  Arrange the answer in descending order.
+2.  Slice out only the top 5 largest catches.
+3.  Select only the year, species, and values columns.
 
 **Note:** The `values` data are reported to the nearest whole 1,000 lbs,
 so add 3 zeros to any number in the `values` column.
-
-In the following chunk, replace
-
--   `[AT LEAST]` with the logical operator for “at least”
--   `[LESS THAN]` with the logical operator for “less than”
--   `[AND]` with the logical operator for “and”
 
 **Note:** You will need to set `eval=TRUE` when you have an answer you
 want to try out.
 
 ``` r
-fishing %>%
+catch_data %>%
   filter(
     region ___ "U.S. Total",
-    year [LESS THAN] 1950 [AND] values [AT LEAST] 30000
-    )
-levels(factor(fishing$species))
+    year ___ 1950
+    ) %>% 
+  arrange(___) %>% 
+  slice(___) %>% 
+  select(___)
 ```
 
 From here on, we’ll continue only using catch data from the “U.S. Total”
@@ -170,7 +173,7 @@ dataframe `fishing_us` from `fishing` that only includes the data we
 want:
 
 ``` r
-fishing_us <- fishing %>% 
+catch_data_us <- catch_data %>% 
   filter(
     region == "U.S. Total"
   )
@@ -183,12 +186,10 @@ compared to 1975?
 
 Test your intuition with data…
 
-Using `filter()` determine the largest total U.S. catches from Lake
-Michigan in the years 2015 and 1975. Simplify your output by using
-`select()` to select only `year`, `species`, and `values`. Although we
-normally tidy up data by pivoting longer, as a final step, use
-`pivot_wider()` to allow you to compare the catch in 1975 with that in
-2015 in a single row.
+Use `filter()` to get data on *total U.S. catches* from *Lake Michigan*
+in the years *2015* and *1975*. Use `arrange()` to identify the largest
+fish catches for those years. Simplify your output by using `select()`
+to select only `year`, `species`, and `values`.
 
 ``` r
 # add code here
@@ -197,7 +198,55 @@ normally tidy up data by pivoting longer, as a final step, use
 
 Was your intuition correct?
 
+Although we normally tidy up data by pivoting longer, as a final step,
+use `pivot_wider()` to allow you to compare the catch in 1975 with that
+in 2015 in a single row. You will need to specify the “names\_from” and
+“values\_from” arguments.
+
+``` r
+# add code here
+```
+
 ### Exercise 5.
+
+Use the `distinct()` function to find out how many years there are in
+the dataset:
+
+``` r
+# add your code here
+```
+
+Now pipe the output to `arrange()` to arrange by descending order (from
+most recent to most distant year):
+
+``` r
+# copy and add your code here
+```
+
+### Exercise 6.
+
+Use the `count()` function to confirm how many observations (rows) there
+are *per lake*:
+
+``` r
+# add your code here
+```
+
+Now generate the same table, but this time use the `sort` argument in
+`count()` to sort in descending order:
+
+``` r
+# add your code here
+```
+
+Generate the same output, but this time using the `arrange()` function,
+rather than `sort` argument in `count()`:
+
+``` r
+# add your code here
+```
+
+### Exercise 7.
 
 Pacific Salmon species started being stocked in the Great lakes during
 the 1970s, for commercial fishing and to reduce the large `Alewife`
@@ -205,8 +254,10 @@ populations. Calculate summary statistics (minimum, mean, median,
 maximum) for the size of the `Chinook Salmon` catch in Lake Michigan
 over all available years of data.
 
-**Hint:** In addition to the functions you’ve used up til now, you’ll
-need to use the `summarize()` function.
+-   Use `filter()` to get data on the Lake Michigan and the Chinook
+    Salmon species
+-   Use `summarize()` to calculate the summary stats across all
+    available years
 
 **Note:** Don’t forget to label your R chunk as well (where it says
 `label-me-1`). Your label should be short, informative, and shouldn’t
@@ -218,14 +269,13 @@ Markdown will give you an error about repeated R chunk labels.
 # pay attention to correctness and code style
 ```
 
-Look at the median value. Why could we have predicted the median value
-without doing the median calculation? Think about the number of years in
-the dataset…
+### Exercise 8.
 
-### Exercise 6.
-
-Use the maximum catch result you got in the last exercise to identify
+Use the maximum catch result you got in the last exercise to filter for
 the `year` the largest `Chinook Salmon` catch was made in Lake Michigan.
+
+-   Use the `filter()` part of the code from Exercise 5, but add one
+    more filtering argument to select the year of the maximum catch.
 
 Remember to label the chunk again.
 
@@ -234,88 +284,49 @@ Remember to label the chunk again.
 # pay attention to correctness and code style
 ```
 
-### Exercise 7.
+### Exercise 9.
 
 In the 1980s, invasive mussel species were introduced to the Great
 Lakes, likely via ballast water discharges into the Lakes from large
 vessels. The mussels went on to radically change the ecology of the
-Lakes, including causing a collapse in the Great Lakes fisheries. Sum
-the total Lake Michigan catch (including all species) in the years 1975,
-1985, 1995, 2005, and 2015.
+Lakes, including causing a collapse in the Great Lakes fisheries.
 
-**Hint:** You can filter using a vector of numbers (e.g., c(1, 2, 3,
-4)), rather than a single number using `%in%` where you would normally
-put the logical operator (e.g., `==`).
+Sum the total Lake Michigan catch (including all species) in the years
+1975, 1985, 1995, 2005, and 2015.
 
-What does the trend show? During which 10 year period was the largest
-change in fish catch?
-
-``` r
-# add code here
-# pay attention to correctness and code style
-```
-
-### Exercise 8.
-
-Repeat the same exercise, but do not filter the data for Lake Michigan.
-Instead, calculate the total catch for each of the Great Lakes in the
-dataset. To make the trend more readable in table format, use
-`pivot_wider()` in the last step of your code.
-
-Are the trends the same for all the Great Lakes?
-
-``` r
-# add code here
-# pay attention to correctness and code style
-
-fishing_us %>% 
-  filter(
-    year %in% c(1975, 1985, 1995, 2005, 2015)
-  ) %>% 
-  group_by(lake, year) %>% 
-  summarize(total_catch = sum(values, na.rm = TRUE)) %>% 
-  pivot_wider(
-    names_from = "lake",
-    values_from = "total_catch"
-  )
-```
-
-    ## `summarise()` has grouped output by 'lake'. You can override using the `.groups` argument.
-
-    ## # A tibble: 5 × 4
-    ##    year  Erie Michigan Superior
-    ##   <dbl> <dbl>    <dbl>    <dbl>
-    ## 1  1975  8215    45338    4710 
-    ## 2  1985  7361    35415    3739.
-    ## 3  1995  5093    14595    2791.
-    ## 4  2005  4823     7360    3324.
-    ## 5  2015  5731     3736    4657.
-
-### Exercise 9.
-
-We are currently only looking at total U.S. catch, however, a large part
-of Lake Superior and Lake Erie are in Canada. Repeat the calculation
-from the previous exercise, but this time, use the original dataset
-`fishing` and filter for both the `U.S. Total` and `Total Canada (ONT)`.
-What changes appear in the results, now that data from Ontario, Canada,
-are included?
+-   You can filter using a vector of numbers rather than a single number
+    by using `%in%` where you would normally put the logical operator
+    `==` . For instance, for the three years 1999, 2000, and 2001 you
+    would use: `filter(year %in% c(1999, 2000, 2001))`.
+-   After filtering, you’ll need to use `group_by()` to compute the sums
+    by year.
 
 ``` r
 # add code here
 # pay attention to correctness and code style
 ```
+
+What does the trend in the values show? During which 10 year period was
+there the largest **change** in fish catch?
 
 ### Exercise 10.
 
-**Wrap up** Look closely at the different character strings used in the
-`species` data column by running the code chunk below. Do you think this
-dataset could be cleaned up more?
-
-**Note:** You will need to set `eval=TRUE` when you have an answer you
-want to try out.
+In an earlier exercise, we told you that the variable values (catch
+size) was in units of nearest 1000 lbs. It can be a bit confusing to
+constantly add three zeros mentally to the values column. Use `mutate()`
+to create a new column called `annual_catch_lbs` which expressed the
+catch size in lbs, rather than 1000s of lbs.
 
 ``` r
-levels( factor( fishing$species ) )
+# add your code here
+```
+
+Finally, save the new version of the `catch_data` dataset that includes
+`annual_catch_lbs` in the code chunk below, using the assignment
+operator (`<-`) to assign your output to `catch_data_v2`.
+
+``` r
+# add your code here
 ```
 
 ## Data dictionary

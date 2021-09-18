@@ -28,13 +28,13 @@ class: middle
 
 ---
 
-## Data: Hotel bookings
+## Data: Commercial Fish Production In The Great Lakes 1867-2015
 
-- Data from two hotels: one resort and one city hotel
-- Observations: Each row represents a hotel booking
+- Data on annual fish catch (weight in lbs) from the Great Lakes (Superior, Michigan, Huron, Erie, and Ontario)
+- Observations: Each row represents the annual catch for a particular species
 
-```{r message=FALSE}
-hotels <- read_csv("data/hotels.csv")
+```{r load-data, message = FALSE, warning = FALSE}
+catch_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
 ```
 
 ---
@@ -48,8 +48,8 @@ class: middle
 ## `select` to keep variables
 
 ```{r}
-hotels %>%
-  select(hotel, lead_time) #<<
+catch_data %>%
+  select(year, values) #<<
 ```
 
 ---
@@ -58,8 +58,8 @@ hotels %>%
 
 .small[
 ```{r output.lines=18}
-hotels %>%
-  select(-agent) #<<
+catch_data %>%
+  select(-year) #<<
 ```
 ]
 
@@ -68,8 +68,8 @@ hotels %>%
 ## `select` a range of variables
 
 ```{r}
-hotels %>%
-  select(hotel:arrival_date_month) #<<
+catch_data %>%
+  select(year:grand_total) #<<
 ```
 
 ---
@@ -77,8 +77,8 @@ hotels %>%
 ## `select` variables with certain characteristics
 
 ```{r}
-hotels %>%
-  select(starts_with("arrival")) #<<
+catch_data %>%
+  select(starts_with("reg")) #<<
 ```
 
 ---
@@ -86,8 +86,26 @@ hotels %>%
 ## `select` variables with certain characteristics
 
 ```{r}
-hotels %>%
-  select(ends_with("type")) #<<
+catch_data %>%
+  select(ends_with("es")) #<<
+```
+
+---
+
+## `select` variables with certain characteristics
+
+```{r}
+catch_data %>%
+  select(contains("u")) #<<
+```
+
+---
+
+## `select` **all** variables
+
+```{r}
+catch_data %>%
+  select(everything()) #<<
 ```
 
 ---
@@ -113,16 +131,16 @@ See help for any of these functions for more info, e.g. `?everything`.
 
 .pull-left[
 ```{r}
-hotels %>%
-  select(adults, children, babies) %>%
-  arrange(babies) #<<
+catch_data %>%
+  select(year, region, values) %>%
+  arrange(values) #<<
 ```
 ]
 .pull-right[
 ```{r}
-hotels %>%
-  select(adults, children, babies) %>%
-  arrange(desc(babies)) #<<
+catch_data %>%
+  select(year, region, values) %>%
+  arrange(desc(values)) #<<
 ```
 ]
 
@@ -133,7 +151,7 @@ hotels %>%
 .midi[
 ```{r output.lines=17}
 # first five
-hotels %>%
+catch_data %>%
   slice(1:5) #<<
 ```
 ]
@@ -149,7 +167,7 @@ certain lines of code while debugging.
 
 .small[
 ```{r output.lines=10}
-hotels %>%
+catch_data %>%
   # slice the first five rows  # this line is a comment
   #select(hotel) %>%           # this one doesn't run
   slice(1:5)                   # this line runs
@@ -168,10 +186,10 @@ class: middle
 
 .midi[
 ```{r output.lines=17}
-# bookings in City Hotels
-hotels %>%
-  filter(hotel == "City Hotel") #<<
-````
+# catches for Lake Huron
+catch_data %>%
+  filter(lake == "Huron") #<<
+```
 ]
 
 ---
@@ -179,12 +197,13 @@ hotels %>%
 ## `filter` for many conditions at once
 
 ```{r}
-hotels %>%
-  filter( 
-    adults == 0,     #<<
-    children >= 1    #<<
+# large catches in Lake Huron
+catch_data %>%
+  filter(
+    lake == "Huron",   #<<
+    values > 100,     #<<
     ) %>% 
-  select(adults, babies, children)
+  select(year, lake, values)
 ```
 
 ---
@@ -192,13 +211,13 @@ hotels %>%
 ## `filter` for more complex conditions
 
 ```{r}
-# bookings with no adults and some children or babies in the room
-hotels %>%
+# small but non-zero catches for Lake Huron and Lake Superior
+catch_data %>%
   filter( 
-    adults == 0,     
-    children >= 1 | babies >= 1     # | means or  #<<
+    lake == "Huron" | lake == "Superior",     
+    values > 0 & values < 100     # & means "AND" (| means "OR")  #<<
     ) %>%
-  select(adults, babies, children)
+  select(year, lake, values)
 ```
 
 ---
@@ -222,9 +241,9 @@ operator    | definition                   || operator     | definition
 .your-turn[
 ### Your turn!
 
-Time to actually play around with the Hotels dataset!
+Time to actually play around with the Great Lake Catches dataset!
 
-- Go to RStudio Cloud and start `AE 04 - Hotels + Data wrangling`.
+- Go to GitHub and clone `e-04-great-lakes-catches` into RStudio
 - Open the R Markdown document and complete Exercises 1 - 4.
 ]
 
@@ -248,16 +267,16 @@ options(dplyr.print_max = 20)
 .small[
 .pull-left[
 ```{r}
-hotels %>% 
-  distinct(market_segment) %>% #<<
-  arrange(market_segment)
+catch_data %>% 
+  distinct(region) %>% #<<
+  arrange(region)
 ```
 ]
 .pull-right[
 ```{r output.lines=13}
-hotels %>% 
-  distinct(hotel, market_segment) %>% #<<
-  arrange(hotel, market_segment)
+catch_data %>% 
+  distinct(year, region) %>% #<<
+  arrange(year, region)
 ```
 ]
 ]
@@ -269,16 +288,16 @@ hotels %>%
 .pull-left[
 ```{r}
 # alphabetical order by default
-hotels %>%
-  count(market_segment) #<<
+catch_data %>%
+  count(region) #<<
 ```
 ]
 --
 .pull-right[
 ```{r}
 # descending frequency order
-hotels %>%
-  count(market_segment, sort = TRUE) #<<
+catch_data %>%
+  count(region, sort = TRUE) #<<
 ```
 ]
 
@@ -289,8 +308,8 @@ hotels %>%
 .pull-left[
 ```{r}
 # ascending frequency order
-hotels %>%
-  count(market_segment) %>%
+catch_data %>%
+  count(region) %>%
   arrange(n) #<<
 ```
 ]
@@ -298,8 +317,8 @@ hotels %>%
 ```{r}
 # descending frequency order
 # just like adding sort = TRUE
-hotels %>%
-  count(market_segment) %>%
+catch_data %>%
+  count(region) %>%
   arrange(desc(n)) #<<
 ```
 ]
@@ -309,8 +328,8 @@ hotels %>%
 ## `count` for multiple variables
 
 ```{r}
-hotels %>%
-  count(hotel, market_segment) #<<
+catch_data %>%
+  count(year, region) #<<
 ```
 
 ---
@@ -320,16 +339,16 @@ hotels %>%
 .midi[
 .pull-left[
 ```{r}
-# hotel type first
-hotels %>%
-  count(hotel, market_segment) #<<
+# year first
+catch_data %>%
+  count(year, region) #<<
 ```
 ]
 .pull-right[
 ```{r}
-# market segment first
-hotels %>%
-  count(market_segment, hotel) #<<
+# region first
+catch_data %>%
+  count(region, year) #<<
 ```
 ]
 ]
@@ -339,7 +358,7 @@ hotels %>%
 .your-turn[
 ### Your turn!
 
-- Go back to RStudio Cloud and continue `AE 04 - Hotels + Data wrangling`.
+- Go back to RStudio Cloud and continue `e-04-great-lakes-catches`.
 - Open the R Markdown document and complete Exercises 5 and 6.
 ]
 
@@ -354,39 +373,39 @@ class: middle
 ## `mutate` to add a new variable
 
 ```{r}
-hotels %>%
-  mutate(little_ones = children + babies) %>% #<<
-  select(children, babies, little_ones) %>%
-  arrange(desc(little_ones))
+catch_data %>%
+  mutate(catch_fraction =  values / grand_total) %>% #<<
+  select(values, grand_total, catch_fraction) %>%
+  arrange(desc(catch_fraction))
 ```
 
 ---
 
-## Little ones in resort and city hotels
+## Catch fraction for specific Lake
 
 .midi[
 .pull-left[
 ```{r}
-# Resort Hotel
-hotels %>%
-  mutate(little_ones = children + babies) %>%
+# Lake Michigan
+catch_data %>%
+  mutate(catch_fraction =  values / grand_total) %>%
   filter(
-    little_ones >= 1,
-    hotel == "Resort Hotel"
+    catch_fraction >= 0.3,
+    lake == "Michigan"
     ) %>%
-  select(hotel, little_ones)
+  select(lake, region, catch_fraction)
 ```
 ]
 .pull-right[
 ```{r}
-# City Hotel
-hotels %>%
-  mutate(little_ones = children + babies) %>%
+# Lake Erie
+catch_data %>%
+  mutate(catch_fraction =  values / grand_total) %>%
   filter(
-    little_ones >= 1,
-    hotel == "City Hotel"
+    catch_fraction >= 0.3,
+    lake == "Erie"
     )  %>%
-  select(hotel, little_ones)
+  select(lake, region, catch_fraction)
 ```
 ]
 ]
@@ -399,9 +418,9 @@ What is happening in the following chunk?
 
 .midi[
 ```{r}
-hotels %>%
-  mutate(little_ones = children + babies) %>%
-  count(hotel, little_ones) %>%
+catch_data %>%
+  mutate(catch_fraction =  values / grand_total) %>%
+  count(region, catch_fraction) %>%
   mutate(prop = n / sum(n))
 ```
 ]
@@ -417,9 +436,9 @@ class: middle
 ## `summarise` for summary stats
 
 ```{r}
-# mean average daily rate for all bookings
-hotels %>%
-  summarise(mean_adr = mean(adr)) #<<
+# mean annual catch
+catch_data %>%
+  summarise(mean_catch = mean(values, na.rm = T)) #<<
 ```
 
 --
@@ -442,16 +461,16 @@ column, but that's not recommended!
 `r emo::ji("x")`
 
 ```{r}
-hotels %>%
-  summarise(mean(adr))
+catch_data %>%
+  summarise(mean(values, na.rm = T))
 ```
 ]
 .pull-right[
 `r emo::ji("white_check_mark")`
 
 ```{r}
-hotels %>%
-  summarise(mean_adr = mean(adr))
+catch_data %>%
+  summarise(mean_catch = mean(values, na.rm = T))
 ```
 ]
 
@@ -460,10 +479,10 @@ hotels %>%
 ## `group_by` for grouped operations
 
 ```{r}
-# mean average daily rate for all booking at city and resort hotels
-hotels %>%
-  group_by(hotel) %>% #<<
-  summarise(mean_adr = mean(adr))
+# mean catch for each lake
+catch_data %>%
+  group_by(lake) %>% #<<
+  summarise(mean_catch = mean(values))
 ```
 
 ---
@@ -474,15 +493,15 @@ The following two give the same result, so `count` is simply short for `group_by
 
 .pull-left[
 ```{r}
-hotels %>%
-  group_by(hotel) %>%
+catch_data %>%
+  group_by(lake) %>%
   summarise(n = n())
 ```
 ]
 .pull-right[
 ```{r}
-hotels %>%
-  count(hotel)
+catch_data %>%
+  count(lake)
 ```
 ]
 
@@ -493,12 +512,12 @@ hotels %>%
 `summarise` can be used for multiple summary statistics as well
 
 ```{r}
-hotels %>%
+catch_data %>%
   summarise(
-    min_adr = min(adr),
-    mean_adr = mean(adr),
-    median_adr = median(adr),
-    max_adr = max(adr)
+    min_catch = min(values),
+    mean_catch = mean(values),
+    median_catch = median(values),
+    max_catch = max(values)
     )
 ```
 
@@ -507,12 +526,9 @@ hotels %>%
 .your-turn[
 ### Your turn!
 
-Time to actually play around with the Hotels dataset!
-
-- Go to RStudio Cloud and start `AE 04 - Hotels + Data wrangling`.
-- Open the R Markdown document and complete Exercises 7 and 8.
+- Go back to RStudio Cloud and continue `e-04-great-lakes-catches`.
+- Open the R Markdown document and complete Exercises 7 - 10.
 ]
-
 ---
 
 .center[
