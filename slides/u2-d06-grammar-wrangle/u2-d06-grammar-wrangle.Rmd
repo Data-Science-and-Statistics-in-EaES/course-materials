@@ -302,25 +302,6 @@ catch_data %>%
 
 The pipe operator is implemented in the package **magrittr**, though we don't need to load this package explicitly since **tidyverse** does this for us.
 
---
-
-.question[
-Any guesses as to why the package is called magrittr?
-]
-
---
-
-.pull-left[
-```{r magritte, echo=FALSE, out.width="90%", caption = "Magritte's pipe"}
-knitr::include_graphics("img/magritte.jpg")
-```
-]
-.pull-right[
-```{r magrittr, echo=FALSE, out.width="100%", caption = "magrittr's pipe"}
-knitr::include_graphics("img/magrittr.jpg")
-```
-]
-
 ---
 
 ## How does a pipe work?
