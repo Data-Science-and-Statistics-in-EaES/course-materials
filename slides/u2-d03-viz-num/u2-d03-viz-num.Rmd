@@ -369,6 +369,9 @@ ggplot(forest_birds, aes(x = abundance)) +
 ]
 ]
 
+**Whiskers = 1st or 3rd Quartile (side of box) +/- 1.5 * Interquartile Range (width of box)**
+
+
 ---
 
 ## Adding a categorical variable
