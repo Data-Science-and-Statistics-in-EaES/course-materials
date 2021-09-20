@@ -811,19 +811,31 @@ catch_data %&gt;%
 .pull-left[
 
 ```r
-# Lake Michigan
+# Lake Superior
 catch_data %&gt;%
   mutate(catch_fraction =  values / grand_total) %&gt;%
   filter(
     catch_fraction &gt;= 0.1,
-    lake == &quot;Michigan&quot;
+    lake == &quot;Superior&quot;
     ) %&gt;%
   select(lake, region, catch_fraction)
 ```
 
 ```
-## # A tibble: 0 × 3
-## # … with 3 variables: lake &lt;chr&gt;, region &lt;chr&gt;, catch_fraction &lt;dbl&gt;
+## # A tibble: 3,125 × 3
+##    lake     region        catch_fraction
+##    &lt;chr&gt;    &lt;chr&gt;                  &lt;dbl&gt;
+##  1 Superior Michigan (MI)          0.823
+##  2 Superior U.S. Total             0.823
+##  3 Superior Canada (ONT)           0.177
+##  4 Superior Michigan (MI)          0.852
+##  5 Superior U.S. Total             0.885
+##  6 Superior Canada (ONT)           0.115
+##  7 Superior Michigan (MI)          0.709
+##  8 Superior U.S. Total             0.8  
+##  9 Superior Canada (ONT)           0.2  
+## 10 Superior Michigan (MI)          0.690
+## # … with 3,115 more rows
 ```
 ]
 .pull-right[

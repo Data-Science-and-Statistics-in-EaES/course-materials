@@ -386,12 +386,12 @@ catch_data %>%
 .midi[
 .pull-left[
 ```{r}
-# Lake Michigan
+# Lake Superior
 catch_data %>%
   mutate(catch_fraction =  values / grand_total) %>%
   filter(
     catch_fraction >= 0.1,
-    lake == "Michigan"
+    lake == "Superior"
     ) %>%
   select(lake, region, catch_fraction)
 ```
