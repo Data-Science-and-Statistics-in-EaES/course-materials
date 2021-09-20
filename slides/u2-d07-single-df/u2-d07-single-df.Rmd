@@ -390,7 +390,7 @@ catch_data %>%
 catch_data %>%
   mutate(catch_fraction =  values / grand_total) %>%
   filter(
-    catch_fraction >= 0.3,
+    catch_fraction >= 0.1,
     lake == "Michigan"
     ) %>%
   select(lake, region, catch_fraction)
@@ -402,7 +402,7 @@ catch_data %>%
 catch_data %>%
   mutate(catch_fraction =  values / grand_total) %>%
   filter(
-    catch_fraction >= 0.3,
+    catch_fraction >= 0.1,
     lake == "Erie"
     )  %>%
   select(lake, region, catch_fraction)
@@ -482,7 +482,7 @@ catch_data %>%
 # mean catch for each lake
 catch_data %>%
   group_by(lake) %>% #<<
-  summarise(mean_catch = mean(values))
+  summarise(mean_catch = mean(values, na.rm = T))
 ```
 
 ---
@@ -514,10 +514,10 @@ catch_data %>%
 ```{r}
 catch_data %>%
   summarise(
-    min_catch = min(values),
-    mean_catch = mean(values),
-    median_catch = median(values),
-    max_catch = max(values)
+    min_catch = min(values, na.rm = TRUE),
+    mean_catch = mean(values, na.rm = TRUE),
+    median_catch = median(values, na.rm = TRUE),
+    max_catch = max(values, na.rm = TRUE)
     )
 ```
 

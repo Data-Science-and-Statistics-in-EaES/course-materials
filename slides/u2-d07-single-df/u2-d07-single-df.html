@@ -815,7 +815,7 @@ catch_data %&gt;%
 catch_data %&gt;%
   mutate(catch_fraction =  values / grand_total) %&gt;%
   filter(
-    catch_fraction &gt;= 0.3,
+    catch_fraction &gt;= 0.1,
     lake == &quot;Michigan&quot;
     ) %&gt;%
   select(lake, region, catch_fraction)
@@ -833,27 +833,27 @@ catch_data %&gt;%
 catch_data %&gt;%
   mutate(catch_fraction =  values / grand_total) %&gt;%
   filter(
-    catch_fraction &gt;= 0.3,
+    catch_fraction &gt;= 0.1,
     lake == &quot;Erie&quot;
     )  %&gt;%
   select(lake, region, catch_fraction)
 ```
 
 ```
-## # A tibble: 2,822 × 3
-##    lake  region       catch_fraction
-##    &lt;chr&gt; &lt;chr&gt;                 &lt;dbl&gt;
-##  1 Erie  Canada (ONT)          1    
-##  2 Erie  Ohio (OH)             0.553
-##  3 Erie  U.S. Total            0.794
-##  4 Erie  Ohio (OH)             0.645
-##  5 Erie  U.S. Total            0.787
-##  6 Erie  Ohio (OH)             0.690
-##  7 Erie  U.S. Total            0.739
-##  8 Erie  Ohio (OH)             0.532
-##  9 Erie  U.S. Total            0.609
-## 10 Erie  Canada (ONT)          0.391
-## # … with 2,812 more rows
+## # A tibble: 3,904 × 3
+##    lake  region            catch_fraction
+##    &lt;chr&gt; &lt;chr&gt;                      &lt;dbl&gt;
+##  1 Erie  Canada (ONT)               1    
+##  2 Erie  Ohio (OH)                  0.553
+##  3 Erie  Pennsylvania (PA)          0.203
+##  4 Erie  U.S. Total                 0.794
+##  5 Erie  Canada (ONT)               0.206
+##  6 Erie  Ohio (OH)                  0.645
+##  7 Erie  Pennsylvania (PA)          0.118
+##  8 Erie  U.S. Total                 0.787
+##  9 Erie  Canada (ONT)               0.213
+## 10 Erie  Ohio (OH)                  0.690
+## # … with 3,894 more rows
 ```
 ]
 ]
@@ -973,19 +973,19 @@ catch_data %&gt;%
 # mean catch for each lake
 catch_data %&gt;%
 * group_by(lake) %&gt;%
-  summarise(mean_catch = mean(values))
+  summarise(mean_catch = mean(values, na.rm = T))
 ```
 
 ```
 ## # A tibble: 6 × 2
 ##   lake        mean_catch
 ##   &lt;chr&gt;            &lt;dbl&gt;
-## 1 Erie                NA
-## 2 Huron               NA
-## 3 Michigan            NA
-## 4 Ontario             NA
-## 5 Saint Clair         NA
-## 6 Superior            NA
+## 1 Erie             746. 
+## 2 Huron            275. 
+## 3 Michigan         760. 
+## 4 Ontario          102. 
+## 5 Saint Clair       58.0
+## 6 Superior         533.
 ```
 
 ---
@@ -1044,10 +1044,10 @@ catch_data %&gt;%
 ```r
 catch_data %&gt;%
   summarise(
-    min_catch = min(values),
-    mean_catch = mean(values),
-    median_catch = median(values),
-    max_catch = max(values)
+    min_catch = min(values, na.rm = TRUE),
+    mean_catch = mean(values, na.rm = TRUE),
+    median_catch = median(values, na.rm = TRUE),
+    max_catch = max(values, na.rm = TRUE)
     )
 ```
 
@@ -1055,7 +1055,7 @@ catch_data %&gt;%
 ## # A tibble: 1 × 4
 ##   min_catch mean_catch median_catch max_catch
 ##       &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
-## 1        NA         NA           NA        NA
+## 1       -31       514.           17     48405
 ```
 
 ---
