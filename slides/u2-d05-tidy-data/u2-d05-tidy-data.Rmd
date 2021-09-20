@@ -133,7 +133,7 @@ starwars %>%
 .pull-left[
 ```{r echo=FALSE}
 starwars %>%
-  group_by(gender) %>%
+  group_by(species) %>%
   summarize(avg_ht = mean(height, na.rm = TRUE))
 ```
 ]
@@ -145,7 +145,7 @@ starwars %>%
 .pull-right[
 ```{r eval=FALSE}
 starwars %>%
-  group_by(gender) %>%
+  group_by(species) %>%
   summarize(
     avg_ht = mean(height, na.rm = TRUE)
     )

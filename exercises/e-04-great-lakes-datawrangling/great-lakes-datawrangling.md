@@ -122,7 +122,7 @@ catch_data %>%
       )
 ```
 
-**Tip:** If you are working with a large dataset like `fishing`, and
+**Tip:** If you are working with a large dataset like `catch_data`, and
 there are character class variables (e.g., \`region\`\`), you can
 quickly see what different character strings (regions) are in the
 dataset by converting the characters to factors (i.e. categorical data),
