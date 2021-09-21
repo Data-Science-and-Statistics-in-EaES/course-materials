@@ -30,7 +30,7 @@ If you're looking at these instructions you've already done the following steps,
 
 -   Go to the course GitHub organization and locate your Unit 3 repo, which should be named `unit-3-YOUR_LAST_NAME`.
 -   Grab the URL of the repo, and clone it in RStudio.
--   First, open the R Markdown instructions `lab-O3-...Rmd` and the lab starter `lab-03.Rmd` and Knit them
+-   First, open the R Markdown instructions `lab-O3-great-lakes-fish-stock.Rmd` and the lab starter `lab-03.Rmd` and Knit them
 -   Make sure they compile without errors.
 
 ## Warm up
@@ -58,41 +58,86 @@ The dataset for this assignment can be found as a CSV (comma separated values) f
 You can read it in using the following.
 
 ```{r load-data, message = FALSE}
-nobel <- read_csv("data/nobel.csv")
+fish_stock <- read_csv("data/great-lakes-fish-stock.csv")
 ```
 
 The variable descriptions are as follows:
 
--   `id`: ID number
--   `firstname`: First name of laureate
--   `surname`: Surname
--   `year`: Year prize won
--   `category`: Category of prize
--   `affiliation`: Affiliation of laureate
--   `city`: City of laureate in prize year
--   `country`: Country of laureate in prize year
--   `born_date`: Birth date of laureate
--   `died_date`: Death date of laureate
--   `gender`: Gender of laureate
--   `born_city`: City where laureate was born
--   `born_country`: Country where laureate was born
--   `born_country_code`: Code of country where laureate was born
--   `died_city`: City where laureate died
--   `died_country`: Country where laureate died
--   `died_country_code`: Code of country where laureate died
--   `overall_motivation`: Overall motivation for recognition
--   `share`: Number of other winners award is shared with
--   `motivation`: Motivation for recognition
+-   `YEAR`: year of stocking, YYYY
 
-In a few cases the name of the city/country changed after laureate was given (e.g. in 1975 Bosnia and Herzegovina was called the Socialist Federative Republic of Yugoslavia).
-In these cases the variables below reflect a different name than their counterparts without the suffix \`\_original\`.
+-   `MONTH`: month of stocking, not always provided by agency
 
--   `born_country_original`: Original country where laureate was born
--   `born_city_original`: Original city where laureate was born
--   `died_country_original`: Original country where laureate died
--   `died_city_original`: Original city where laureate died
--   `city_original`: Original city where laureate lived at the time of winning the award
--   `country_original`: Original country where laureate lived at the time of winning the award
+-   `LAKE`: Great Lake, coded
+
+-   
+
+        ER (Lake Erie)
+
+-   
+
+        HU (Huron)
+
+-   
+
+        MI (Lake Michigan)
+
+-   
+
+        ON (Lake Ontario)
+
+-   
+
+        SC (Lake St. Clare)
+
+-   
+
+        SU (Lake Superior)
+
+-   `STATE_PROVENCE`: state or province where stocking occurred
+
+-   
+
+        IL (Illinois)
+
+-   
+
+        IN (Indiana)
+
+-   
+
+        MI (Michigan)
+
+-   
+
+        MN (Minnesota)
+
+-   
+
+        NY (New York)
+
+-   
+
+        OH (Ohio)
+
+-   
+
+        ON (Ontario)
+
+-   
+
+        PA (Pennsylvania)
+
+-   
+
+        WI (Wisconsin)
+
+-   `SPECIES`: species coded by naming convention (
+
+-   `NO_STOCKED`: number of fish stocked
+
+-   `AGEMONTH`: age in months, not always provided by agency
+
+-   `WEIGHT`: total weight of fish stocked in kilograms
 
 ## Get to know your data
 
