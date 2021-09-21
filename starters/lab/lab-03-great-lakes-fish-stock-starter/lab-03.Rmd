@@ -1,8 +1,8 @@
 ---
-title: "Lab 03 - Nobel laureates"
+title: "Lab 03 - Great Lakes Fish Stocking"
 author: "Insert your name here"
 date: "Insert date here"
-output: github_document
+output: html_document
 ---
 
 ### Load packages and data
@@ -12,7 +12,7 @@ library(tidyverse)
 ```
 
 ```{r load-data, message=FALSE}
-nobel <- read_csv("data/nobel.csv")
+fish_stock <- read_csv("data/great-lakes-fish-stock.csv")
 ```
 
 ## Exercises
@@ -20,20 +20,17 @@ nobel <- read_csv("data/nobel.csv")
 ### Exercise 1
 
 Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 1 here.
+Remove this text, and add your answer for Exercise 2 here.
 Add code chunks as needed.
 Don't forget to label your code chunk.
 Do not use spaces in code chunk labels.
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 1 here.
+Remove this text, and add your answer for Exercise 3 here.
 Add code chunks as needed.
 Don't forget to label your code chunk.
 Do not use spaces in code chunk labels.
