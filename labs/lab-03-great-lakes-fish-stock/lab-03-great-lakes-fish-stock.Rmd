@@ -64,105 +64,58 @@ fish_stock <- read_csv("data/great-lakes-fish-stock.csv")
 The variable descriptions are as follows:
 
 -   `YEAR`: year of stocking, YYYY
-
 -   `MONTH`: month of stocking, not always provided by agency
-
 -   `LAKE`: Great Lake, coded
-
--   
-
-        ER (Lake Erie)
-
--   
-
-        HU (Huron)
-
--   
-
-        MI (Lake Michigan)
-
--   
-
-        ON (Lake Ontario)
-
--   
-
-        SC (Lake St. Clare)
-
--   
-
-        SU (Lake Superior)
-
+-   ER (Lake Erie); HU (Huron); MI (Lake Michigan); ON (Lake Ontario); SC (Lake St. Clare); SU (Lake Superior)
 -   `STATE_PROVENCE`: state or province where stocking occurred
-
--   
-
-        IL (Illinois)
-
--   
-
-        IN (Indiana)
-
--   
-
-        MI (Michigan)
-
--   
-
-        MN (Minnesota)
-
--   
-
-        NY (New York)
-
--   
-
-        OH (Ohio)
-
--   
-
-        ON (Ontario)
-
--   
-
-        PA (Pennsylvania)
-
--   
-
-        WI (Wisconsin)
-
+-   IL (Illinois); IN (Indiana); MI (Michigan); MN (Minnesota);
+-   NY (New York); OH (Ohio); ON (Ontario); PA (Pennsylvania); WI (Wisconsin)
 -   `SPECIES`: species coded by naming convention (
-
 -   `NO_STOCKED`: number of fish stocked
-
 -   `AGEMONTH`: age in months, not always provided by agency
-
 -   `WEIGHT`: total weight of fish stocked in kilograms
 
 ## Get to know your data
 
-1.  How many observations and how many variables are in the dataset? Use inline code to answer this question. What does each row represent?
+1.  How many observations and how many variables are in the dataset?
+    Use inline code to answer this question.
+    What does each row represent?
+    Enter your answer in the `lab-03-great-lakes-fish-stock` starter file, under Exercise 1!
 
-There are some observations in this dataset that we will exclude from our analysis to match the Buzzfeed results.
+2.  Create a new data frame called `salmon_stock` that filters for:
 
-2.  Create a new data frame called `nobel_living` that filters for
+-   stocking events for `ATS` (Atlantic Salmon), `CHS` (Chinook Salmon), and `COS` (Coho Salmon)
+-   stocking events that report total weight of fish stocked (`WEIGHT` is not `NA`)
+-   stocking events for all lakes except Lake Ontario (`LAKE` is not `ON`)
 
--   laureates for whom `country` is available
--   laureates who are people as opposed to organizations (organizations are denoted with `"org"` as their `gender`)
--   laureates who are still alive (their `died_date` is `NA`)
+To create it, copy the code below into the starter file, under Exercise 2, then complete the code chunk.
+Remember you'll need to change eval = FALSE, to eval = TRUE, to run the chunk when you knit the starter file.
 
-```{r echo=FALSE}
-nobel_living <- nobel %>%
+```{r echo = FALSE, eval = FALSE}
+salmon_stock <- fish_stock %>%
   filter(
-    !is.na(country),
-    gender != "org",
-    is.na(died_date)
+    SPECIES %in% c("___", "___", "___"),
+    !is.na(___),
+     ___ != "ON"
   )
 ```
 
-Confirm that once you have filtered for these characteristics you are left with a data frame with `r nrow(nobel_living)` observations, once again using inline code.
+Create a second code chunk, and use one or more function(s) to output:
 
-🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
+-   the number of rows
+-   the number of variables
+-   the names and data type of the variables
+
+... found in `salmon_stock`.
+**And** add a narrative (text) response below your code chunk describing:
+
+-   the number of rows and variables
+-   which variables are numerical and which are character strings
+
+*Hint:* Review your lecture slides/notes if you can't remember a suitable function(s).
+(there are a couple you could choose from).
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
 ## Most living Nobel laureates were based in the US when they won their prizes
 
