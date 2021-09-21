@@ -24,10 +24,22 @@ Each row represents a fish stocking event in one of the Great Lakes.
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 2 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r filter-stock-data, echo = FALSE, eval = TRUE}
+salmon_stock <- fish_stock %>%
+  filter(
+    SPECIES %in% c("ATS", "CHS", "COS"),
+    !is.na(WEIGHT),
+     LAKE != "ON"
+  )
+```
+
+```{r summarize-new-data}
+glimpse(salmon_stock)
+```
+
+The new data frame `salmon_stock` contains 5,131 rows, 8 columns (variables).
+YEAR, MONTH, NO_STOCKED, AGEMONTH and WEIGHT are numerical.
+LAKE, STATE_PROV, SPECIES are character strings.
 
 ### Exercise 3
 
