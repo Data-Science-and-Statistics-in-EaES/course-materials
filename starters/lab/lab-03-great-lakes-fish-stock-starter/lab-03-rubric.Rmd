@@ -58,8 +58,8 @@ The mutate function creates a new variable `AVG_WEIGHT` which is the average wei
 salmon_stock %>% 
   group_by(LAKE) %>% 
   filter(YEAR > 2000) %>% 
-  summarize(MEAN_NO_STOCKED = mean(NO_STOCKED, na.rm = T),
-            MEAN_WEIGHT = mean(WEIGHT, na.rm = T)) %>% 
+  summarize(MEAN_NO_STOCKED = mean(NO_STOCKED, na.rm = TRUE),
+            MEAN_WEIGHT = mean(WEIGHT, na.rm = TRUE)) %>% 
   arrange(desc(MEAN_NO_STOCKED))
 ```
 
@@ -67,8 +67,32 @@ Lake Huron had the largest mean number of salmon stocked per event, and Lake Mic
 
 ### Exercise 5
 
-...
+```{r combine-chunks-trout}
+fish_stock %>% 
+  filter(SPECIES %in% c("BKT", "BRN", "LAT", "RBT", "TRT"),
+         !is.na(WEIGHT),
+         LAKE != "ON") %>% 
+  mutate(AVG_WEIGHT = WEIGHT / NO_STOCKED * 1000) %>% 
+  group_by(LAKE) %>% 
+  summarize(MEAN_NO_STOCKED = mean(NO_STOCKED, na.rm = TRUE),
+            MEAN_WEIGHT = mean(WEIGHT, na.rm = TRUE)) %>% 
+  arrange(desc(MEAN_NO_STOCKED))
+```
 
 ### Exercise 6
 
-...
+```{r plot-salmon-weight-over-time}
+fish_stock %>% 
+  filter(SPECIES %in% c("CHS", "BKT")) %>% 
+  group_by(LAKE, SPECIES, YEAR) %>% 
+  summarize(ANNUAL_NO_STOCKED = sum(NO_STOCKED, na.rm = TRUE)) %>% 
+  ggplot(aes(x = YEAR, y = ANNUAL_NO_STOCKED, color = SPECIES)) +
+  geom_line() +
+  facet_wrap(~LAKE) +
+  theme_bw() +
+  labs(x = "Year", y = "Fish Stocked per Year")
+```
+
+Chinook Salmon are stocked at a higher rate than Brook Trout.
+Chinook Salmon stocking was largest in Lake Michigan.
+Chinook Salmon stocking in Lake Michigan peaked around 1980-1990.
