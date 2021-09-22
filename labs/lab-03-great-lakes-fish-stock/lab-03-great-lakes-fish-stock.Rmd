@@ -28,7 +28,7 @@ Fish and Wildlife Service.
 
 If you're looking at these instructions you've already done the following steps, but as a reminder:
 
--   Go to the course GitHub organization and locate your Unit 3 repo, which should be named `unit-3-YOUR_LAST_NAME`.
+-   Go to the course GitHub organization and locate your Unit 3 repo, which should be named `lab-3-YOUR_LAST_NAME`.
 -   Grab the URL of the repo, and clone it in RStudio.
 -   First, open the R Markdown instructions `lab-O3-great-lakes-fish-stock.Rmd` and the lab starter `lab-03.Rmd` and Knit them
 -   Make sure they compile without errors.
@@ -66,11 +66,10 @@ The variable descriptions are as follows:
 -   `YEAR`: year of stocking, YYYY
 -   `MONTH`: month of stocking, not always provided by agency
 -   `LAKE`: Great Lake, coded
--   ER (Lake Erie); HU (Huron); MI (Lake Michigan); ON (Lake Ontario); SC (Lake St. Clare); SU (Lake Superior)
--   `STATE_PROVENCE`: state or province where stocking occurred
--   IL (Illinois); IN (Indiana); MI (Michigan); MN (Minnesota);
--   NY (New York); OH (Ohio); ON (Ontario); PA (Pennsylvania); WI (Wisconsin)
--   `SPECIES`: species coded by naming convention (
+-   **ER (Lake Erie); HU (Huron); MI (Lake Michigan); ON (Lake Ontario); SC (Lake St. Clare); SU (Lake Superior)**
+-   `STATE_PROVENCE`: state or province where stocking occurred, coded
+-   **IL (Illinois); IN (Indiana); MI (Michigan); MN (Minnesota); NY (New York); OH (Ohio); ON (Ontario); PA (Pennsylvania); WI (Wisconsin)**
+-   `SPECIES`: species coded by naming convention
 -   `NO_STOCKED`: number of fish stocked
 -   `AGEMONTH`: age in months, not always provided by agency
 -   `WEIGHT`: total weight of fish stocked in kilograms
@@ -80,7 +79,8 @@ The variable descriptions are as follows:
 1.  How many observations and how many variables are in the dataset?
     Use inline code to answer this question.
     What does each row represent?
-    Enter your answer in the `lab-03-great-lakes-fish-stock` starter file, under Exercise 1!
+    Be specific.
+    Enter your answers in the `lab-03-great-lakes-fish-stock` starter file, under Exercise 1!
 
 2.  Create a new data frame called `salmon_stock` that filters for:
 
@@ -89,9 +89,9 @@ The variable descriptions are as follows:
 -   stocking events for all lakes except Lake Ontario (`LAKE` is not `ON`)
 
 To create it, copy the code below into the starter file, under Exercise 2, then complete the code chunk.
-Remember you'll need to change eval = FALSE, to eval = TRUE, to run the chunk when you knit the starter file.
+If you copy the Rmarkdown code that includes `{r eval = FALSE}` in the first line, then you will need to change `eval = FALSE`, to `eval = TRUE`, to run the chunk when you knit the starter file.
 
-```{r echo = FALSE, eval = FALSE}
+```{r eval = FALSE}
 salmon_stock <- fish_stock %>%
   filter(
     SPECIES %in% c("___", "___", "___"),
@@ -117,76 +117,86 @@ Create a second code chunk, and use one or more function(s) to output:
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
-## Most living Nobel laureates were based in the US when they won their prizes
+## Creating a new variable
 
-... says the Buzzfeed article.
-Let's see if that's true.
+3.  Follow the instructions below to complete the chunk below and create a new variable that calculates the average Salmon weight in **grams** for each stocking event (row) in `salmon_stock`.
 
-First, we'll create a new variable to identify whether the laureate was in the US when they won their prize.
-We'll use the `mutate()` function for this.
-The following pipeline mutates the `nobel_living` data frame by adding a new variable called `country_us`.
-We use an if statement to create this variable.
-The first argument in the `if_else()` function we're using to write this if statement is the condition we're testing for.
-If `country` is equal to `"USA"`, we set `country_us` to `"USA"`.
-If not, we set the `country_us` to `"Other"`.
+-   copy the chunk into exercise 3 in your starter file (follow the standard code chunk instructions)
+-   pipe `salmon_stock` into the `mutate()` function
+-   within `mutate()`, add the name of your new average weight variable to the left side of the `=` sign. You can pick any name, but perhaps be consistent with the others and use ALL CAPS.
+-   finally, complete the equation to convert the weight from kilograms to grams
 
-```{marginfigure}
-Note that we can achieve the same result using the `fct_other()` function we've seen before (i.e. with `country_us = fct_other(country, "USA")`). We decided to use the `if_else()` here to show you one example of an if statement in R.
-```
-
-```{r}
-nobel_living <- nobel_living %>%
-  mutate(
-    country_us = if_else(country == "USA", "USA", "Other")
+```{r eval = FALSE}
+salmon_stock <- ___ %>%
+  ___(
+    ___ = WEIGHT / NO_STOCKED * ___
   )
 ```
 
-Next, we will limit our analysis to only the following categories: Physics, Medicine, Chemistry, and Economics.
+Then add a sentence of text narrative to explain what the `mutate()` function is doing in this code chunk.
+(I.e., what is it creating, what is it using to create that thing?)
 
-```{r}
-nobel_living_science <- nobel_living %>%
-  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+## Summarizing the data by group
+
+4.  Follow the instructions to complete the code chunk and compute the summary statistics (means) of:
+
+-   number of salmon stocked per event
+-   total weight of salmon
+
+...for each lake, and only for years since the year 2000.
+Finally, arrange your output in descending order of number of salmon stocked.
+
+```{r eval = FALSE}
+___ %>% 
+  group_by(___) %>% 
+  filter(YEAR > ___) %>% 
+  summarize(MEAN_NO_STOCKED = mean(___, na.rm = TRUE), # mean() will return an NA if any NAs are present
+            MEAN_WEIGHT = mean(___, ___ = ___)) %>% 
+  arrange(desc(___))
 ```
 
-For the next exercise work with the `nobel_living_science` data frame you created above.
-This means you'll need to define this data frame in your R Markdown document, even though the next exercise doesn't explicitly ask you to do so.
+State below your code chunk which lakes have the largest mean fish per stocking event and mean weight per stocking event, respectively.
 
-3.  Create a faceted bar plot visualizing the relationship between the category of prize and whether the laureate was in the US when they won the nobel prize.
-    Interpret your visualization, and say a few words about whether the Buzzfeed headline is supported by the data.
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
-    -   Your visualization should be faceted by category.
-    -   For each facet you should have two bars, one for winners in the US and one for Other.
-    -   Flip the coordinates so the bars are horizontal, not vertical.
+5.  Next, we will switch from Salmon to Trout. Given the following fish name codes below, create (and label!) a code chunk under your Exercise 5 space, to roughly combine the last 3 exercises into one single pipeline:
 
-🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.d*
+`BKT` Brook Trout `BRN` Brown Trout `LAT` Lake Trout `RBT` Rainbow Trout `TRT` Tiger Trout
 
-## But of those US-based Nobel laureates, many were born in other countries
+-   Start by filtering the original dataset `fish_stock` for the trout species, to remove missing fish weights, and to remove Lake Ontario (as in Exercise 2)
 
-```{marginfigure}
-**Hint:** You should be able to ~~cheat~~ borrow from code you used earlier to create the `country_us` variable.
-```
+-   use mutate to create the average fish weight variable (as in Exercise 3)
 
-4.  Create a new variable called `born_country_us` that has the value `"USA"` if the laureate is born in the US, and `"Other"` otherwise.
-    How many of the winners are born in the US?
+-   summarize the mean trout number and total weight per stocking event by lake (similar to Exercise 4, but without the YEAR filter)
 
-5.  Add a second variable to your visualization from Exercise 3 based on whether the laureate was born in the US or not.
-    Based on your visualization, do the data appear to support Buzzfeed's claim?
-    Explain your reasoning in 1-2 sentences.
+-   arrange output by descending mean number of fish per stocking event (as in Exercise 4)
 
-    -   Your final visualization should contain a facet for each category.
-    -   Within each facet, there should be a bar for whether the laureate won the award in the US or not.
-    -   Each bar should have segments for whether the laureate was born in the US or not.
+-   (you do not need to assign this output to a new object)
 
-🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
-## Here's where those immigrant Nobelists were born
+6.  Insert a new labeled code chunk under Exercise 6 in your starter file to create a faceted line plot showing the annual total of the number of Chinook Salmon (CHS) and Brook Trout (BKT) stocked over each year of the dataset. Each facet should show data for a different lake, and the two salmon species should be colored differently. ,
 
-```{marginfigure}
-Note that your bar plot won't exactly match the one from the Buzzfeed article. This is likely because the data has been updated since the article was published.
-```
+This task required you to combine several data wrangling steps and data visualization steps in a single pipeline.
+The bullets below will help you:
 
-6.  In a single pipeline, filter for laureates who won their prize in the US, but were born outside of the US, and then create a frequency table (with the `count()` function) for their birth country (`born_country`) and arrange the resulting data frame in descending order of number of observations for each country. Which country is the most common?
+-   Pipe the original dataset into a filter function to select the species we need
+-   Then use group_by() piped into summarise() to compute the **annual** total (sum) number of fish stocked for each **fish species**, for each **lake** (you'll need to group by three variables to do this!)
+-   Pipe the output of summarize into ggplot() assigning YEAR to the x axis and your computed variable to the Y axis
+-   map SPECIES to the color aesthetic
+-   Specify the geometry for a line plot
+-   Facet your plot based on the single variable LAKE (remember there are two different facet functions)
+-   Finally, add a default theme (e.g., `+ theme_bw()`) of your choice
+-   And add clear labels (using `+ labs()`)
 
-🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
+Answer the following questions in the text narrative:
+
+-   Which of the two fish species were stocked at a higher rate?
+-   In which lake was fish stocking activities largest?
+-   In that same lake, roughly when did stocking reach its peak?
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
 Now go back through your write up to make sure you've answered all questions and all of your R chunks are properly labelled.
