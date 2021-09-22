@@ -43,10 +43,14 @@ LAKE, STATE_PROV, SPECIES are character strings.
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 3 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r eval = TRUE}
+salmon_stock <- salmon_stock %>%
+  mutate(
+    AVG_WEIGHT = WEIGHT / NO_STOCKED * 1000
+  )
+```
+
+The mutate function creates a new variable `AVG_WEIGHT` which is the average weight of the fish stocked, in grams, and is computed as NO_STOCKED divided by WEIGHT multiplied by 1000.
 
 ### Exercise 4
 

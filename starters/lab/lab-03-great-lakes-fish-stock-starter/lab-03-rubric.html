@@ -200,7 +200,11 @@ pre code {
 </div>
 <div id="exercise-3" class="section level3">
 <h3>Exercise 3</h3>
-<p>Remove this text, and add your answer for Exercise 3 here. Add code chunks as needed. Don’t forget to label your code chunk. Do not use spaces in code chunk labels.</p>
+<pre class="r"><code>salmon_stock &lt;- salmon_stock %&gt;%
+  mutate(
+    AVG_WEIGHT = WEIGHT / NO_STOCKED * 1000
+  )</code></pre>
+<p>The mutate function creates a new variable <code>AVG_WEIGHT</code> which is the average weight of the fish stocked, in grams, and is computed as NO_STOCKED divided by WEIGHT multiplied by 1000.</p>
 </div>
 <div id="exercise-4" class="section level3">
 <h3>Exercise 4</h3>
