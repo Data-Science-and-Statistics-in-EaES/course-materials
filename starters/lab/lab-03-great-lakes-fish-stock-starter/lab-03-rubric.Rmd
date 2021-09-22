@@ -43,7 +43,7 @@ LAKE, STATE_PROV, SPECIES are character strings.
 
 ### Exercise 3
 
-```{r eval = TRUE}
+```{r compute-average-weight, eval = TRUE}
 salmon_stock <- salmon_stock %>%
   mutate(
     AVG_WEIGHT = WEIGHT / NO_STOCKED * 1000
@@ -54,7 +54,16 @@ The mutate function creates a new variable `AVG_WEIGHT` which is the average wei
 
 ### Exercise 4
 
-...
+```{r eval = TRUE}
+salmon_stock %>% 
+  group_by(LAKE) %>% 
+  filter(YEAR > 2000) %>% 
+  summarize(MEAN_NO_STOCKED = mean(NO_STOCKED, na.rm = T),
+            MEAN_WEIGHT = mean(WEIGHT, na.rm = T)) %>% 
+  arrange(desc(MEAN_NO_STOCKED))
+```
+
+Lake Huron had the largest mean number of salmon stocked per event, and Lake Michigan has the largest mean weight of salmon stocked per event.
 
 ### Exercise 5
 

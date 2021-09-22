@@ -208,7 +208,21 @@ pre code {
 </div>
 <div id="exercise-4" class="section level3">
 <h3>Exercise 4</h3>
-<p>…</p>
+<pre class="r"><code>salmon_stock %&gt;% 
+  group_by(LAKE) %&gt;% 
+  filter(YEAR &gt; 2000) %&gt;% 
+  summarize(MEAN_NO_STOCKED = mean(NO_STOCKED, na.rm = T),
+            MEAN_WEIGHT = mean(WEIGHT, na.rm = T)) %&gt;% 
+  arrange(desc(MEAN_NO_STOCKED))</code></pre>
+<pre><code>## # A tibble: 5 × 3
+##   LAKE  MEAN_NO_STOCKED MEAN_WEIGHT
+##   &lt;chr&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+## 1 HU             68950.        448.
+## 2 SU             63032.        415.
+## 3 MI             48256.       1013.
+## 4 ER              9000.        374.
+## 5 SC               185.          0</code></pre>
+<p>Lake Huron had the largest mean number of salmon stocked per event, and Lake Michigan has the largest mean weight of salmon stocked per event.</p>
 </div>
 <div id="exercise-5" class="section level3">
 <h3>Exercise 5</h3>
