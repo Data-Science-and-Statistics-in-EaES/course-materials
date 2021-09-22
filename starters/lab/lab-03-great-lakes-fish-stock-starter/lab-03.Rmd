@@ -37,12 +37,21 @@ Do not use spaces in code chunk labels.
 
 ### Exercise 4
 
-...
+Remove this text, and add your answer for Exercise 4 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
 
 ### Exercise 5
 
-...
+Remove this text, and add your answer for Exercise 5 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
 
 ### Exercise 6
 
-...
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
