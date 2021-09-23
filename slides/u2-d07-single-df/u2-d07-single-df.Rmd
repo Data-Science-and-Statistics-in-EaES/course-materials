@@ -28,6 +28,147 @@ class: middle
 
 ---
 
+class: middle
+
+## What is tidy data?
+
+---
+
+class: middle
+
+## What is tidy data?
+
+### A data table (the unit of analysis) where each row is an observation and each column is a variable.
+
+---
+
+class: middle
+
+## What is data wrangling?
+
+---
+
+class: middle
+
+## What is data wrangling?
+
+### The manipulation of a data table into a tidy form that can be easily visualized and analyzed, using verb functions.
+
+---
+
+class: middle
+
+## What package do we use (primarily) for data wrangling?
+
+---
+
+class: middle
+
+## What package do we use (primarily) for data wrangling?
+
+### `dplyr`
+
+---
+
+class: middle
+
+## How do you load the wrangling package?
+
+---
+
+class: middle
+
+## How do you load the wrangling package?
+
+### `library(tidyverse)`
+### `library(dplyr)`
+
+---
+
+class: middle
+
+## What are the four rules of wrangling functions?
+
+---
+
+class: middle
+
+## What are the four rules of wrangling functions?
+
+### 1. 1st argument is data
+### 2. following arguments detail the action to be performed 
+### 3. input is always a data frame
+### 4. function does not alter original data frame (unless you assign it)
+
+---
+
+class: middle
+
+## What is the difference between piping and layering?
+
+---
+
+class: middle
+
+## What is the difference between piping and layering?
+
+### Piping (%>%) is sends the output from one line/function to the input of the next
+### e.g.  data_frame **%>%** select(...) **%>%** filter() **%>%** ggplot()...
+
+### Layering (+) is adding graphical layers to plots in ggplot()
+### e.g.  ggplot(data = ..., aes(x = x, y = y)) **+** geom_point() **+** facet_wrap(~...)
+
+---
+
+class: middle
+
+## What are the four functions we've covered so far?
+
+---
+
+class: middle
+
+## What are the four functions we've covered so far?
+
+### `select()` - pick/drop columns/variables by name
+### `slice()` - pick rows using index(es)
+### `arrange()` - reorder rows using variable values
+### `filter()` - pick rows matching certain criteria
+
+---
+
+## Handouts!
+
+### The handout covers some wrangling functions and logical operators 
+### You already have a handout for `ggplot()` (or ask me for the pdf!)
+
+---
+
+## A grammar of data wrangling...
+
+... based on the concepts of functions as verbs that manipulate data frames
+
+.pull-left[
+```{r dplyr-part-of-tidyverse, echo=FALSE, out.width="70%", caption = "dplyr is part of the tidyverse"}
+knitr::include_graphics("img/dplyr-part-of-tidyverse.png")
+```
+]
+.pull-right[
+.midi[
+- `select`: pick columns by name
+- `arrange`: reorder rows
+- `slice`: pick rows using index(es)
+- `filter`: pick rows matching criteria
+- `distinct`: filter for unique rows
+- `mutate`: add new variables
+- `summarise`: reduce variables to values
+- `group_by`: for grouped operations
+- ... (many more)
+]
+]
+
+---
+
 ## Data: Commercial Fish Production In The Great Lakes 1867-2015
 
 - Data on annual fish catch (weight in lbs) from the Great Lakes (Superior, Michigan, Huron, Erie, and Ontario)
