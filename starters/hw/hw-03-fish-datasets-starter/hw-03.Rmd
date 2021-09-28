@@ -31,14 +31,38 @@ Remove this text, and add your answer for Exercise 2 here.
 
 Remove this text, and add your answer for Exercise 3 here.
 
-```{r label-me-1}
-# remove this comment and add the code for Exercise 3 here
-```
-
 ### Exercise 4
 
 Remove this text, and add your answer for Exercise 4 here.
 
-```{r label-me-2}
-# remove this comment and add the code for Exercise 4 here
+### Exercise 5
+
+Remove this text, and add your answer for Exercise 5 here.
+
+### Code chunks provided
+
+Remember to change eval = FALSE, to eval = TRUE, when you are ready to run the code/knit the document.
+
+```{r finalize-fish-stock, eval = FALSE}
+fish_stock_yearly <- fish_stock_yearly %>% 
+  rename(year = YEAR) %>% 
+  mutate(stock_weight_yr_lbs = as.integer(STOCK_WEIGHT_YR * 0.454 / 1000)) %>% # 1 lb = 1 kg * 0.454
+  select(year, stock_weight_yr_lbs)
 ```
+
+```{r finalize-catch-data, eval = FALSE}
+catch_data <- catch_data %>% 
+  rename(catch_weight_yr_lbs = values)
+```
+
+### Exercise 6
+
+Remove this text, and add your answer for Exercise 6 here.
+
+### Exercise 7
+
+Remove this text, and add your answer for Exercise 7 here.
+
+### Exercise 8
+
+Remove this text, and add your answer for Exercise 8 here.
