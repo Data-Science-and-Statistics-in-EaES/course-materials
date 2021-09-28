@@ -91,8 +91,9 @@ If you need a refresher on what each variable is, look at the data dictionary at
 # Exercises
 
 In the first set of exercises, we want to wrangle the two data frames to prepare to merge them.
+The merged data table we want to end with will have a yearly total catch and stocking weight (in the same units (lbs)) for each lake.
 
-1. First, let's simplify our task by deciding what columns we want to retain from each dataset. Use `select()` to pick out `year`, `lake`, `region`, `species`, and `values` from `catch_data` and to pick out `YEAR`, `MONTH`, `LAKE`, `STATE_PROV`, `SPECIES`, and `WEIGHT` from `fish_stock`. Copy both code chunks below into the space for Exercise 1 in your hw-03.Rmd starter file, and complete it as indicated above.
+1.  First, let's simplify our task by deciding what columns we want to retain from each dataset. Use `select()` to pick out `year`, `lake`, `species`, and `grand_total` from `catch_data` and to pick out `YEAR`, `MONTH`, `LAKE`, `STATE_PROV`, `SPECIES`, and `WEIGHT` from `fish_stock`. Copy both empty code chunks below into the space for Exercise 1 in your hw-03.Rmd starter file, and complete it as indicated above. To save your output, use the assign operator (`<-`) to overwrite the original dataframe objects.
 
 ```{r catch-data-subset}
 # add your code here
@@ -101,6 +102,10 @@ In the first set of exercises, we want to wrangle the two data frames to prepare
 ```{r fish-stock-subset}
 # add your code here
 ```
+
+2.  Use `glimpse()` to look at your new datasets. To do this, create a new code chunk under Exercise 2 in your starter file.
+
+There are some differences between the two datasets that we need to address using some wrangling functions before we can merge these two data tables.
 
 Here's a at least three things we can see:
 
@@ -163,7 +168,7 @@ Below is the full data dictionary.
 -   `MONTH`: month of stocking, not always provided by agency
 -   `LAKE`: Great Lake, coded
 -   **ER (Lake Erie); HU (Huron); MI (Lake Michigan); ON (Lake Ontario); SC (Lake St. Clare); SU (Lake Superior)**
--   `STATE_PROVENCE`: state or province where stocking occurred, coded
+-   `STATE_PROV`: state or province where stocking occurred, coded
 -   **IL (Illinois); IN (Indiana); MI (Michigan); MN (Minnesota); NY (New York); OH (Ohio); ON (Ontario); PA (Pennsylvania); WI (Wisconsin)**
 -   `SPECIES`: species coded by naming convention
 -   `NO_STOCKED`: number of fish stocked

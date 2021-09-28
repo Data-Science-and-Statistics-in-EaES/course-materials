@@ -11,11 +11,25 @@ output: html_document
 library(tidyverse)
 ```
 
+```{r load-data, message = FALSE}
+catch_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
+
+fish_stock <- read_csv("data/great-lakes-fish-stock.csv")
+```
+
 ## Exercises
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
+```{r catch-data-subset}
+catch_data <- catch_data %>% 
+  select(year, lake, species, grand_total)
+```
+
+```{r fish-stock-subset}
+fish_stock <- fish_stock %>% 
+  select(-NO_STOCKED, -AGEMONTH)
+```
 
 ### Exercise 2
 
