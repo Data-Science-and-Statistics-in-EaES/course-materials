@@ -1,0 +1,98 @@
+---
+title: "Lab 03 - Great Lakes Fish Stocking"
+author: "Insert your name here"
+date: "Insert date here"
+output: html_document
+---
+
+### Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse) 
+```
+
+```{r load-data, message=FALSE}
+fish_stock <- read_csv("data/great-lakes-fish-stock.csv")
+```
+
+## Exercises
+
+### Exercise 1
+
+There are `r nrow(fish_stock)` observations and `r ncol(fish_stock)` variables in this dataset.
+Each row represents a fish stocking event in one of the Great Lakes.
+
+### Exercise 2
+
+```{r filter-stock-data, echo = FALSE, eval = TRUE}
+salmon_stock <- fish_stock %>%
+  filter(
+    SPECIES %in% c("ATS", "CHS", "COS"),
+    !is.na(WEIGHT),
+     LAKE != "ON"
+  )
+```
+
+```{r summarize-new-data}
+glimpse(salmon_stock)
+```
+
+The new data frame `salmon_stock` contains 5,131 rows, 8 columns (variables).
+YEAR, MONTH, NO_STOCKED, AGEMONTH and WEIGHT are numerical.
+LAKE, STATE_PROV, SPECIES are character strings.
+
+### Exercise 3
+
+```{r compute-average-weight, eval = TRUE}
+salmon_stock <- salmon_stock %>%
+  mutate(
+    AVG_WEIGHT = WEIGHT / NO_STOCKED * 1000
+  )
+```
+
+The mutate function creates a new variable `AVG_WEIGHT` which is the average weight of the fish stocked, in grams, and is computed as NO_STOCKED divided by WEIGHT multiplied by 1000.
+
+### Exercise 4
+
+```{r eval = TRUE}
+salmon_stock %>% 
+  group_by(LAKE) %>% 
+  filter(YEAR > 2000) %>% 
+  summarize(MEAN_NO_STOCKED = mean(NO_STOCKED, na.rm = TRUE),
+            MEAN_WEIGHT = mean(WEIGHT, na.rm = TRUE)) %>% 
+  arrange(desc(MEAN_NO_STOCKED))
+```
+
+Lake Huron had the largest mean number of salmon stocked per event, and Lake Michigan has the largest mean weight of salmon stocked per event.
+
+### Exercise 5
+
+```{r combine-chunks-trout}
+fish_stock %>% 
+  filter(SPECIES %in% c("BKT", "BRN", "LAT", "RBT", "TRT"),
+         !is.na(WEIGHT),
+         LAKE != "ON") %>% 
+  mutate(AVG_WEIGHT = WEIGHT / NO_STOCKED * 1000) %>% 
+  group_by(LAKE) %>% 
+  summarize(MEAN_NO_STOCKED = mean(NO_STOCKED, na.rm = TRUE),
+            MEAN_WEIGHT = mean(WEIGHT, na.rm = TRUE)) %>% 
+  arrange(desc(MEAN_NO_STOCKED))
+```
+
+### Exercise 6
+
+```{r plot-salmon-weight-over-time}
+fish_stock %>% 
+  filter(SPECIES %in% c("CHS", "BKT")) %>% 
+  group_by(LAKE, SPECIES, YEAR) %>% 
+  summarize(ANNUAL_NO_STOCKED = sum(NO_STOCKED, na.rm = TRUE)) %>% 
+  ggplot(aes(x = YEAR, y = ANNUAL_NO_STOCKED, color = SPECIES)) +
+  geom_line() +
+  facet_wrap(~LAKE) +
+  theme_bw() +
+  labs(x = "Year", y = "Fish Stocked per Year")
+```
+
+Chinook Salmon are stocked at a higher rate than Brook Trout.
+Chinook Salmon stocking was largest in Lake Michigan.
+Chinook Salmon stocking in Lake Michigan peaked around 1980-1990.
