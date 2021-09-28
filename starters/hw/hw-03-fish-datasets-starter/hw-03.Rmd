@@ -1,15 +1,14 @@
 ---
-title: "HW 02 - Road traffic accidents"
+title: "HW 03 - Great Lakes Fish Datasets"
 author: "Insert your name here"
 date: "Insert date here"
-output: github_document
+output: html_document
 ---
 
 ## Load packages and data
 
 ```{r load-packages, message = FALSE}
 library(tidyverse)
-library(dsbox)
 ```
 
 ## Exercises
