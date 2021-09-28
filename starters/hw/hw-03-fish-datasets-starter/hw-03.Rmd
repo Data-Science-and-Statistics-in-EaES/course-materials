@@ -21,15 +21,7 @@ fish_stock <- read_csv("data/great-lakes-fish-stock.csv")
 
 ### Exercise 1
 
-```{r catch-data-subset}
-catch_data <- catch_data %>% 
-  select(year, lake, species, grand_total)
-```
-
-```{r fish-stock-subset}
-fish_stock <- fish_stock %>% 
-  select(-NO_STOCKED, -AGEMONTH)
-```
+Remove this text, and add your answer for Exercise 1 here.
 
 ### Exercise 2
 

@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo from Great Lakes Fishing Database", eval = TRUE}
-knitr::include_graphics("img/stocking.jpg")
+knitr::include_graphics("img/stocking.jpeg")
 ```
 
 For Homework-03 you'll continue using the [Great Lakes Database](http://www.glfc.org/great-lakes-databases.php) and [Great Lakes Fish Stocking database](http://www.glfc.org/fishstocking/index.htm).
@@ -30,8 +30,8 @@ Fish and Wildlife Service.
 # Learning goals
 
 -   More practice data wrangling and data visualization
--   Practice using join functions to merge dataframes
--   Practice using pivot functions to make dataframes longer or wider
+-   Practice using join functions to merge data frames
+-   Practice using pivot functions to make data frames longer or wider
 
 # Getting started
 
@@ -39,7 +39,7 @@ If you're looking at these instructions you've already done the following steps,
 
 -   Go to the course GitHub organization and locate your Unit 3 repo, which should be named `unit-3-YOUR_LAST_NAME`.
 -   Grab the URL of the repo, and clone it in RStudio.
--   First, open the R Markdown instructions `hw-O3-fish-stocking.Rmd` and the lab starter `hw-03.Rmd` and Knit them
+-   First, open the R Markdown instructions `hw-O3-fish-databases.Rmd` and the lab starter `hw-03.Rmd` and Knit them
 -   Make sure they compile without errors.
 
 ## Warm up
@@ -82,7 +82,7 @@ glimpse(catch_data)
 
 Next, look at `fish_stock` with the following code chunk:
 
-```{r glimpse-catch}
+```{r glimpse-stock}
 glimpse(fish_stock)
 ```
 
@@ -90,61 +90,159 @@ If you need a refresher on what each variable is, look at the data dictionary at
 
 # Exercises
 
-In the first set of exercises, we want to wrangle the two data frames to prepare to merge them.
-The merged data table we want to end with will have a yearly total catch and stocking weight (in the same units (lbs)) for each lake.
+**The goal of the following exercises is to create a merged data table where each row will provide a yearly total catch and stocking weight for Chinook Salmon (in the same units (lbs)) for Lake Michigan.** Before we can merge the data frames, we need to do some wrangling to get them into compatible formats.
 
-1.  First, let's simplify our task by deciding what columns we want to retain from each dataset. Use `select()` to pick out `year`, `lake`, `species`, and `grand_total` from `catch_data` and to pick out `YEAR`, `MONTH`, `LAKE`, `STATE_PROV`, `SPECIES`, and `WEIGHT` from `fish_stock`. Copy both empty code chunks below into the space for Exercise 1 in your hw-03.Rmd starter file, and complete it as indicated above. To save your output, use the assign operator (`<-`) to overwrite the original dataframe objects.
+1.  First, let's simplify our task by deciding what columns we want to retain from each dataset. Use `select()` to pick out `year`, `lake`, `species`, `region`, and `values` from `catch_data` and to pick out `YEAR`, `MONTH`, `LAKE`, `STATE_PROV`, `SPECIES`, and `WEIGHT` from `fish_stock`. Copy both empty code chunks below into the space for Exercise 1 in your hw-03.Rmd starter file, and complete it as indicated above. To save your output, use the assign operator (`<-`) to overwrite the original dataframe objects.
 
 ```{r catch-data-subset}
-# add your code here
+# copy this chunk from the instructions into the starter, and complete
 ```
 
 ```{r fish-stock-subset}
-# add your code here
+# copy this chunk from the instructions into the starter, and complete
 ```
 
-2.  Use `glimpse()` to look at your new datasets. To do this, create a new code chunk under Exercise 2 in your starter file.
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
-There are some differences between the two datasets that we need to address using some wrangling functions before we can merge these two data tables.
+1.  Use `glimpse()` to look at your new data frames. To do this, create a new code chunk under Exercise 2 in your starter file. Remember to include a code chunk label.
 
-Here's a at least three things we can see:
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
-`catch_data` - Each row is a **yearly total** - The variables are all **lower case** - The lake names are spelled out (e.g., "Michigan")
+Next, let's simplify both datasets even further, so that they only contain U.S. state/region fish catch and stock event information for one fish species, **Chinook Salmon** (coded "CHS" in the `fish_stock` dataset), and one lake, **Michigan** (coded "MI" in the `fish_stock` dataset).
 
-`fish_stock` - Each row is a **year-month** combination (during which fish stocking occurred) - The variable names are all **upper case** - The lake names are abbreviated (e.g., "MU")
+1.  Copy the two code chunks below and complete them under Exercise 3 in the starter file. Remember, change `eval` to TRUE in the starter file, to make sure the chunk runs.
 
-1.  How many observations (rows) does the dataset have?
-    Instead of hard coding the number in your answer, use inline code.
-
-2.  Run `View(accidents)` in your Console to view the data in the data viewer.
-    What does each row in the dataset represent?
-
-🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
-
-3.  Recreate the following plot, and describe in context of the data. In your answer, don't forget to label your R chunk as well (where it says `label-me-1`). Your label should be short, informative, shouldn't include spaces, and shouldn't shouldn't repeat a previous label.
-
-```{r eval = TRUE, echo = FALSE, fig.fullwidth = TRUE}
-accidents %>%
-  mutate(day_of_week_type = if_else(day_of_week %in% c("Saturday", "Sunday"), "Weekend", "Weekday")) %>%
-  ggplot(aes(x = time, fill = severity)) +
-  geom_density(alpha = 0.5) +
-  facet_wrap(~day_of_week_type, ncol = 1) +
-  theme_minimal() +
-  scale_fill_viridis_d() +
-  labs(
-    title = "Number of accidents throughout the day",
-    subtitle = "By day of week and severity",
-    x = "Time of day",
-    y = "Density",
-    fill = "Severity"
-  )
+```{r filter-catch, eval = FALSE}
+catch_data <- catch_data %>% 
+  filter(region == "U.S. Total",
+         species == "___",
+         lake == "___")
 ```
 
-🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
+```{r filter-stock, eval = FALSE}
+fish_stock <- fish_stock %>% 
+  filter(___ %in% c("MI", "WI", "IL", "IN"),
+         SPECIES == "___",
+         LAKE == "MI")
+```
 
-4.  Create another data visualisation based on these data and interpret it. You can choose any variables and any type of visualisation you like, but it must have at least three variables, e.g. a scatterplot of x vs. y isn't enough, but if points are coloured by z, that's fine. In your answer, don't forget to label your R chunk as well (where it says `label-me-2`).
+1.  Using in-line code within three separate statements, state how many rows (observations) are in each data set and which is the first (min) and last (max) year. Hint: remember to select a particular variable from a dataframe use the `$` sign. For instance: `data_frame$variable_name`.
 
-🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+You might have noticed that one dataset has many more rows than the other.
+Why might this be?
+Remember that each row of the `fish_stock` dataset is a stocking event in a particular year and month.
+
+Our next step to get these data frames ready to be merged is to compute annual sums for the Chinook Salmon stocking events in `fish_stock`.
+After this step, each row in both datasets will correspond with one year of fishing/stocking.
+
+1.  Write a code chunk under Exercise 6 in the starter file that combines `group_by()` and `summarise()` to perform this calculation. The summary variable name should be `STOCK_WEIGHT_YR` and is calculated as the sum of the `WEIGHT` column. Save the output data frame as `fish_stock_yearly`. Remember to label the chunk and to remove any NAs from your calculation.
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+There are still some differences between the two data frames that we need to address using some wrangling functions before we can merge these two data tables.
+
+Here are two differences:
+
+-   `catch_data`: The variables are all **lower case** - The `values` variable is in units of 1000s of lbs
+
+-   `fish_stock`: The variable names are all **UPPER CASE** - The `STOCK_WEIGHT_YR` variable is in units of kgs
+
+Review the following two code chunks and think about what they will do.
+They are also provided for you in your starter file after Exercise 5.
+Run them and view the output to confirm that the two data frames are now compatible.
+
+```{r finalize-fish-stock, eval = FALSE}
+fish_stock_yearly <- fish_stock_yearly %>% 
+  rename(year = YEAR) %>% 
+  mutate(stock_weight_yr_lbs = as.integer(STOCK_WEIGHT_YR * 0.454 / 1000)) %>% # 1 lb = 1 kg * 0.454
+  select(year, stock_weight_yr_lbs)
+```
+
+```{r finalize-catch-data, eval = FALSE}
+catch_data <- catch_data %>% 
+  rename(catch_weight_yr_lbs = values)
+```
+
+Our two datasets are now ready to be merged using a join function.
+
+1.  Copy and complete the 6 code chunks under Exercise 6 in your starter file to join these two data sets in 6 different ways (i.e. using `left_join()`, `right_join()`, `inner_join()`, `full_join()`, and `anti_join()` (in two different ways)). Look at the output of each chunk, and write a short narrative response about what the join function did. (I.e., Which rows were retained in the output data frame and why? What did R do when one of the two data frames did not contain a particular row?)
+
+```{r left-join}
+# add your code
+```
+
+Add narrative here.
+
+```{r right-join}
+# add your code
+```
+
+Add narrative here.
+
+```{r inner-join}
+# add your code
+```
+
+Add narrative here.
+
+```{r full-join}
+# add your code
+```
+
+Add narrative here.
+
+**For these last two examples we provide the code, just write narrative for both**
+
+```{r anti-join-v1, eval = FALSE}
+catch_data %>% 
+  anti_join(fish_stock_yearly)
+```
+
+Add narrative here.
+
+```{r anti-join-v2, eval = FALSE}
+fish_stock_yearly %>% 
+  anti_join(catch_data)
+```
+
+Add narrative here.
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+We can still tidy up our output a little more.
+Since both the catch and stocking weight columns are in units of 1000s of lbs, we can add both those columns of numerical values to single column named `weight_lbs` and create a new index column that specifies whether the row is `catch_weight_yr_lbs` or `stock_weight_yr_lbs`.
+We can do this using `pivot_longer()`.
+
+1.  Copy and complete the code chunk below under Exercise 7 in your starter file to make the data longer (and more tidy!). Remember to change eval = TRUE to run in your starter file.
+
+```{r pivot-longer, eval = FALSE}
+catch_data %>% 
+  left_join(___) %>% 
+  ___(names_to = "activity",
+               values_to = "___",
+               cols = 5:6)
+```
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+Almost finished!
+For the last exercise, let's add to our pipeline from the previous exercise and visualize the stocking and fish catch variables.
+
+1.  Copy the code chunk below into Exercise 8 in your starter file. This code chunk should join the two datsets so that all the rows from `catch_data` are retained, then pivot_longer as in Exercise 7, then pipe the data into a `ggplot()` function. Map `year` to the x axis and`weight_lbs` to the y axis, and map `activity` to the color aesthetic. Then add (`+`) a geom layer for line plots, and finally add a clean theme layer such as `theme_bw()`. With a single sentence, describe the trends over time since the early 1990s in the stocking and fish catch size for Lake Michigan.
+
+```{r final-visualization, eval = FALSE}
+catch_data %>% 
+  left_join(___) %>% 
+  ___(names_to = "activity",
+               values_to = "___",
+               cols = 5:6)
+```
+
+Great work!
+You are finished with Homework 3!
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
 ## Data dictionary
 
@@ -164,13 +262,13 @@ Below is the full data dictionary.
 
 ### great-lakes-fish-stock.csv (`fish_stock`)
 
--   `YEAR`: year of stocking, YYYY
--   `MONTH`: month of stocking, not always provided by agency
--   `LAKE`: Great Lake, coded
--   **ER (Lake Erie); HU (Huron); MI (Lake Michigan); ON (Lake Ontario); SC (Lake St. Clare); SU (Lake Superior)**
--   `STATE_PROV`: state or province where stocking occurred, coded
--   **IL (Illinois); IN (Indiana); MI (Michigan); MN (Minnesota); NY (New York); OH (Ohio); ON (Ontario); PA (Pennsylvania); WI (Wisconsin)**
--   `SPECIES`: species coded by naming convention
--   `NO_STOCKED`: number of fish stocked
--   `AGEMONTH`: age in months, not always provided by agency
--   `WEIGHT`: total weight of fish stocked in kilograms
+| variable   | class     | description                                            |
+|:-----------|:----------|:-------------------------------------------------------|
+| YEAR       | double    | year of stocking, YYYY                                 |
+| MONTH      | double    | month of stocking, not always provided by agency       |
+| LAKE       | character | Great Lake, abbreviated                                |
+| STATE_PROV | character | state or province where stocking occurred, abbreviated |
+| SPECIES    | character | species coded by naming convention, abbreviated        |
+| NO-STOCKED | double    | number of fish stocked                                 |
+| AGEMONTH   | double    | age in months, not always provided by agency           |
+| WEIGHT     | double    | total weight of fish stocked in kilograms              |

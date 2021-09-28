@@ -1,0 +1,173 @@
+---
+title: "HW 03 - Great Lakes Fish Datasets"
+author: "Insert your name here"
+date: "Insert date here"
+output: html_document
+---
+
+## Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+```
+
+```{r load-data, message = FALSE}
+catch_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
+
+fish_stock <- read_csv("data/great-lakes-fish-stock.csv")
+```
+
+## Exercises
+
+### Exercise 1
+
+```{r catch-data-subset}
+catch_data <- catch_data %>% 
+  select(year, lake, species, region, values)
+```
+
+```{r fish-stock-subset}
+fish_stock <- fish_stock %>% 
+  select(-NO_STOCKED, -AGEMONTH)
+```
+
+**Half point for each correct and labeled code chunk. selection method can vary as along as correct variables are selected (MAX 1)**
+
+### Exercise 2
+
+```{r glimipse-datasets}
+glimpse(catch_data)
+glimpse(fish_stock)
+```
+
+**Half point for using glimpse in labeled code chunk (MAX 0.5)**
+
+### Exercise 3
+
+```{r filter-catch, eval = TRUE}
+catch_data <- catch_data %>% 
+  filter(region == "U.S. Total",
+         species == "Chinook Salmon",
+         lake == "Michigan")
+```
+
+```{r filter-stock, eval = TRUE}
+fish_stock <- fish_stock %>% 
+  filter(STATE_PROV %in% c("MI", "WI", "IL", "IN"),
+         SPECIES == "CHS",
+         LAKE == "MI")
+```
+
+**Half point for each correct chunk (MAX 1)**
+
+### Exercise 4
+
+There are now `r nrow(catch_data)` rows in the `catch_data` dataset, and `r nrow(fish_stock)` rows in the `fish_stock` dataset.
+The earliest year in the `catch_data` dataset is `r min(catch_data$year)` and the most recent year was `r max(catch_data$year)`.
+The earliest year in the `fish_stock` dataset is `r min(fish_stock$YEAR)` and the most recent year was `r max(fish_stock$YEAR)`.
+
+**Half point for each correct statement using inline code (MAX 1.5)**
+
+### Exercise 5
+
+```{r compute-annual-stocking}
+fish_stock_yearly <- fish_stock %>% 
+  group_by(YEAR) %>% 
+  summarize(STOCK_WEIGHT_YR = sum(WEIGHT, na.rm = TRUE))
+```
+
+**Half point each for label, correct use of group_by and correct use of summarize calculation, and assigning to correct new object name (MAX 1.5)**
+
+### Code chunks provided
+
+```{r finalize-fish-stock, eval = TRUE}
+fish_stock_yearly <- fish_stock_yearly %>% 
+  rename(year = YEAR) %>% 
+  mutate(stock_weight_yr_lbs = as.integer(STOCK_WEIGHT_YR * 0.454 / 1000)) %>% # 1 lb = 1 kg * 0.454
+  select(year, stock_weight_yr_lbs)
+```
+
+```{r finalize-catch-data, eval = TRUE}
+catch_data <- catch_data %>% 
+  rename(catch_weight_yr_lbs = values)
+```
+
+### Exercise 6
+
+```{r left-join}
+catch_data %>% 
+  left_join(fish_stock_yearly)
+```
+
+Rows from `catch_data` were retained and `stock_weight_yr_lbs` was added for each row.
+
+```{r right-join}
+catch_data %>% 
+  right_join(fish_stock_yearly)
+```
+
+Rows from `fish_stock_yearly` were retained.
+For any rows that were missing in `catch_data`, the `catch_weight_yr_lbs` column was filled with NAs/missing values.
+
+```{r inner-join}
+catch_data %>% 
+  inner_join(fish_stock_yearly)
+```
+
+Rows present in both `catch_data` and `fish_stock_yearly` were retained and `stock_weight_yr_lbs` was added for each row.
+Same output at `left_join()` but for slightly different reason.
+
+```{r full-join}
+catch_data %>% 
+  full_join(fish_stock_yearly)
+```
+
+All rows present in either `catch_data` or `fish_stock_yearly` were retained and NAs were added for any missing stock or catch data.
+Same output at `right_join()` but for slightly different reason.
+
+**First 4: 1/4 point for each correct pipeline AND explanation of which rows are retained by function.**
+
+```{r anti-join-v1}
+catch_data %>% 
+  anti_join(fish_stock_yearly)
+```
+
+Zero rows were retained as none were present in `catch_data` that did not also appear in `fish_stock_yearly` were retained.
+
+```{r anti-join-v2}
+fish_stock_yearly %>% 
+  anti_join(catch_data)
+```
+
+All rows were retained from `fish_stock_yearly` that were not present in `catch_data`.
+
+**Last 2: 1.4 point for each correct explanation of which rows were retained (MAX 1.5)**
+
+### Exercise 7
+
+```{r pivot-longer}
+catch_data %>% 
+  left_join(fish_stock_yearly) %>% 
+  pivot_longer(names_to = "activity",
+               values_to = "weight_lbs",
+               cols = 5:6)
+```
+
+**Half point each for correctly completing left_join and pivot_longer (MAX 1.0)**
+
+### Exercise 8
+
+```{r final-visualization}
+catch_data %>% 
+  left_join(fish_stock_yearly) %>% 
+  pivot_longer(names_to = "activity",
+               values_to = "weight_lbs",
+               cols = 5:6) %>% 
+  ggplot(aes(x = year, y = weight_lbs, color = activity)) +
+  geom_line() +
+  theme_bw()
+```
+
+The stocking rate has stayed fairly constant sinc ehte 90s, whereas the catch rate peaked sharply in the mid-90s and has dropped since, to less than 1000 lbs in 2015.
+
+\*\*Half point each for mapping aesthetics, adding geometries, adding theme layer, and interpreting (MAX 2)\*
