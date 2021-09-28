@@ -1,5 +1,5 @@
 ---
-title: "HW 03 - Road traffic accidents"
+title: "HW 03 - great Lakes Fish Stocking"
 output: 
   tufte::tufte_html:
     css: ../hw.css
@@ -18,8 +18,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo by Clark Van Der Beken on Unsplash", eval = TRUE}
-knitr::include_graphics("img/accident.jpg")
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Photo from Great Lakes Fishing Database", eval = TRUE}
+knitr::include_graphics("img/stocking.jpg")
 ```
 
 In this assignment we'll look at traffic accidents in Edinburgh.
