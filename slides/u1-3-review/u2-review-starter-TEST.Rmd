@@ -48,7 +48,8 @@ In `density` each row is the density of a particular mineral In `site_descriptio
 ### Exercise 3
 
 ```{r join-mineral-properties}
-
+sand_minerals %>% 
+  left_join(density)
 ```
 
 ### Exercise 4
