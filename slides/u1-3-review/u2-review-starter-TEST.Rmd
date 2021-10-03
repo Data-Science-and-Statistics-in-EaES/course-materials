@@ -36,6 +36,9 @@ Each row is a sand grain mineral observed at a particular location (one of ten).
 glimpse(density)
 glimpse(site_descriptions)
 glimpse(solubility_hardness)
+names(density)
+names(site_descriptions)
+names(solubility_hardness)
 ```
 
 density has 3 rows and 2 columns, site_descriptions has 10 rows and 2 columns, solubility_hardness has 3 rows and 3 columns
