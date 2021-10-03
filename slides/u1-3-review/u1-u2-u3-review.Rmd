@@ -72,7 +72,8 @@ class: middle
 - We will provide a numbered list prompt.
     
 - Pick someone to go first (next birthday?)
-    1. **If it's your turn:** Write code for the first item. Knit, commit *with a message*, and push!
+    1. **If it's your turn:** Write code for the first item. Knit, commit *with a message*, and push! 
+    -   **(Suggestion: "completed exercise 1.1" for Exercise 1 bullet 1)**
     2. **Everyone else:** pull the changes from GitHub. 
     3. **Next person clockwise:** Write code for the next item. Knit, commit and push!
     4. Keep going until you complete the exercise. Check it runs!
@@ -80,7 +81,7 @@ class: middle
     
 - NOTES: Help the person who is making, committing, and pushing changes.
 - At least one person must be connected to the Zoom (to share screen later)
-- If you are joining remotely, work on an `unit2-review-exercises-GROUP#`
+- If you are joining remotely, work on an `unit2-review-exercises-GROUP#` independently
 
 ---
 
@@ -114,11 +115,12 @@ Four data frames (which we will wrangle, join, pivot, and visualize!):
 
 ---
 
-## Exercise 1: Inpsect the first data frame
+## Exercise 1: Inspect the first data frame
 
 Under Exercise 1 in your starter file:
 
 1. Delete existing text, insert and label a code chunk named `inspect-sand-minerals`
+  - (Edit, knit, commit, push)
 2. Add a line of code that outputs a "glimpse" of the `sand-minerals` data ;)
 3. Add text narrative below the chunk stating the number of observations and rows.
 4. Add text stating what each row is (exactly!)
