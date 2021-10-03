@@ -33,7 +33,9 @@ Each row is a sand grain mineral observed at a particular location (one of ten).
 ### Exercise 2
 
 ```{r inspect-other-dataframes}
-
+glimpse(density)
+glimpse(site_descriptions)
+glimpse(solubility_hardness)
 ```
 
 ### Exercise 3
