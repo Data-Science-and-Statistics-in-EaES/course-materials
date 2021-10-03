@@ -38,6 +38,8 @@ glimpse(site_descriptions)
 glimpse(solubility_hardness)
 ```
 
+density has 3 rows and 2 columns, site_descriptions has 10 rows and 2 columns, solubility_hardness has 3 rows and 3 columns
+
 ### Exercise 3
 
 Remove this text, and add your answer for Exercise 3 here.
