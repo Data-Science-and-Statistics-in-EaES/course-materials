@@ -122,9 +122,27 @@ Under Exercise 1 in your starter file:
 1. Delete existing text, insert and label a code chunk named `inspect-sand-minerals`
   - (Edit, knit, commit, push)
 2. Add a line of code that outputs a "glimpse" of the `sand-minerals` data ;)
-3. Add text narrative below the chunk stating the number of observations and rows.
+3. Add text narrative below the chunk stating the number of rows and variables
 4. Add text stating what each row is (exactly!)
 5. Add a second line of code within the original code chunk that outputs the variable names
+
+Remember: 
+- 1 person: Edit, knit, commit, push
+- Everyone: Pull changes and inspect
+- Next person: Edit, knit commit push...
+
+---
+
+## Exercise 2: Inspect the other three data frames
+
+Under Exercise 2 in your starter file:
+
+1. Delete existing text, insert and label a code chunk named `inspect-other-dataframes`
+2. Add three line of code that outputs a "glimpse" of the other three data frames ;)
+    - `density`, `solubility_hardness` and `site_descriptions`
+3. Add text narrative below the chunk stating the number of rows and variables for each data frame
+4. Add text stating what each row is (exactly!) in each data frame
+5. Add a fourth, fifth, and sixth line of code within the original code chunk that outputs the variable names
 
 Remember: 
 - 1 person: Edit, knit, commit, push
