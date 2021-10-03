@@ -24,6 +24,7 @@ solubility_hardness <- read_csv("data/solubility-hardness.csv")
 
 ```{r inspect-sand-minerals}
 glimpse(sand_minerals)
+names(sand_minerals)
 ```
 
 There are 23 rows and 2 columns (variables).
