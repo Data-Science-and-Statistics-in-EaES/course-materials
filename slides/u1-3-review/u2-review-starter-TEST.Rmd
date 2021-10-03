@@ -27,6 +27,7 @@ glimpse(sand_minerals)
 ```
 
 There are 23 rows and 2 columns (variables).
+Each row is a sand grain mineral observed at a particular location (one of ten).
 
 ### Exercise 2
 
