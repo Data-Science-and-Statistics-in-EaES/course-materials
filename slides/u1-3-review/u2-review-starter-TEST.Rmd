@@ -48,9 +48,11 @@ In `density` each row is the density of a particular mineral In `site_descriptio
 ### Exercise 3
 
 ```{r join-mineral-properties}
-sand_minerals %>% 
+sand_mineral_density <- sand_minerals %>% 
   left_join(density)
 ```
+
+The output data frame still has 23 rows, the same as `sand_minerals`.
 
 ### Exercise 4
 
