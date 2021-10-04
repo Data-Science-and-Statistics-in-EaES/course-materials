@@ -98,7 +98,7 @@ Four data frames (which we will wrangle, join, pivot, and visualize!):
 1. `sand_minerals`: mineral types found in sand grains across 10 sites
 2. `density`: the density of each mineral
 3. `solubility_hardness`: the solubility and hardness of each mineral
-4. `site_descriptions`: text descriptions of each site's location
+4. `location_descriptions`: text descriptions of each location
 
 ---
 
@@ -133,19 +133,13 @@ Remember:
 
 ---
 
-class: middle
-
-# Exercise 1 Solution
-
----
-
 ## Exercise 2: Inspect the other three data frames
 
 Under Exercise 2 in your starter file:
 
 1. Delete existing text, insert and label a code chunk named `inspect-other-dataframes`
 2. Add three line of code that outputs a "glimpse" of the other three data frames ;)
-    - `density`, `solubility_hardness` and `site_descriptions`
+    - `density`, `solubility_hardness` and `location_descriptions`
 3. Add text narrative below the chunk stating the number of rows and variables for each data frame
 4. Add text stating what each row is (exactly!) in each data frame
 5. Add a fourth, fifth, and sixth line of code within the original code chunk that outputs the variable names
@@ -157,15 +151,15 @@ Remember:
 
 ---
 
-## Exercise 3: Join `density` to `sand_minerals`, then join `solubility_hardness`
+## Exercise 3: Practice joining 
 
 Under Exercise 3 in your starter file:
 
-1. Delete existing text, insert and label a code chunk named `join-minerals-density`
-2. Write a pipeline to to join `density` to `sand_mineral`, retaining all rows in `sand_minerals`
-3. Assign the output to a new data frame object named `sand_mineral_density`
-4. Write a pipeline to to join `solubility_hardness` to `sand_mineral_density`, retaining all rows in `sand_minerals`
-5. Assign the output to a new data frame object named `sand_mineral_properties`
+1. Delete existing text, insert and label a code chunk named `join-mineral-properties`
+2. Write a pipeline to to join `density` to `sand_minerals`, retaining all rows in `sand_minerals`
+3. State in narrative below the chunk how many rows the output has. Is it the same as `sand_minerals`? Assign the output to a new data frame object named `sand_mineral_density`
+4. Write a second pipeline beneath the last one to join `solubility_hardness` to `sand_mineral_density`, retaining all rows in `sand_mineral_density`
+5. Assign the output to a new data frame object named `sand_mineral_properties`. 
 
 Remember: 
 - 1 person: Edit, knit, commit, push
@@ -173,6 +167,57 @@ Remember:
 - Next person: Edit, knit commit push...
 
 ---
+
+## Exercise 4: Single data frame wrangling
+
+Under Exercise 4 in your starter file:
+
+1. Delete existing text, insert and label a code chunk that outputs the number of sand grains observed per location (starting with `sand_mineral_properties`)
+2. Insert and label a second chunk to slice out just the bottom 10 rows of the same data frame
+3. Insert and label a third chunk to arrange by density in descending order and then slice out just the bottom 10 rows of the same data frame 
+4. Insert and label a fourth chunk to select for the first and last column, and then slice out just the bottom 5 rows of the data frame 
+5. Insert and label a final chunk to filter to *remove* NAs in the `hardness` column, arrange by density in descending order, then slice out just the top 5 rows of the data frame
+
+Remember: 
+- 1 person: Edit, knit, commit, push
+- Everyone: Pull changes and inspect
+- Next person: Edit, knit commit push...
+
+---
+
+## Exercise 5: Single data frame wrangling
+
+Under Exercise 5 in your starter file:
+
+1. Delete existing text, insert and label a code chunk that outputs the distinct values of the column `density`
+2. Insert and label a second chunk that outputs that counts the number of each `minerals` type observed
+3. Insert and label a third chunk that adds a new variable called `density_1000` equal to the density column divided by 1000
+4. Insert and label a fourth chunk that outputs a summary table showing the mean of the `density` values *across all rows*
+5. Insert and label a final chunk that outputs a summary table showing the mean of the `density` values *grouped by location*
+
+Remember: 
+- 1 person: Edit, knit, commit, push
+- Everyone: Pull changes and inspect
+- Next person: Edit, knit commit push...
+
+---
+
+
+## Exercise 6: Pivoting data
+
+Under Exercise 6 in your starter file:
+
+1. Delete existing text, insert and label a code chunk takes `sand_minerals` as input and pivots the data frame *wider*
+2. Add a new line of code to the chunk that pivots the data frame *longer* again
+3. Insert and label a second chunk that takes `sand_mineral_density` as input and pivots the data frame *wider where each new column is a mineral type and each row is a density*
+
+Remember: 
+- 1 person: Edit, knit, commit, push
+- Everyone: Pull changes and inspect
+- Next person: Edit, knit commit push...
+
+---
+
 
 .center[
 .large[
