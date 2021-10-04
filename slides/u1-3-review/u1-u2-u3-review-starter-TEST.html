@@ -188,15 +188,46 @@ solubility_hardness &lt;- read_csv(&quot;data/solubility-hardness.csv&quot;)</co
 ## Columns: 2
 ## $ location &lt;dbl&gt; 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 9, 1…
 ## $ minerals &lt;chr&gt; &quot;Quartz&quot;, &quot;Feldspar&quot;, &quot;Quartz&quot;, &quot;Feldspar&quot;, &quot;Quartz&quot;, &quot;Feldsp…</code></pre>
-<p>There are 23 rows and 2 columns (variables).</p>
+<pre class="r"><code>names(sand_minerals)</code></pre>
+<pre><code>## [1] &quot;location&quot; &quot;minerals&quot;</code></pre>
+<p>There are 23 rows and 2 columns (variables). Each row is a sand grain mineral observed at a particular location (one of ten).</p>
 </div>
 <div id="exercise-2" class="section level3">
 <h3>Exercise 2</h3>
-<p>Remove this text, and add your answer for Exercise 2 here. Add code chunks as needed. Don’t forget to label your code chunk. Do not use spaces in code chunk labels.</p>
+<pre class="r"><code>glimpse(density)</code></pre>
+<pre><code>## Rows: 3
+## Columns: 2
+## $ minerals &lt;chr&gt; &quot;Quartz&quot;, &quot;Feldspar&quot;, &quot;Biotite&quot;
+## $ density  &lt;dbl&gt; 2.65, 2.56, 3.09</code></pre>
+<pre class="r"><code>glimpse(site_descriptions)</code></pre>
+<pre><code>## Rows: 10
+## Columns: 2
+## $ location &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+## $ loc_desc &lt;chr&gt; &quot;near_water&quot;, &quot;near_water&quot;, &quot;near_water&quot;, NA, &quot;valley_floor&quot;,…</code></pre>
+<pre class="r"><code>glimpse(solubility_hardness)</code></pre>
+<pre><code>## Rows: 3
+## Columns: 3
+## $ minerals   &lt;chr&gt; &quot;Quartz&quot;, &quot;Feldspar&quot;, &quot;Biotite&quot;
+## $ solubility &lt;chr&gt; &quot;low&quot;, &quot;med&quot;, &quot;high&quot;
+## $ hardness   &lt;dbl&gt; 7, NA, 3</code></pre>
+<pre class="r"><code>names(density)</code></pre>
+<pre><code>## [1] &quot;minerals&quot; &quot;density&quot;</code></pre>
+<pre class="r"><code>names(site_descriptions)</code></pre>
+<pre><code>## [1] &quot;location&quot; &quot;loc_desc&quot;</code></pre>
+<pre class="r"><code>names(solubility_hardness)</code></pre>
+<pre><code>## [1] &quot;minerals&quot;   &quot;solubility&quot; &quot;hardness&quot;</code></pre>
+<p>density has 3 rows and 2 columns, site_descriptions has 10 rows and 2 columns, solubility_hardness has 3 rows and 3 columns</p>
+<p>In <code>density</code> each row is the density of a particular mineral In <code>site_descriptions</code> each row is information about the location of a site In <code>solubility_hardness</code> each row is the solubility and hardness for a particular mineral</p>
 </div>
 <div id="exercise-3" class="section level3">
 <h3>Exercise 3</h3>
-<p>Remove this text, and add your answer for Exercise 3 here. Add code chunks as needed. Don’t forget to label your code chunk. Do not use spaces in code chunk labels.</p>
+<pre class="r"><code>sand_mineral_density &lt;- sand_minerals %&gt;% 
+  left_join(density)</code></pre>
+<pre><code>## Joining, by = &quot;minerals&quot;</code></pre>
+<pre class="r"><code>sand_mineral_properties &lt;- sand_mineral_density %&gt;% 
+  left_join(solubility_hardness)</code></pre>
+<pre><code>## Joining, by = &quot;minerals&quot;</code></pre>
+<p>The output data frame still has 23 rows, the same as <code>sand_minerals</code>.</p>
 </div>
 <div id="exercise-4" class="section level3">
 <h3>Exercise 4</h3>
