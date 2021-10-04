@@ -1,5 +1,5 @@
 ---
-title: "Unit 1 - 3 Starter"
+title: "Unit 1 - 3 Review Starter"
 author: "Insert your group number here"
 date: "Insert date here"
 output: html_document
@@ -12,8 +12,8 @@ library(tidyverse)
 ```
 
 ```{r load-data, message=FALSE}
-sites <- read_csv("data/sites.csv")
-site_descriptions <- read_csv("data/site-descriptions.csv")
+sites <- read_csv("data/sand-minerals.csv")
+location_descriptions <- read_csv("data/location-descriptions.csv")
 density <- read_csv("data/density.csv")
 solubility_hardness <- read_csv("data/solubility-hardness.csv")
 ```
