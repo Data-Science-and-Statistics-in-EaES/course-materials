@@ -61,3 +61,28 @@ Remove this text, and add your answer for Exercise 6 here.
 Add code chunks as needed.
 Don't forget to label your code chunk.
 Do not use spaces in code chunk labels.
+
+## Part II - Data Visualization
+
+`starwars` is already loaded within the `dplyr` package (within `tidyverse`)
+
+### Exercise 7
+
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 8
+
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 9
+
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.

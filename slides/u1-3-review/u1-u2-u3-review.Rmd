@@ -218,6 +218,83 @@ Remember:
 
 ---
 
+class: middle
+
+# Part II - Data Visualization
+
+```{r echo=FALSE, out.width="60%", fig.align="left"}
+knitr::include_graphics("img/grammar-of-graphics.png")
+```
+
+---
+
+## Data: starwars {dplyr}
+
+
+.pull-left[
+Help page and data dictionary: `?starwars`
+
+```{r echo=FALSE, message = FALSE}
+glimpse(starwars)
+```
+]
+---
+
+## Exercise 7: Histograms
+
+Under Exercise 7 in your starter file:
+
+1. Delete existing text, insert and label a code chunk called `starwars-heights` and pipe `starwars` into `ggplot()`
+2. Map `height` to the x-axis aesthetic and add a histogram geometry layer
+3. Add a plot labels layer with `labs()`, including an x and y axis, and title
+4. Map `species` the to fill aesthetic and add a new label to argument for `fill` within `labs()`
+5. Facet the plot by `species`, using either facet function
+6. Add a preset theme layer. These should be suggested to you as you type `+ theme...`
+7. Add text narrative describing the shape, center and spread. You can use inline code and relevant functions (e.g., `mean()`) to add detail to your description.
+
+Remember: 
+- 1 person: Edit, knit, commit, push
+- Everyone: Pull changes and inspect
+- Next person: Edit, knit commit push...
+
+---
+
+## Exercise 8: Scatter plots with smooth fits
+
+Under Exercise 8 in your starter file:
+
+1. Delete existing text, insert and label a code chunk called `weight-vs-height` and pipe `starwars` into `ggplot()`
+2. Make a scatter plot of `height` (x axis) against `weight` (y axis)
+3. Add a plot labels layer with `labs()`, including an x and y axis, and title
+4. Add a line of code between the first line, and the ggplot() line that filters to **remove** characters with `mass` over 1000 kg
+5. Add a smooth moving average line with `geom_smooth()` and facet by `homeworld`
+
+Remember: 
+- 1 person: Edit, knit, commit, push
+- Everyone: Pull changes and inspect
+- Next person: Edit, knit commit push...
+
+---
+
+## Exercise 9: Barplots
+
+Under Exercise 9 in your starter file:
+
+1. Delete existing text, insert and label a code chunk called `homeworld-barplot` and pipe `starwars` into `ggplot()`
+2. Make a barplot plot where `homeworld` is on the x axis
+3. Add a plot labels layer with `labs()`, including an x and y axis, and title
+4. Map `gender` to an aesthetic such that each bar is split into two colors based on gender
+5. Add an argument within the bar plot geom function that allows *better comparison of proportions*
+6. Change the code chunk so that each bar on the x-axis is a gender, the y-axis is *no longer a proportion*, and the plot is faceted by `homeworld`
+7. Add text narrative describing the character gender split across each homeworld.
+
+Remember: 
+- 1 person: Edit, knit, commit, push
+- Everyone: Pull changes and inspect
+- Next person: Edit, knit commit push...
+
+---
+
 
 .center[
 .large[
