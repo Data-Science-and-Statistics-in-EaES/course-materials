@@ -13,7 +13,7 @@ library(tidyverse)
 
 ```{r load-data, message=FALSE}
 sand_minerals <- read_csv("data/sand-minerals.csv")
-site_descriptions <- read_csv("data/site-descriptions.csv")
+site_descriptions <- read_csv("data/location-descriptions.csv")
 density <- read_csv("data/density.csv")
 solubility_hardness <- read_csv("data/solubility-hardness.csv")
 ```
@@ -57,11 +57,6 @@ sand_mineral_properties <- sand_mineral_density %>%
 The output data frame still has 23 rows, the same as `sand_minerals`.
 
 ### Exercise 4
-
-Remove this text, and add your answer for Exercise 4 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
 
 ### Exercise 5
 
