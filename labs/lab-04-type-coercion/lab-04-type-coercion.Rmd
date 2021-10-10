@@ -33,12 +33,13 @@ If you're looking at these instructions you've already done the following steps,
 
 ## Data
 
-For the first 3 exercises, we will use data objects we will create ourselves.
-The last 3 exercises will use the `earthquakes` dataset from the `{openintro}` package we have used before.
+For the first 6 exercises, we will use data objects we will create ourselves.
+The last 4 exercises will use the `earthquakes` dataset from the `{openintro}` package we have used before and we will also need `{tidyverse}` for some data wrangling.
 
 ## Packages
 
 ```{r message = FALSE}
+library(tidyverse)
 library(openintro)
 ```
 
@@ -59,17 +60,17 @@ Before we start the lab, let's warm up by changing the YAML in the starter file:
 
 -   Vector `c(1, 1L, "C")`
 
-```{r}
+```{r echo = F}
 1
 1L
 "C"
 ```
 
-```{r}
+```{r echo = F}
 c(1, 1L, "C")
 ```
 
-```{r}
+```{r echo = F}
 #typeof(c(1, 1L, "C"))
 ```
 
@@ -77,12 +78,12 @@ c(1, 1L, "C")
 
 -   Vector `c(1:3, 5)`
 
-```{r}
+```{r echo = F}
 1:3
 5
 ```
 
-```{r}
+```{r echo = F}
 #typeof(c(1:3, 5))
 ```
 
@@ -90,13 +91,13 @@ c(1, 1L, "C")
 
 -   Vector `c(3, FALSE, T)`
 
-```{r}
+```{r echo = F}
 3 
 FALSE
 T
 ```
 
-```{r}
+```{r echo = F}
 #typeof(c(3, FALSE, T))
 ```
 
@@ -104,12 +105,12 @@ T
 
 -   Vector `c(TRUE, as.numeric(TRUE))`
 
-```{r}
+```{r echo = F}
 TRUE
 as.numeric(TRUE)
 ```
 
-```{r}
+```{r echo = F}
 #typeof(c(TRUE, as.numeric(TRUE)))
 ```
 
@@ -117,13 +118,13 @@ as.numeric(TRUE)
 
 -   Vector `c(NA, FALSE, as.logical(1))`
 
-```{r}
+```{r echo = F}
 NA
 FALSE
 as.logical(1)
 ```
 
-```{r}
+```{r echo = F}
 #typeof(c(NA, FALSE, as.logical(1)))
 ```
 
@@ -131,13 +132,37 @@ as.logical(1)
 
 -   Vector `c(1L / 0, "A")`
 
-```{r}
+```{r echo = F}
 1L
 0
 1L / 0
 "A"
 ```
 
-```{r}
+```{r echo = F}
 #typeof(c(1L / 0, "A"))
+```
+
+## Last 4 Exercises: With "real" data
+
+7.  Write and label a code chunk below exercise 7 in your starter file that gives you a "glimpse" of the `earthquakes` dataset.
+
+8.  Under exercise 8, state which of the variables could be explicitly coerced to new data types, without any loss of information.
+    Try to identify at least two.
+
+9.  What problems would this coercion cause if we tried to recreate the plot from Homework 1 which mapped year to the x-axis and magnitude to the y-axis?
+
+10. Copy the code chunk below into exercise 10 in your starter file, then label and complete it!
+    This pipeline **1)** creates a new variable called `major` which takes on the value `TRUE` for `richter > 7.5`; **2)** coerces the new variable to type numeric; and **3)** filters only for the major earthquakes.
+    Remember to set eval = T to knit your starter file.
+    **How many major earthquakes are there in this dataset?**
+
+```{r label-me, eval = F}
+___ %>% 
+  mutate(major = case_when(
+    ___ > 7.5 ~ TRUE,
+    TRUE ~ ___
+  )) %>% 
+  mutate(___ = as.numeric(___)) %>% 
+  filter(___ == ___)
 ```
