@@ -44,17 +44,17 @@ cat_lovers
 
 ```{r}
 cat_lovers %>%
-  summarise(mean_cats = mean(number_of_cats))
+  summarise(median_cats = median(number_of_cats))
 ```
 
 ---
 
 ```{r eval=FALSE}
-?mean
+?median
 ```
 
-```{r echo=FALSE, caption="Help for mean", out.width="75%"}
-knitr::include_graphics("img/mean-help.png")
+```{r echo=FALSE, caption="Help for mean", out.width="60%"}
+knitr::include_graphics("img/median-help.png")
 ```
 
 ---
@@ -63,7 +63,7 @@ knitr::include_graphics("img/mean-help.png")
 
 ```{r}
 cat_lovers %>%
-  summarise(mean_cats = mean(number_of_cats, na.rm = TRUE))
+  summarise(median_cats = mean(number_of_cats, na.rm = TRUE))
 ```
 
 ---
@@ -120,7 +120,7 @@ cat_lovers %>%
       ),
     number_of_cats = as.numeric(number_of_cats)
     ) %>%
-  summarise(mean_cats = mean(number_of_cats))
+  summarise(median_cats = median(number_of_cats))
 ```
 
 ---
@@ -150,14 +150,9 @@ cat_lovers <- cat_lovers %>% #<<
 
 class: middle
 
-.hand[.light-blue[now that we have a good motivation for]]  
-.hand[.light-blue[learning about data types in R]]
 
-<br>
+## Now, let's learn about data types in R!
 
-.large[
-.hand[.light-blue[let's learn about data types in R!]]
-]
 
 ---
 
@@ -304,43 +299,13 @@ Let's give formal names to what we've seen so far:
 
 
 --
-- **Implicit coercion** happens when you use a vector in a specific context that expects a certain type of vector
+- **Implicit coercion** happens when you use a vector (or dataframe column) in a specific context that expects a certain type of vector
 
 ---
 
-.midi[
-.your-turn[
-### .hand[Your turn!]
-
-- RStudio Cloud > `AE 05 - Hotels + Data types` > open `type-coercion.Rmd` and knit.
-- What is the type of the given vectors? First, guess. Then, try it out in R. 
-If your guess was correct, great! If not, discuss why they have that type.
-]
-]
-
---
-
-.small[
-**Example:** Suppose we want to know the type of `c(1, "a")`. First, I'd look at: 
-
-.pull-left[
-```{r}
-typeof(1)
+```{r echo=FALSE, caption="Data type coerceion", out.width="75%"}
+knitr::include_graphics("img/data-coercion.png")
 ```
-]
-.pull-right[
-```{r}
-typeof("a")
-```
-]
-
-and make a guess based on these. Then finally I'd check:
-.pull-left[
-```{r}
-typeof(c(1, "a"))
-```
-]
-]
 
 ---
 
@@ -449,3 +414,40 @@ FALSE | FALSE # if NA was FALSE
 
 - Doesn't make sense for mathematical operations 
 - Makes sense in the context of missing data
+
+---
+
+.midi[
+.your-turn[
+### .hand[Your turn!]
+
+- RStudio Cloud > `Lab 04 - Type coercion` > open `type-coercion.Rmd` and knit.
+- What is the type of the given vectors? First, guess. Then, try it out in R. 
+If your guess was correct, great! If not, discuss why they have that type.
+]
+]
+
+--
+
+.small[
+**Example:** Suppose we want to know the type of `c(1, "a")`. First, I'd look at: 
+
+.pull-left[
+```{r}
+typeof(1)
+```
+]
+.pull-right[
+```{r}
+typeof("a")
+```
+]
+
+and make a guess based on these. Then finally I'd check:
+.pull-left[
+```{r}
+typeof(c(1, "a"))
+```
+]
+]
+

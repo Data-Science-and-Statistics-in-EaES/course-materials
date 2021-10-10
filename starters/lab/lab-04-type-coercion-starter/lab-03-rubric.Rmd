@@ -1,0 +1,147 @@
+---
+title: "Lab 04 - Data Type Coercion"
+author: "RUBRIC"
+date: "DATE"
+output: html_document
+---
+
+**Half point for YAML MAX (0.5)**
+
+### Load packages and data
+
+```{r load-packages, message=FALSE}
+library(openintro) 
+```
+
+## Exercises
+
+### Exercise 1
+
+**Half point per chunk MAX (1.5)**
+
+```{r}
+1
+1L
+"C"
+```
+
+-   `1` is type `r typeof(1)`
+-   `1L` is type `r typeof(1L)`
+-   `"C"` is type `r typeof("C")`
+
+```{r}
+c(1, 1L, "C")
+```
+
+The first chunk prints out each value as a separate object, second code concatenates the objects as elements of a single vector.
+
+```{r}
+typeof(c(1, 1L, "C"))
+```
+
+The vector type is character.
+R automatically coerces numeric to character when both types are present in a vector.
+
+### Exercise 2
+
+**Half point for each narrative (MAX 1)**
+
+```{r}
+1:3
+5
+```
+
+-   `1:3` is type `r typeof(1:3)`
+-   `5` is type `r typeof(5)`
+
+```{r}
+typeof(c(1:3, 5))
+```
+
+The vector type is double.
+R automatically coerces numeric integers to numeric doubles when both types are present in a vector.
+
+### Exercise 3
+
+**Half point for each narrative (MAX 1)**
+
+```{r}
+3 
+FALSE
+T
+```
+
+-   `3` is type `r typeof(3)`
+-   `FALSE` is type `r typeof(FALSE)`
+-   `T` is type `r typeof(T)`
+
+```{r}
+typeof(c(3, FALSE, T))
+```
+
+The vector is double.
+R coerces logical data to numeric doubles when both are present.
+
+### Exercise 4
+
+**Half point for each narrative (MAX 1)**
+
+```{r}
+TRUE
+as.numeric(TRUE)
+```
+
+-   `TRUE` is type `r typeof(TRUE)`
+-   `as.numeric(TRUE)` is type `r typeof(as.numeric(TRUE))`
+
+```{r}
+typeof(c(TRUE, as.numeric(TRUE)))
+```
+
+Vector type is double.
+R coerces logical to numeric when both are present in a vector.
+
+### Exercise 5
+
+**Half point for each narrative (MAX 1)**
+
+```{r}
+NA
+FALSE
+as.logical(1)
+```
+
+-   `NA` is type `r typeof(NA)`
+-   `FALSE` is type `r typeof(FALSE)`
+-   `as.logical(1)` is type `r typeof(as.logical(1))`
+
+```{r}
+typeof(c(NA, FALSE, as.logical(1)))
+```
+
+Vector is type logical.
+All the terms are already logical.
+R does not need to coerce any element of the vector.
+
+### Exercise 6
+
+**Half point for each narrative (MAX 1)**
+
+```{r}
+1L
+0
+1L / 0
+"A"
+```
+
+-   `1L` is type `r typeof(1L)`
+-   `0` is type `r typeof(0)`
+-   `1L / 0` is type `r typeof(1L / 0)`
+-   `"A"` is type `r typeof("A")`
+
+```{r}
+typeof(c(1L / 0, "A"))
+```
+
+Vector is type character.
+Vectors are coerced to character type when character and numeric are present.
