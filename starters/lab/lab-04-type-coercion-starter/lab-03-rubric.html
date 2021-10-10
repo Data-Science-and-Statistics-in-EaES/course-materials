@@ -174,7 +174,8 @@ pre code {
 <p><strong>Half point for YAML MAX (0.5)</strong></p>
 <div id="load-packages-and-data" class="section level3">
 <h3>Load packages and data</h3>
-<pre class="r"><code>library(openintro) </code></pre>
+<pre class="r"><code>library(openintro) 
+library(tidyverse)</code></pre>
 </div>
 <div id="exercises" class="section level2">
 <h2>Exercises</h2>
@@ -285,6 +286,55 @@ pre code {
 <pre class="r"><code>typeof(c(1L / 0, &quot;A&quot;))</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <p>Vector is type character. Vectors are coerced to character type when character and numeric are present.</p>
+</div>
+<div id="exercise-7" class="section level3">
+<h3>Exercise 7</h3>
+<p><strong>Half point for chunk (MAX 0.5)</strong></p>
+<pre class="r"><code>glimpse(earthquakes)</code></pre>
+<pre><code>## Rows: 123
+## Columns: 7
+## $ year    &lt;dbl&gt; 1902, 1902, 1903, 1903, 1905, 1906, 1906, 1906, 1906, 1907, 19…
+## $ month   &lt;chr&gt; &quot;April&quot;, &quot;December&quot;, &quot;April&quot;, &quot;May&quot;, &quot;April&quot;, &quot;January&quot;, &quot;Marc…
+## $ day     &lt;dbl&gt; 19, 16, 28, 28, 4, 31, 16, 18, 17, 21, 28, 23, 9, 3, 13, 30, 1…
+## $ richter &lt;dbl&gt; 7.5, 6.4, 7.0, 5.8, 7.5, 8.8, 6.8, 7.7, 8.6, 8.1, 7.2, 7.3, 7.…
+## $ area    &lt;chr&gt; &quot;Quezaltenango and San Marco&quot;, &quot;Uzbekistan&quot;, &quot;Malazgirt&quot;, &quot;Gol…
+## $ region  &lt;chr&gt; &quot;Guatemala&quot;, &quot;Russia&quot;, &quot;Turkey&quot;, &quot;Turkey&quot;, &quot;India&quot;, &quot;Ecuador&quot;,…
+## $ deaths  &lt;dbl&gt; 2000, 4700, 3500, 1000, 19000, 1000, 1250, 3000, 3882, 12000, …</code></pre>
+</div>
+<div id="exercise-8" class="section level3">
+<h3>Exercise 8</h3>
+<p><strong>Half point for two correct (MAX 0.5)</strong></p>
+<p><code>year</code> or <code>richter</code> or <code>day</code> or <code>deaths</code> could be coerced to character, or <code>day</code> or <code>year</code> or <code>deaths</code> could be coerced to <code>integer</code> with no information loss.</p>
+</div>
+<div id="exercise-9" class="section level3">
+<h3>Exercise 9</h3>
+<p><strong>Half point for correct prediction (MAX 0.5)</strong></p>
+<p>The ordering may be wrong on the x-axis because the years are not treated as sequential numbers, they will be treated as character string categories.</p>
+</div>
+<div id="exercise-10" class="section level3">
+<h3>Exercise 10</h3>
+<p><strong>half point for completing first mutate expression correctly, half point for all other expressions (e.g., filter, second mutate), and half point for 29 rows (MAX 1.5)</strong></p>
+<pre class="r"><code>earthquakes %&gt;% 
+  mutate(major = case_when(
+    richter &gt; 7.5 ~ TRUE,
+    TRUE ~ FALSE
+  )) %&gt;% 
+  mutate(major = as.numeric(major)) %&gt;% 
+  filter(major == 1)</code></pre>
+<pre><code>## # A tibble: 29 × 8
+##     year month       day richter area                   region      deaths major
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
+##  1  1906 January      31     8.8 Esmeraldas (off coast) Ecuador       1000     1
+##  2  1906 April        18     7.7 San Francisco          United Sta…   3000     1
+##  3  1906 August       17     8.6 Valparaiso             Chile         3882     1
+##  4  1907 October      21     8.1 Central                Asia         12000     1
+##  5  1920 December     16     7.8 Gansu                  China       200000     1
+##  6  1923 September     1     7.9 Yokohama               Japan       142800     1
+##  7  1927 March         7     7.6 Tango                  Japan         3020     1
+##  8  1927 May          22     7.6 Gansu                  China        40900     1
+##  9  1931 August       10     8   Xinjiang               China        10000     1
+## 10  1933 March         2     8.4 Sanriku                Japan         2990     1
+## # … with 19 more rows</code></pre>
 </div>
 </div>
 

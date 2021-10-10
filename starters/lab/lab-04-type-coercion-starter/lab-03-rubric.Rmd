@@ -11,6 +11,7 @@ output: html_document
 
 ```{r load-packages, message=FALSE}
 library(openintro) 
+library(tidyverse)
 ```
 
 ## Exercises
@@ -145,3 +146,37 @@ typeof(c(1L / 0, "A"))
 
 Vector is type character.
 Vectors are coerced to character type when character and numeric are present.
+
+### Exercise 7
+
+**Half point for chunk (MAX 0.5)**
+
+```{r glimpse}
+glimpse(earthquakes)
+```
+
+### Exercise 8
+
+**Half point for two correct (MAX 0.5)**
+
+`year` or `richter` or `day` or `deaths` could be coerced to character, or `day` or `year` or `deaths` could be coerced to `integer` with no information loss.
+
+### Exercise 9
+
+**Half point for correct prediction (MAX 0.5)**
+
+The ordering may be wrong on the x-axis because the years are not treated as sequential numbers, they will be treated as character string categories.
+
+### Exercise 10
+
+**half point for completing first mutate expression correctly, half point for all other expressions (e.g., filter, second mutate), and half point for 29 rows (MAX 1.5)**
+
+```{r find major earthquakes, eval = T}
+earthquakes %>% 
+  mutate(major = case_when(
+    richter > 7.5 ~ TRUE,
+    TRUE ~ FALSE
+  )) %>% 
+  mutate(major = as.numeric(major)) %>% 
+  filter(major == 1)
+```

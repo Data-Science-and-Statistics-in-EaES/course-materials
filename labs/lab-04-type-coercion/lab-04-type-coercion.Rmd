@@ -51,6 +51,8 @@ Before we start the lab, let's warm up by changing the YAML in the starter file:
 -   Push your changes to GitHub.️ ⬆️
 -   Go to your repo on GitHub and confirm that your changes are visible in your Rmd files.
 
+# Lab Exercises
+
 1.  Copy the three code chunks below into Exercise 1 in your Lab 04 starter file. Beneath the **first** code chunk, add text narrative to state what the data type is for each object. Beneath the **second** code chunk, add text narrative explaining why the output of the first code chunk is different from the second. Finally, uncomment the code (remove `#`) in the **third** code chunk, and add text narrative stating and *explaining* the data type of the vector.
 
 **NOTE** Don't worry about code chunk labels in this Lab *unless* we tell you to add them.
@@ -112,6 +114,7 @@ as.numeric(TRUE)
 ```
 
 5.  Copy the next two code chunks below into Exercise 5 in your Lab 04 starter file. Beneath the **first** code chunk, add text narrative to state what the data type is for each object. Then, uncomment the code (remove `#`) in the **second** code chunk, and add text narrative stating and *explaining* the data type of the vector.
+
 -   Vector `c(NA, FALSE, as.logical(1))`
 
 ```{r}
