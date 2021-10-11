@@ -1,0 +1,81 @@
+---
+title: "Homework 04 - Data Classes w. forcats & lubridate"
+author: "RUBRIC"
+date: "DATE"
+output: html_document
+---
+
+### Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro) 
+library(lubridate)
+```
+
+## Exercises
+
+### Exercise 1
+
+```{r create-3-vectors}
+numeric <- c(1:5)
+character <- c("a", "b", "c", "d", "e")
+mixed <- c(1, "b", 3, "d", 5)
+```
+
+-   numeric is a `r typeof(numeric)` vector of class `r class(numeric)`
+-   character is a `r typeof(character)` vector of class `r class(character)`
+-   mixed is a `r typeof(mixed)` vector of class `r class(mixed)`
+
+### Exercise 2
+
+```{r create-data-frame, eval = T}
+data_frame <- bind_cols("numeric" = numeric, "character" = character, "mixed" = mixed)
+data_frame
+```
+
+-   data_frame is of **type** `r typeof(data_frame)` and of **class** `r class(data_frame)`
+
+### Exercise 3
+
+```{r create-list}
+numeric <- c(1:4)
+character <- c("a", "b", "c", "d", "e")
+mixed <- c(1, "b", 3, "d", 5)
+# data_frame <- bind_cols("numeric" = numeric, "character" = character, "mixed" = mixed)
+```
+
+`bind_cols()` won't work because data frames need to be created from vectors of equal length.
+
+### Exercise 4
+
+```{r my-list, eval = T}
+my_list <- list("numeric" = numeric, "character" = character, "mixed" = mixed)
+my_list
+```
+
+the `list()` function can concatenate vectors of different length
+
+### Exercise 5
+
+Remove this text, and add your answer for Exercise 5 here.
+
+### Exercise 6
+
+Remove this text, and add your answer for Exercise 6 here.
+
+### Exercise 7
+
+Remove this text, and add your answer for Exercise 7 here.
+
+### Exercise 8
+
+Remove this text, and add your answer for Exercise 8 here.
+
+### Exercise 9
+
+Remove this text, and add your answer for Exercise 9 here.
+
+### Exercise 10
+
+Remove this text, and add your answer for Exercise 10 here.

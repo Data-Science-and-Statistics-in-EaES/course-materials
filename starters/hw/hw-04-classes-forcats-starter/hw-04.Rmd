@@ -1,5 +1,5 @@
 ---
-title: "Lab 04 - Data Type Coercion"
+title: "Homework 04 - Data Classes w. forcats & lubridate"
 author: "Insert your name here"
 date: "Insert date here"
 output: html_document
@@ -8,8 +8,9 @@ output: html_document
 ### Load packages and data
 
 ```{r load-packages, message=FALSE}
-library(openintro) 
 library(tidyverse)
+library(openintro) 
+library(lubridate)
 ```
 
 ## Exercises

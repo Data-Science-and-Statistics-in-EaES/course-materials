@@ -159,13 +159,13 @@ glimpse(earthquakes)
 
 **Half point for two correct (MAX 0.5)**
 
-`year` or `richter` or `day` or `deaths` could be coerced to character, or `day` or `year` or `deaths` could be coerced to `integer` with no information loss.
+`day` or `year` or `deaths` could be coerced to `integer` with no information loss.
 
 ### Exercise 9
 
 **Half point for correct prediction (MAX 0.5)**
 
-The ordering may be wrong on the x-axis because the years are not treated as sequential numbers, they will be treated as character string categories.
+If `year` were coerced to character, the ordering may be wrong on the x-axis because the years are not treated as sequential numbers, they will be treated as character string categories.
 
 ### Exercise 10
 
