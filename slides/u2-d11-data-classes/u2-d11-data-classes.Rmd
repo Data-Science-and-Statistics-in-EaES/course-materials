@@ -289,7 +289,7 @@ glimpse(earthquakes)
 Let's try just glueing together a full date as a character string (factor).
 
 .midi[
-```{r output.lines=7, echo = FALSE, message = FALSE}
+```{r echo = T, message = FALSE}
 library(glue)
 
 earthquakes %>%
@@ -332,7 +332,7 @@ earthquakes %>%
 .hand[zooming in a bit...]
 
 .question[
-What is weird here?
+What is weird here? [**Look at 1933 earthquakes**]
 ]
 
 ```{r out.width="80%", echo=FALSE, fig.asp = 0.5}
@@ -347,7 +347,7 @@ earthquakes %>%
 
 ---
 
-## Step 1. *REVISED* Construct dates **"as dates"**
+## Step 1. Construct dates **"as dates"** (wrap in `ymd()`)
 
 .midi[
 ```{r message = FALSE}
@@ -355,9 +355,9 @@ library(lubridate)
 
 earthquakes %>%
   mutate(
-    date = ymd(glue("{year} {month} {day}")) #<< # wrap in ymd() function!
+    date = ymd(glue("{year} {month} {day}")) #<< 
     ) %>% 
-  relocate(date) #<<
+  relocate(date)
 ```
 ]
 
@@ -376,7 +376,7 @@ earthquakes %>%
 
 ---
 
-## Step 3a. Visualise earthquakes by date
+## Step 3a. Visualise earthquakes by date 
 
 .midi[
 ```{r out.width="80%", fig.asp = 0.4}
@@ -393,7 +393,7 @@ earthquakes %>%
 .hand[zooming in a bit...]
 
 .question[
-Did if fix the problem if we zoom in?
+Did if fix the problem if we zoom in on **1933**?
 ]
 
 .midi[
