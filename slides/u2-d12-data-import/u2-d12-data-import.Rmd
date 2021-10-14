@@ -1,20 +1,19 @@
 ---
 title: "Importing data"
-subtitle: "<br><br> Data Science in a Box"
-author: "[datasciencebox.org](https://datasciencebox.org/)"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
+    self_contained: true
     lib_dir: libs
     nature:
       ratio: "16:9"
+      highlightStyle: github
       highlightLines: true
-      highlightStyle: solarized-light
       countIncrementalSlides: false
 ---
 
-```{r child = "../setup.Rmd"}
-```
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(readxl)
@@ -116,7 +115,7 @@ fields.
 - Write out the two data frames to `nobel-stem.csv` and `nobel-nonstem.csv`, 
 respectively, to `data/`.
 
-**Hint:** Use the `%in%` operator when `filter()`ing.
+**Hint:** Use the `%in%` operator when `dplyr::filter()`ing.
 ]
 
 ---
@@ -495,3 +494,13 @@ sales %>%
   )
 ```
 ]
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]
+

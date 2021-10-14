@@ -1,25 +1,24 @@
 ---
 title: "Tips for effective data visualization"
-subtitle: "<br><br> Data Science in a Box"
-author: "[datasciencebox.org](https://datasciencebox.org/)"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
+    self_contained: true
     lib_dir: libs
-    anchor_sections: FALSE
     nature:
       ratio: "16:9"
+      highlightStyle: github
       highlightLines: true
-      highlightStyle: solarized-light
       countIncrementalSlides: false
 ---
-
-```{r child = "../setup.Rmd"}
-```
 
 ```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(scales)
+my_theme <- theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=16,face="bold"))
 ```
 
 class: middle
@@ -31,7 +30,7 @@ class: middle
 ## Keep it simple
 
 .pull-left-narrow[
-```{r pie-3d, echo = FALSE, out.width="100%"}
+```{r pie-3d, echo = FALSE, out.width="60%"}
 knitr::include_graphics("img/pie-3d.jpg")
 ```
 ]
@@ -49,7 +48,8 @@ ggplot(d, aes(x = fct_reorder(category, value), y = value)) +
   geom_col() +
   theme_minimal() +
   coord_flip() +
-  labs(x = "", y = "")
+  labs(x = "", y = "") +
+  my_theme
 ```
 ]
 
@@ -67,7 +67,8 @@ d %>%
   geom_col() +
   theme_minimal() +
   labs(x = "", y = "") +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  my_theme
 ```
 ]
 .pull-right[
@@ -78,7 +79,8 @@ ggplot(d, aes(x = fct_reorder(category, value), y = value, fill = category)) +
   coord_flip() +
   labs(x = "", y = "") +
   scale_fill_manual(values = c("red", rep("gray", 4))) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  my_theme
 ```
 ]
 
@@ -138,9 +140,10 @@ brexit <- tibble(
 )
 ```
 
-```{r echo = FALSE, out.width="100%"}
+```{r echo = FALSE, out.width="80%"}
 ggplot(brexit, aes(x = opinion)) +
-  geom_bar()
+  geom_bar() +
+  my_theme
 ```
 ]
 
@@ -161,14 +164,15 @@ class: middle
 .panelset[
 
 .panel[.panel-name[Plot]
-```{r ref.label="default-opinion", echo = FALSE}
+```{r ref.label="default-opinion", echo = FALSE, out.width= "40%"}
 ```
 ]
 
 .panel[.panel-name[Code]
 ```{r default-opinion, fig.show = "hide"}
 ggplot(brexit, aes(x = opinion)) +
-  geom_bar()
+  geom_bar() +
+  my_theme
 ```
 ]
 
@@ -181,7 +185,7 @@ ggplot(brexit, aes(x = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-```{r ref.label="infreq", echo = FALSE}
+```{r ref.label="infreq", echo = FALSE, out.width= "40%"}
 ```
 ]
 
@@ -191,7 +195,8 @@ ggplot(brexit, aes(x = opinion)) +
 
 ```{r infreq, fig.show = "hide"}
 ggplot(brexit, aes(x = fct_infreq(opinion))) + #<<
-  geom_bar()
+  geom_bar() +
+  my_theme
 ```
 ]
 
@@ -216,7 +221,8 @@ ggplot(brexit, aes(x = opinion)) +
   labs( #<<
     x = "Opinion", #<<
     y = "Count" #<<
-  ) #<<
+  ) + #<< 
+  my_theme
 ```
 ]
 
@@ -229,7 +235,7 @@ ggplot(brexit, aes(x = opinion)) +
 .panelset[
 
 .panel[.panel-name[Plot]
-```{r ref.label="region-default", echo = FALSE}
+```{r ref.label="region-default", echo = FALSE, out.width="40%"}
 ```
 ]
 
@@ -237,7 +243,8 @@ ggplot(brexit, aes(x = opinion)) +
 
 ```{r region-default, fig.show = "hide"}
 ggplot(brexit, aes(x = region)) +
-  geom_bar()
+  geom_bar() +
+  my_theme
 ```
 ]
 
@@ -267,7 +274,8 @@ brexit <- brexit %>%
 .panel[.panel-name[Plot]
 ```{r echo=FALSE}
 ggplot(brexit, aes(x = region)) +
-  geom_bar()
+  geom_bar() +
+  my_theme
 ```
 ]
 
@@ -739,3 +747,13 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 - Change the visualisation in three different ways to tell slightly different stories with it each time.
 ]
 ]
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]
+
