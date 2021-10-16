@@ -1,0 +1,114 @@
+---
+title: "Lab 05 - Reading and Writing Data"
+output: 
+  tufte::tufte_html:
+    css: ../lab.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+# Learning goals
+
+-   Learn how data types are coerced in vectors (or columns)
+-   Practice creating mixed type vectors
+-   Practice using explicit data coercion functions
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 5, fig.cap = "Data Importing with readr and readxl", eval = TRUE}
+knitr::include_graphics("img/readr.png")
+knitr::include_graphics("img/readxl.png")
+```
+
+# Getting started
+
+If you're looking at these instructions you've already done the following steps, but as a reminder:
+
+-   Go to the course GitHub organization and locate your Unit 3 repo, which should be named `unit-5-YOUR_LAST_NAME`.
+-   Grab the URL of the repo, and clone it in RStudio.
+-   First, open the R Markdown instructions `lab-O5-import-recode.Rmd` and the lab starter `lab-05.Rmd` and Knit them
+-   Make sure they compile without errors.
+
+## Data
+
+For this lab, we will be using the `earthquakes` dataset from the `{openintro}` package we have used before and we will also need `{tidyverse}` for some data wrangling.
+
+## Packages
+
+The package `{readr}` is automatically loaded with the `tidyverse`.
+`{readxl}` is also part of the `tidyverse` but it is not automatically loaded.
+
+```{r message = FALSE}
+library(tidyverse)
+library(readxl)
+library(openintro)
+```
+
+## Warm up
+
+Before we start the lab, let's warm up by changing the YAML in the starter file:
+
+-   Update the YAML, changing the author name to your name, and **knit** the document. 🧶
+-   Commit your changes with a meaningful commit message. ✅
+-   Push your changes to GitHub.️ ⬆️
+-   Go to your repo on GitHub and confirm that your changes are visible in your Rmd files.
+
+# Lab Exercises
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+```
+
+Let's first load the data:
+
+```{r label-me1, eval=FALSE}
+nobel <- ___(___)
+```
+
+Then let's split the data into two:
+
+```{r label-me2, eval=FALSE}
+# stem laureates
+___ <- nobel %>%
+  filter(___)
+
+# non-steam laureates
+___ <- nobel %>%
+  filter(___)
+```
+
+And finally write out the data:
+
+```{r label-me3}
+# add code for writing out the two data frames here
+```
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(readxl)
+```
+
+-   Read in the Excel file called `sales.xlsx` from the `data-raw/` folder such that it looks like the following.
+
+```{r echo=FALSE, out.width="20%"}
+knitr::include_graphics("images/sales-1.png")
+```
+
+```{r}
+
+```
+
+-   **Stretch goal:** Manipulate the sales data such such that it looks like the following.
+
+```{r echo=FALSE, out.width="25%"}
+knitr::include_graphics("images/sales-2.png")
+```
+
+```{r}
+
+```
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
