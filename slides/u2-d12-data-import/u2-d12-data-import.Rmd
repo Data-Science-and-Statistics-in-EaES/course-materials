@@ -68,8 +68,8 @@ knitr::include_graphics("img/readxl.png")
 ## Reading data
 
 ```{r}
-nobel <- read_csv(file = "data/nobel.csv")
-nobel
+earthquakes <- read_csv(file = "data/earthquakes.csv")
+earthquakes
 ```
 
 ---
@@ -80,14 +80,10 @@ nobel
 - Write a file
 
 ```{r cache=TRUE}
-df <- tribble(
-  ~x, ~y,
-  1,  "a",
-  2,  "b",
-  3,  "c"
-)
+earthquakes_subset <- earthquakes %>%
+  select(-richter, -deaths)
 
-write_csv(df, file = "data/df.csv")
+write_csv(earthquakes_subset, file = "data/earthquakes-subset.csv")
 ```
 ]
 
@@ -96,7 +92,7 @@ write_csv(df, file = "data/df.csv")
 - Read it back in to inspect
 
 ```{r}
-read_csv("data/df.csv")
+read_csv("data/earthquakes-subset.csv")
 ```
 ]
 
@@ -105,17 +101,12 @@ read_csv("data/df.csv")
 .your-turn[
 ### .hand[Your turn!]
 
-- RStudio Cloud > `AE 06 - Nobels and sales + Data import` > open `nobels-csv.Rmd` and knit.
-- Read in the `nobels.csv` file from the `data-raw/` folder.
-- Split into two (STEM and non-STEM): 
-  - Create a new data frame, `nobel_stem`, that filters for the STEM fields 
-(Physics, Medicine, Chemistry, and Economics).
-  - Create another data frame, `nobel_nonstem`, that filters for the remaining 
-fields.  
-- Write out the two data frames to `nobel-stem.csv` and `nobel-nonstem.csv`, 
-respectively, to `data/`.
+- RStudio Cloud > `lab 05 - Import and Recode earthquakes` > open `lab-05-import-recode.Rmd` and knit.
+- **Exercises 1-4**:
+- Read in the `earthquakes` dataset in parts, using different read functions
+- Reassemble using join functions 
+- Write out the joined dataset to `earthquakes-tidyverse.csv` to `data/`.
 
-**Hint:** Use the `%in%` operator when `dplyr::filter()`ing.
 ]
 
 ---
@@ -129,8 +120,8 @@ class: middle
 ## Data with bad names
 
 ```{r message=FALSE}
-edibnb_badnames <- read_csv("data/edibnb-badnames.csv")
-names(edibnb_badnames)
+earthquakes_badnames <- read_csv("data/earthquakes-badnames.csv")
+names(earthquakes_badnames)
 ```
 
 --
@@ -138,7 +129,7 @@ names(edibnb_badnames)
 ... but R doesn't allow spaces in variable names
 
 ```{r error=TRUE}
-ggplot(edibnb_badnames, aes(x = Number of bathrooms, y = Price)) +
+ggplot(earthquakes_badnames, aes(x = year, y = total deaths)) +
   geom_point()
 ```
 
@@ -148,14 +139,13 @@ ggplot(edibnb_badnames, aes(x = Number of bathrooms, y = Price)) +
 
 .small[
 ```{r}
-edibnb_col_names <- read_csv("data/edibnb-badnames.csv",
-                             col_names = c("id", "price", 
-                                           "neighbourhood", "accommodates",
-                                           "bathroom", "bedroom", 
-                                           "bed", "review_scores_rating", 
-                                           "n_reviews", "url"))
+earthquakes_correct_names <- read_csv("data/earthquakes-badnames.csv",
+                             col_names = c("year", "month", "day",
+                                           "richter", "area",
+                                           "region", "deaths")
+                                           )
 
-names(edibnb_col_names)
+names(earthquakes_correct_names)
 ```
 ]
 
@@ -164,10 +154,10 @@ names(edibnb_col_names)
 ## Option 2 - Format text to snake_case
 
 ```{r warning=FALSE}
-edibnb_clean_names <- read_csv("data/edibnb-badnames.csv") %>%
+earthquakes_clean_names <- read_csv("data/earthquakes-badnames.csv") %>%
   janitor::clean_names()
 
-names(edibnb_clean_names)
+names(earthquakes_clean_names)
 ```
 
 ---
@@ -179,7 +169,7 @@ class: middle
 ---
 
 .question[
-Which type is `x`? Why?
+Which type is `richter``? Why?
 ]
 
 .pull-left[
@@ -189,11 +179,11 @@ knitr::include_graphics("img/df-na.png")
 ]
 .pull-right[
 ```{r eval=FALSE}
-read_csv("data/df-na.csv")
+read_csv("data/earthquakes-na.csv")
 ```
 
 ```{r echo=FALSE}
-read_csv("data/df-na.csv") %>% print(n = 10)
+read_csv("data/earthquakes-na.csv") %>% print(n = 10)
 ```
 ]
 
@@ -202,9 +192,9 @@ read_csv("data/df-na.csv") %>% print(n = 10)
 ## Option 1. Explicit NAs
 
 ```{r eval=FALSE}
-read_csv("data/df-na.csv", 
-         na = c("", "NA", ".", "9999", "Not applicable"))
-```
+read_csv("data/earthquakes-na.csv", 
+         na = c("NA", "."))
+``` 
 
 .pull-left[
 ```{r echo=FALSE, out.width="100%"}
@@ -213,9 +203,8 @@ knitr::include_graphics("img/df-na.png")
 ]
 .pull-right[
 ```{r echo=FALSE,message=FALSE,}
-read_csv("data/df-na.csv", 
-  na = c("", "NA", ".", "9999",
-         "Not applicable")) %>% 
+read_csv("data/earthquakes-na.csv", 
+  na = c("NA", ".")) %>% 
   print(n = 10)
 ```
 ]
@@ -225,15 +214,24 @@ read_csv("data/df-na.csv",
 ## Option 2. Specify column types
 
 ```{r eval=FALSE}
-read_csv("data/df-na.csv", col_types = list(col_double(), 
-                                            col_character(), 
-                                            col_character()))
+read_csv("data/earthquakes-na.csv", col_types = list(col_integer(), # year
+                                            col_character(), # month
+                                            col_integer(), # day
+                                            col_double(), # richter
+                                            col_character(), # area
+                                            col_character(), # region
+                                            col_integer() # deaths
+                                            ))
 ```
 
 ```{r echo=FALSE}
-read_csv("data/df-na.csv", col_types = list(col_double(), 
+read_csv("data/earthquakes-na.csv", col_types = list(col_integer(), 
+                                            col_character(),
+                                            col_integer(), 
+                                            col_double(), 
                                             col_character(), 
-                                            col_character())) %>%
+                                            col_character(), 
+                                            col_integer() )) %>%
   print(n = 10)
 ```
 
@@ -249,7 +247,7 @@ read_csv("data/df-na.csv", col_types = list(col_double(),
 `col_datetime()`   | POSIXct (date-time)
 `col_double()`     | double (numeric)
 `col_factor()`     | factor
-`col_guess()`      | let readr guess (default)
+`col_guess()`      | let readr guess (**default**)
 `col_integer()`    | integer
 `col_logical()`    | logical
 `col_number()`     | numbers mixed with non-number characters
@@ -260,123 +258,55 @@ read_csv("data/df-na.csv", col_types = list(col_double(),
 
 ---
 
-.question[
-Wondering where you remember these from?
-]
-
-```{r message=TRUE, output.lines=7}
-read_csv("data/df-na.csv")
-```
-
----
-
-class:middle
-
-# Case study: Favourite foods
-
----
-
-## Favourite foods
-
-```{r echo=FALSE}
-knitr::include_graphics("img/fav-food/fav-food.png")
-```
-
---
+## Review: How to correct a wrongly-entered value?
 
 ```{r}
-fav_food <- read_excel("data/favourite-food.xlsx") #<<
-
-fav_food
+earthquakes_bad_value <- read_csv("data/earthquakes-character-value.csv")
+glimpse(earthquakes_bad_value)
 ```
 
----
+----
 
-## Variable names
-
-```{r echo=FALSE}
-knitr::include_graphics("img/fav-food/fav-food-names.png")
-```
-
---
+## Review: How to correct a wrongly-entered value?
 
 ```{r warning=FALSE}
-fav_food <- read_excel("data/favourite-food.xlsx") %>%
-  janitor::clean_names() #<<
+earthquakes_OK_value <- earthquakes_bad_value %>%
+  mutate(richter = case_when(     #<<
+    richter == "seven" ~ "7",      #<<
+    TRUE ~ richter),     #<<
+    richter = as.numeric(richter))      #<<
 
-fav_food 
+glimpse(earthquakes_OK_value) 
 ```
 
 ---
 
-## Handling NAs
-
-```{r echo=FALSE}
-knitr::include_graphics("img/fav-food/fav-food-nas.png")
-```
-
---
-
-```{r warning=FALSE}
-fav_food <- read_excel("data/favourite-food.xlsx",
-                       na = c("N/A", "99999")) %>% #<<
-  janitor::clean_names()
-
-fav_food 
-```
-
----
-
-## Make `age` numeric
-
-.pull-left-wide[
-```{r warning=FALSE}
-fav_food <- fav_food %>%
-  mutate( #<<
-    age = if_else(age == "five", "5", age), #<<
-    age = as.numeric(age) #<<
-    ) #<<
-
-glimpse(fav_food) 
-```
-]
-.pull-right-narrow[
-```{r echo=FALSE}
-knitr::include_graphics("img/fav-food/fav-food-age.png")
-```
-]
-
----
-
-## Socio-economic status
+## More review: Factor orders
 
 .question[
-What order are the levels of `ses` listed in?
+What order are the levels of `month` listed in?
 ]
 
-.pull-left-wide[
 ```{r}
-fav_food %>%
-  count(ses)
+earthquakes %>%
+  count(month)
 ```
-]
-.pull-right-narrow[
-```{r echo=FALSE}
-knitr::include_graphics("img/fav-food/fav-food-ses.png")
-```
-]
+
+**What package/function could we use to correct this?** 
 
 ---
 
-## Make `ses` factor
+## Make `month` class factor
 
 .pull-left-wide[
 ```{r warning=FALSE}
-fav_food <- fav_food %>%
-  mutate(ses = fct_relevel(ses, "Low", "Middle", "High")) #<<
+earthquakes_relevel <- earthquakes %>%
+  mutate(month = fct_relevel(month, "January", "February", "March",
+                             "April", "May", "June", "July", "August",
+                             "September", "October", "November", "December")) #<<
 
-fav_food %>%
-  count(ses)
+earthquakes_relevel %>%
+  count(month)
 ```
 ]
 
@@ -385,15 +315,19 @@ fav_food %>%
 ## Putting it altogether
 
 ```{r warning=FALSE}
-fav_food <- read_excel("data/favourite-food.xlsx", na = c("N/A", "99999")) %>%
+earthquakes_final <- read_csv("data/earthquakes-badnames-na.csv", na = c(".", "NA")) %>%
   janitor::clean_names() %>%
   mutate(
-    age = if_else(age == "five", "5", age), 
-    age = as.numeric(age),
-    ses = fct_relevel(ses, "Low", "Middle", "High")
-  )
+    richter = case_when(
+      richter == "seven" ~ "7",
+      TRUE ~ richter
+      ),
+    richter = as.numeric(richter),
+    month = fct_relevel(month, "January", "February", "March",
+                             "April", "May", "June", "July", "August",
+                             "September", "October", "November", "December")) 
 
-fav_food
+earthquakes_final
 ```
 
 ---
@@ -401,9 +335,9 @@ fav_food
 ## Out and back in
 
 ```{r}
-write_csv(fav_food, file = "data/fav-food-clean.csv")
+write_csv(earthquakes_final, file = "data/earthquakes-final.csv")
 
-fav_food_clean <- read_csv("data/fav-food-clean.csv")
+earthquakes_final <- read_csv("data/earthquakes-final.csv")
 ```
 
 ---
@@ -413,8 +347,8 @@ What happened to `ses` again?
 ]
 
 ```{r}
-fav_food_clean %>%
-  count(ses)
+earthquakes_final %>%
+  count(month)
 ```
 
 ---
@@ -434,12 +368,12 @@ write_rds(x, path)
 ## Out and back in, take 2
 
 ```{r}
-write_rds(fav_food, file = "data/fav-food-clean.rds")
+write_rds(earthquakes_final, file = "data/earthquakes-final.rds")
 
-fav_food_clean <- read_rds("data/fav-food-clean.rds")
+earthquakes_final <- read_rds("data/earthquakes-final.rds")
 
-fav_food_clean %>%
-  count(ses)
+earthquakes_final %>%
+  count(month)
 ```
 
 ---
@@ -466,34 +400,11 @@ class: middle
 .your-turn[
 ### .hand[Your turn!]
 .midi[
-- RStudio Cloud > `AE 06 - Nobels and sales + Data import` > `sales-excel.Rmd`. 
-- Load the `sales.xlsx` file from the `data-raw/` folder, using appropriate arguments for the `read_excel()` function such that it looks like the output on the left.
-- **Stretch goal:** Manipulate the sales data such that it looks like the output on the right.
+- Continue `lab 05 - importing and recoding earthquakes`
+- Complete exercises 5-8
 ]
 ]
 
-.pull-left[
-```{r echo=FALSE}
-sales <- read_excel("data/sales.xlsx", skip = 3, col_names = c("id", "n"))
-sales
-```
-]
-.pull-right[
-```{r echo=FALSE}
-sales %>%
-  mutate(
-    is_brand_name = str_detect(id, "Brand"),
-    brand = if_else(is_brand_name, id, NA_character_)
-  ) %>%
-  fill(brand) %>%
-  filter(!is_brand_name) %>%
-  select(brand, id, n) %>%
-  mutate(
-    id = as.numeric(id),
-    n = as.numeric(n)
-  )
-```
-]
 
 ---
 

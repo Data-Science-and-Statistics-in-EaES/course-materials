@@ -1,5 +1,5 @@
 ---
-title: "Lab 05 - Reading and Writing Data"
+title: "Lab 05 - Importing and recoding `earthquakes`"
 output: 
   tufte::tufte_html:
     css: ../lab.css
@@ -14,9 +14,8 @@ knitr::opts_chunk$set(eval = TRUE)
 
 # Learning goals
 
--   Learn how data types are coerced in vectors (or columns)
--   Practice creating mixed type vectors
--   Practice using explicit data coercion functions
+-   Know how to use read and write functions
+-   Practice fixing variable names, types and recoding factors when reading
 
 ```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 5, fig.cap = "Data Importing with readr and readxl", eval = TRUE}
 knitr::include_graphics("img/readr.png")
@@ -40,11 +39,13 @@ For this lab, we will be using the `earthquakes` dataset from the `{openintro}` 
 
 The package `{readr}` is automatically loaded with the `tidyverse`.
 `{readxl}` is also part of the `tidyverse` but it is not automatically loaded.
+We'll also load `{skimr}` to get a detailed look at data frames.
 
-```{r message = FALSE}
+```{r load-packages, message = FALSE}
 library(tidyverse)
 library(readxl)
 library(openintro)
+library(skimr)
 ```
 
 ## Warm up
@@ -58,57 +59,76 @@ Before we start the lab, let's warm up by changing the YAML in the starter file:
 
 # Lab Exercises
 
-```{r load-packages, message=FALSE}
-library(tidyverse)
+First, let's look at `earthquakes` with `skim`.
+Copy the code chunk below into Exercise 1 in the starter file.
+
+```{r inspect-earthquakes}
+skim(earthquakes)
 ```
 
-Let's first load the data:
+1.  Add text narrative below the output explaining briefly why we are able to view `earthquakes` without first using a `read_()` function.
+
+The `earthquake` version you have just viewed using `skim` is the final version.
+We've provided three partial datasets in the `/data` folder of your RStudio project.
+Let's remake the original file.
+
+2.  Identify the three partial datasets in your project directory (`earthquakes-1-3`). Insert a code chunk under Exercise 2 in your starter file. Import the three files into RStudio using three lines of code and an appropriate read function for each file. We give you some partial code below to get started on the first one.
 
 ```{r label-me1, eval=FALSE}
-nobel <- ___(___)
+earthquakes_1 <- read_csv("data/___")
 ```
 
-Then let's split the data into two:
+3.  Write a labeled code chunk to view the imported data sets under Exercise 3 in your starter file, and comment with text narrative on what is missing from each dataset when compared to the `tidyverse::earthquakes` version.
 
-```{r label-me2, eval=FALSE}
-# stem laureates
-___ <- nobel %>%
-  filter(___)
+**Note:** We can use the syntax `package::function` or `package::object` when specifying (exactly) a function or object from a particular package.
+You will see thist most frequently when we install packages using `install.packages::packagename`.
 
-# non-steam laureates
-___ <- nobel %>%
-  filter(___)
+4.  Insert a labeled code chunk which uses a pipeline of join functions to merge the data from the three partial datasets. Don't assign the output to anything, but pipe the joined data into `skim()` to confirm the output matches that of the `inspect-earthquakes` chunk at the start of this lab.
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+For Exercises 5-10, you will practice using the importing functionality covered in lecture.
+We have provided labeled code chunks and limited code that you should copy into the starter file, but the rest is up to you!
+
+5.  Write a pipeline that first reads `earthquakes-badnames-na.csv` into RStudio using an appropriate function, and then provides a glimpse of the dataset.
+
+```{r read-inspect, eval = F}
+read_csv("___/earthquakes-badnames-na.csv") %>% 
+  glimpse()
 ```
 
-And finally write out the data:
+6.  Complete and add to the code below such that `earthquakes-badnames-na.csv` is read into RStudio and the bad values ("." and "NA") are automatically assigned to `NA`.
 
-```{r label-me3}
-# add code for writing out the two data frames here
+```{r fix-nas, eval = F}
+read_csv("___/earthquakes-badnames-na.csv") 
 ```
 
-```{r load-packages, message=FALSE}
-library(tidyverse)
-library(readxl)
-```
+7.  Copy your code from exercise 6 above into the next exercise 7 chunk labeled `fix-names`. Start a pipeline whose first step is to fix the variable names in the data frame (remember, variable names cannot contain spaces).
 
--   Read in the Excel file called `sales.xlsx` from the `data-raw/` folder such that it looks like the following.
-
-```{r echo=FALSE, out.width="20%"}
-knitr::include_graphics("images/sales-1.png")
-```
-
-```{r}
-
-```
-
--   **Stretch goal:** Manipulate the sales data such such that it looks like the following.
-
-```{r echo=FALSE, out.width="25%"}
-knitr::include_graphics("images/sales-2.png")
-```
-
-```{r}
+```{r fix-names}
 
 ```
 
+8.  Copy your code from exercise 7 into the next exercise 8 chunk labeled `fix-richter`. Using `mutate` and `case_when()`, add to the pipeline so that the bad values in the variable `richter` ("seven") are corrected, and then then entire column is coerced to type numeric.
+
+```{r fix-richter}
+
+```
+
+9.  Copy your code from exercise 8 into the next exercise 9 labeled `revlevel-month`. Add to the mutate function so that the default alphabetical ordering of the `month` variable is re-leveled to match the natural ordering of the months (January through December). Add a separate line of code (not part of the pipeline) below the pipeline that uses the `count()` function to confirm that the months are ordered correctly.
+
+```{r relevel-month}
+
+```
+
+10. Copy your code one more time into Exercise 10. Add one more line to the pipeline that writes your corrected dataset as an `.rds` file. In a separate pipeline, use `readRDS` to read the file back in and, using count() again, confirm that the ordering of `month` is retained in an RDS file.
+
+```{r write-read-rds}
+
+```
+
+Great work!
+You just built an elaborate pipeline that combined importing, wrangling, and writing functions!
+
+You are finished with Lab 5!
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
