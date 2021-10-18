@@ -76,7 +76,6 @@ earthquakes
 
 ## Writing data
 
-.pull-left[
 - Write a file
 
 ```{r cache=TRUE}
@@ -85,24 +84,26 @@ earthquakes_subset <- earthquakes %>%
 
 write_csv(earthquakes_subset, file = "data/earthquakes-subset.csv")
 ```
-]
 
---
-.pull-right[
-- Read it back in to inspect
+---
+
+## Read it back in to inspect
 
 ```{r}
 read_csv("data/earthquakes-subset.csv")
 ```
-]
+
 
 ---
 
 .your-turn[
 ### .hand[Your turn!]
 
+- GitHub Repo Links: Blackboard Week 9 Content > Weekly Content > Clone Unit-5 Repo
 - RStudio Cloud > `lab 05 - Import and Recode earthquakes` > open `lab-05-import-recode.Rmd` and knit.
-- **Exercises 1-4**:
+  
+  
+- **Complete Exercises 1-4**:
 - Read in the `earthquakes` dataset in parts, using different read functions
 - Reassemble using join functions 
 - Write out the joined dataset to `earthquakes-tidyverse.csv` to `data/`.
@@ -139,12 +140,11 @@ ggplot(earthquakes_badnames, aes(x = year, y = total deaths)) +
 
 .small[
 ```{r}
-earthquakes_correct_names <- read_csv("data/earthquakes-badnames.csv",
-                             col_names = c("year", "month", "day",
-                                           "richter", "area",
-                                           "region", "deaths")
-                                           )
-
+earthquakes_correct_names <- read_csv("data/earthquakes-badnames.csv", 
+                                      col_names = c("year", "month", "day", 
+                                                    "richter", "area","region", 
+                                                    "deaths")
+                                      )
 names(earthquakes_correct_names)
 ```
 ]
@@ -173,15 +173,11 @@ Which type is `richter``? Why?
 ]
 
 .pull-left[
-```{r echo=FALSE, out.width="100%"}
+```{r echo=FALSE, out.width="90%"}
 knitr::include_graphics("img/df-na.png")
 ```
 ]
 .pull-right[
-```{r eval=FALSE}
-read_csv("data/earthquakes-na.csv")
-```
-
 ```{r echo=FALSE}
 read_csv("data/earthquakes-na.csv") %>% print(n = 10)
 ```
@@ -193,7 +189,7 @@ read_csv("data/earthquakes-na.csv") %>% print(n = 10)
 
 ```{r eval=FALSE}
 read_csv("data/earthquakes-na.csv", 
-         na = c("NA", "."))
+         na = c("NA", ".")) #<<
 ``` 
 
 .pull-left[
@@ -204,8 +200,8 @@ knitr::include_graphics("img/df-na.png")
 .pull-right[
 ```{r echo=FALSE,message=FALSE,}
 read_csv("data/earthquakes-na.csv", 
-  na = c("NA", ".")) %>% 
-  print(n = 10)
+  na = c("NA", ".")) %>% #<<
+  print(n = 10) 
 ```
 ]
 
@@ -265,7 +261,7 @@ earthquakes_bad_value <- read_csv("data/earthquakes-character-value.csv")
 glimpse(earthquakes_bad_value)
 ```
 
-----
+---
 
 ## Review: How to correct a wrongly-entered value?
 
@@ -301,8 +297,8 @@ earthquakes %>%
 .pull-left-wide[
 ```{r warning=FALSE}
 earthquakes_relevel <- earthquakes %>%
-  mutate(month = fct_relevel(month, "January", "February", "March",
-                             "April", "May", "June", "July", "August",
+  mutate(month = fct_relevel(month, "January", "February", "March", #<<
+                             "April", "May", "June", "July", "August", #<<
                              "September", "October", "November", "December")) #<<
 
 earthquakes_relevel %>%
@@ -326,13 +322,19 @@ earthquakes_final <- read_csv("data/earthquakes-badnames-na.csv", na = c(".", "N
     month = fct_relevel(month, "January", "February", "March",
                              "April", "May", "June", "July", "August",
                              "September", "October", "November", "December")) 
+```
 
+---
+
+## Does it look correct now?
+
+```{r warning=FALSE}
 earthquakes_final
 ```
 
 ---
 
-## Out and back in
+## Write out, and read back in
 
 ```{r}
 write_csv(earthquakes_final, file = "data/earthquakes-final.csv")
@@ -343,7 +345,7 @@ earthquakes_final <- read_csv("data/earthquakes-final.csv")
 ---
 
 .question[
-What happened to `ses` again?
+What happened to `month` again?
 ]
 
 ```{r}
@@ -353,7 +355,7 @@ earthquakes_final %>%
 
 ---
 
-## `read_rds()` and `write_rds()`
+## RDS files: R data structures
 
 - CSVs can be unreliable for saving interim results if there is specific variable type information you want to hold on to.
 - An alternative is RDS files, you can read and write them with `read_rds()` and `write_rds()`, respectively.
@@ -366,6 +368,20 @@ write_rds(x, path)
 ---
 
 ## Out and back in, take 2
+
+```{r warning=FALSE, echo = FALSE, message = FALSE}
+earthquakes_final <- read_csv("data/earthquakes-badnames-na.csv", na = c(".", "NA")) %>%
+  janitor::clean_names() %>%
+  mutate(
+    richter = case_when(
+      richter == "seven" ~ "7",
+      TRUE ~ richter
+      ),
+    richter = as.numeric(richter),
+    month = fct_relevel(month, "January", "February", "March",
+                             "April", "May", "June", "July", "August",
+                             "September", "October", "November", "December")) 
+```
 
 ```{r}
 write_rds(earthquakes_final, file = "data/earthquakes-final.rds")
@@ -401,7 +417,7 @@ class: middle
 ### .hand[Your turn!]
 .midi[
 - Continue `lab 05 - importing and recoding earthquakes`
-- Complete exercises 5-8
+- Complete exercises 5-10
 ]
 ]
 

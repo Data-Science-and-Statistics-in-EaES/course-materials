@@ -17,7 +17,7 @@ knitr::opts_chunk$set(eval = TRUE)
 -   Know how to use read and write functions
 -   Practice fixing variable names, types and recoding factors when reading
 
-```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 5, fig.cap = "Data Importing with readr and readxl", eval = TRUE}
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 2, fig.cap = "Data Importing with readr and readxl", eval = TRUE}
 knitr::include_graphics("img/readr.png")
 knitr::include_graphics("img/readxl.png")
 ```
@@ -39,13 +39,14 @@ For this lab, we will be using the `earthquakes` dataset from the `{openintro}` 
 
 The package `{readr}` is automatically loaded with the `tidyverse`.
 `{readxl}` is also part of the `tidyverse` but it is not automatically loaded.
-We'll also load `{skimr}` to get a detailed look at data frames.
+We'll also load `{skimr}` to get a detailed look at data frames and `{janitor}` to automate cleaning of variable names.
 
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(readxl)
 library(openintro)
 library(skimr)
+library(janitor)
 ```
 
 ## Warm up
@@ -72,7 +73,7 @@ The `earthquake` version you have just viewed using `skim` is the final version.
 We've provided three partial datasets in the `/data` folder of your RStudio project.
 Let's remake the original file.
 
-2.  Identify the three partial datasets in your project directory (`earthquakes-1-3`). Insert a code chunk under Exercise 2 in your starter file. Import the three files into RStudio using three lines of code and an appropriate read function for each file. We give you some partial code below to get started on the first one.
+2.  Identify the three partial datasets in your project directory (`earthquakes-1 to earthquakes-3`). Insert a code chunk under Exercise 2 in your starter file. Import the three files into RStudio using three lines of code and an appropriate read function for each file. We give you some partial code below to get started on the first one.
 
 ```{r label-me1, eval=FALSE}
 earthquakes_1 <- read_csv("data/___")
@@ -81,7 +82,6 @@ earthquakes_1 <- read_csv("data/___")
 3.  Write a labeled code chunk to view the imported data sets under Exercise 3 in your starter file, and comment with text narrative on what is missing from each dataset when compared to the `tidyverse::earthquakes` version.
 
 **Note:** We can use the syntax `package::function` or `package::object` when specifying (exactly) a function or object from a particular package.
-You will see thist most frequently when we install packages using `install.packages::packagename`.
 
 4.  Insert a labeled code chunk which uses a pipeline of join functions to merge the data from the three partial datasets. Don't assign the output to anything, but pipe the joined data into `skim()` to confirm the output matches that of the `inspect-earthquakes` chunk at the start of this lab.
 
@@ -97,7 +97,7 @@ read_csv("___/earthquakes-badnames-na.csv") %>%
   glimpse()
 ```
 
-6.  Complete and add to the code below such that `earthquakes-badnames-na.csv` is read into RStudio and the bad values ("." and "NA") are automatically assigned to `NA`.
+6.  Complete and add to the code below such that `earthquakes-badnames-na.csv` is read into RStudio **and** any bad values ("." and "NA") are automatically assigned to `NA`.
 
 ```{r fix-nas, eval = F}
 read_csv("___/earthquakes-badnames-na.csv") 

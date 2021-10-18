@@ -12,6 +12,7 @@ library(tidyverse)
 library(readxl)
 library(openintro)
 library(skimr)
+library(janitor)
 ```
 
 ## Exercises
@@ -50,4 +51,8 @@ Remove this text, and add your answer for Exercise 8 here.
 
 ### Exercise 9
 
-Remove this text, and add your answer for Exercise 9 here.
+Remove this text, and add your answer for Exercise 8 here.
+
+### Exercise 10
+
+Remove this text, and add your answer for Exercise 8 here.
