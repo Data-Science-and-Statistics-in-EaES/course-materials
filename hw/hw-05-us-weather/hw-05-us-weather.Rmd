@@ -1,0 +1,73 @@
+---
+title: "HW 05 - Putting it all together!"
+output: 
+  tufte::tufte_html:
+    css: ../hw.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+# Learning goals
+
+-   Apply functions for data importing, recoding, wrangling and visualization
+-   Working through these exercises with less scaffolding
+
+## Data
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "F5 Tornado - Source: Wikipedia", eval = TRUE}
+knitr::include_graphics("img/F5-tornado.jpeg")
+```
+
+We will be working with data downloaded from the [NOAA Severe Storm Database](https://www.kaggle.com/atinakarim/noaa-severe-storm-database).
+
+In particular, we will use the `tornado-path.csv` data in which each observation (row) represents a tornado that hit the U.S. (and affiliated damages) from 1950 onwards.
+
+## Packages
+
+We will need `dplyr` and `forcats` functions from the tidyverse, and lubridate to fix date variables.
+
+```{r message = FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+## Warm up
+
+Before we introduce the data, let's warm up with some simple exercises.
+
+-   Update the YAML, changing the author name to your name, and **knit** the document.
+-   Commit your changes with a meaningful commit message.
+-   Push your changes to GitHub.
+-   Go to your repo on GitHub and confirm that your changes are visible in your Rmd **and** md files. If anything is missing, commit and push again.
+
+## Importing the data
+
+1.  Insert and label a code chunk that reads the tornado data into RStudio, assigns it to a sensible object name and provides a glimpse of the newly created object.
+    State below the code chunk how many rows and variables the data set contains.
+
+2.  Insert and label a code chunk that will read the data (as in Exercise 1) and then, using a short pipeline, will select only the variables `storm_date`, `storm_time`, `state_name`, `magnitude`, `fatality_count`, `length`, and `width` from the data frame object you created in Exercise 1.
+    Assign the output of this code such that it **over-writes** the object you created in Exercise 1.
+
+3.  Insert and label a code chunk to take a look at the over-written object.
+    Using text narrative, comment under the code chunk on what is strange about the variable `magnitude`.
+    Then add and label a second code chunk that writes the new data file as a `.csv` to the `data/` directory and saves it using the same name you gave the R object.
+
+4.  Insert and label a code chunk to read in the new `.csv` file you just wrote out, rather than `tornado_path.csv`.
+    Add to the `read_csv` function to fix `magnitude`.
+    Assign the output to a new object name and add one further line of code to view the new object and confirm the issue with `magnitude` is resolved.
+
+5.  Filter the new data object to only include the states "Kansas" and "Oklahoma", then pipe the output into ggplot to create a multifaceted scatter plot exploring the relationship between time of day (x axis) and fatalities (y axis).
+    The facets should each correspond to a different magnitude value.
+    Different states (`state_name`) and the range of tornado widths (`width`) should be visible with reasonable aesthetic mappings.
+    Improve the clarity of the axes labels using `labs` and pick a theme layer of your choice.
+    Beneath the output, interpret the plots and write a narrative response about the conditions under which tornado fatalities are generally the highest and any caveats to your interpretation.
+
+Great work!
+You just completed an entire homework without any provided code chunks!
+You are finished with Homework 5!
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
