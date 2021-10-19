@@ -73,24 +73,34 @@ The `earthquake` version you have just viewed using `skim` is the final version.
 We've provided three partial datasets in the `/data` folder of your RStudio project.
 Let's remake the original file.
 
-2.  Identify the three partial datasets in your project directory (`earthquakes-1 to earthquakes-3`). Insert a code chunk under Exercise 2 in your starter file. Import the three files into RStudio using three lines of code and an appropriate read function for each file. We give you some partial code below to get started on the first one.
+2.  Identify the three partial datasets within the starter file `data` folder of your your project directory (`earthquakes-1 to earthquakes-3`). Insert a code chunk under Exercise 2 in your starter file. Import the three files into RStudio using three lines of code and an appropriate read function for each file. We give you some partial code below to get started on the first one.
 
 ```{r label-me1, eval=FALSE}
 earthquakes_1 <- read_csv("data/___")
 ```
 
-3.  Write a labeled code chunk to view the imported data sets under Exercise 3 in your starter file, and comment with text narrative on what is missing from each dataset when compared to the `tidyverse::earthquakes` version.
+3.  Write a labeled code chunk to view the imported data frames under Exercise 3 in your starter file, and comment with text narrative on: **1)** what is missing from each data frame when compared to the `openintro::earthquakes` version; **2)** what is strange about the `deaths` variable in the object you created when importing `earthquakes-3.xlsx`; and **3)** why will the code chunk below (labeled `coerce-earthquakes-3`) fix the problem with `deaths`?
+
+**After you respond to these three prompts, make sure you copy the code chunk into your starter file under your responses to exercise 3.** Notice that the syntax for `col_types` within `read_xlsx`, is slightly different to that for `read_csv` or `read_txt`.
+Always check the function help page if you're not sure!
+
+```{r coerce-earthquakes-3, message = F, warning = F}
+earthquakes_3 <- read_xlsx("data/earthquakes-3.xlsx", col_types = c("numeric", 
+                                                                    "text",
+                                                                    "numeric",
+                                                                    "numeric"))
+```
 
 **Note:** We can use the syntax `package::function` or `package::object` when specifying (exactly) a function or object from a particular package.
 
-4.  Insert a labeled code chunk which uses a pipeline of join functions to merge the data from the three partial datasets. Don't assign the output to anything, but pipe the joined data into `skim()` to confirm the output matches that of the `inspect-earthquakes` chunk at the start of this lab.
+4.  Insert a labeled code chunk which uses a pipeline of join functions to merge the data from the three partial datasets. Don't assign the output to anything, but pipe the joined data into `skim()` to confirm the output roughly matches that of the `inspect-earthquakes` chunk at the start of this lab.
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
 For Exercises 5-10, you will practice using the importing functionality covered in lecture.
 We have provided labeled code chunks and limited code that you should copy into the starter file, but the rest is up to you!
 
-5.  Write a pipeline that first reads `earthquakes-badnames-na.csv` into RStudio using an appropriate function, and then provides a glimpse of the dataset.
+5.  Write a pipeline that first reads `earthquakes-badnames-na.csv` into RStudio using an appropriate function, and then provides a glimpse of the dataset. Use the code below to get you started.
 
 ```{r read-inspect, eval = F}
 read_csv("___/earthquakes-badnames-na.csv") %>% 
@@ -105,25 +115,25 @@ read_csv("___/earthquakes-badnames-na.csv")
 
 7.  Copy your code from exercise 6 above into the next exercise 7 chunk labeled `fix-names`. Start a pipeline whose first step is to fix the variable names in the data frame (remember, variable names cannot contain spaces).
 
-```{r fix-names}
+```{r fix-names, message = F, warning = F}
 
 ```
 
 8.  Copy your code from exercise 7 into the next exercise 8 chunk labeled `fix-richter`. Using `mutate` and `case_when()`, add to the pipeline so that the bad values in the variable `richter` ("seven") are corrected, and then then entire column is coerced to type numeric.
 
-```{r fix-richter}
+```{r fix-richter, message = F, warning = F}
 
 ```
 
-9.  Copy your code from exercise 8 into the next exercise 9 labeled `revlevel-month`. Add to the mutate function so that the default alphabetical ordering of the `month` variable is re-leveled to match the natural ordering of the months (January through December). Add a separate line of code (not part of the pipeline) below the pipeline that uses the `count()` function to confirm that the months are ordered correctly.
+9.  Copy your code from exercise 8 into the next exercise 9 labeled `revlevel-month`. Add to the mutate function so that the default alphabetical ordering of the `month` variable is re-leveled to match the natural ordering of the months (January through December). Assign the new output to `earthquakes_correct`. Add a second, short pipeline that takes `earthquakes_correct` as input and applies the `count()` function to confirm that the `month` factor levels are ordered correctly.
 
-```{r relevel-month}
+```{r relevel-month, message = F, warning = F}
 
 ```
 
-10. Copy your code one more time into Exercise 10. Add one more line to the pipeline that writes your corrected dataset as an `.rds` file. In a separate pipeline, use `readRDS` to read the file back in and, using count() again, confirm that the ordering of `month` is retained in an RDS file.
+10. Write a new short a pipeline that writes `earthquakes_correct` as an `.rds` file. In a separate pipeline, use `readRDS` to read the file back in and, using count() again, confirm that the ordering of `month` is retained in an RDS file.
 
-```{r write-read-rds}
+```{r write-read-rds, message = F, warning = F}
 
 ```
 

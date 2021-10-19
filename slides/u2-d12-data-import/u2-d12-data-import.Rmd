@@ -1,5 +1,5 @@
 ---
-title: "Importing data"
+title: "Importing and recoding data"
 subtitle: "<br><br> Data Science & Statistics"
 author: "Gavin McNicol"
 date: "`r Sys.Date()`"
@@ -22,6 +22,9 @@ library(knitr)
 library(DT)
 library(here)
 ```
+
+
+---
 
 class: middle
 
@@ -251,6 +254,13 @@ read_csv("data/earthquakes-na.csv", col_types = list(col_integer(),
 `col_skip()`       | do not read
 `col_time()`       | time
 ]
+
+---
+
+# Data Importing and Recoding Activity
+
+In-person: Work with neighbor(s) on handout
+Remote: Go to Blackboard > Weekly Content > Week 9 for Handout 
 
 ---
 

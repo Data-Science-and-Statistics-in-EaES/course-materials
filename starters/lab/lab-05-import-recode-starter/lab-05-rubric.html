@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Insert your name here" />
+<meta name="author" content="RUBRIC" />
 
 
 <title>Lab 05 - Importing and Recoding earthquakes</title>
@@ -165,8 +165,8 @@ pre code {
 
 
 <h1 class="title toc-ignore">Lab 05 - Importing and Recoding <code>earthquakes</code></h1>
-<h4 class="author">Insert your name here</h4>
-<h4 class="date">Insert date here</h4>
+<h4 class="author">RUBRIC</h4>
+<h4 class="date">RUBRIC</h4>
 
 </div>
 
@@ -183,39 +183,222 @@ library(janitor)</code></pre>
 <h2>Exercises</h2>
 <div id="exercise-1" class="section level3">
 <h3>Exercise 1</h3>
-<p>Remove this text, and add your answer for Exercise 1 here.</p>
+</div>
+<div id="half-point-for-identifying-that-it-is-loaded-with-a-package---max-0.5" class="section level3">
+<h3><strong>Half point for identifying that it is loaded with a package - (MAX 0.5)</strong></h3>
+<p>We don’t need to use a read function to import <code>earthquakes</code> because this is a dataset that is already available to us via the <code>openintro</code> package, which we loaded.</p>
 </div>
 <div id="exercise-2" class="section level3">
 <h3>Exercise 2</h3>
-<p>Remove this text, and add your answer for Exercise 2 here.</p>
+</div>
+<div id="half-point-for-each-import---max-1.5" class="section level3">
+<h3><strong>Half point for each import - (MAX 1.5)</strong></h3>
+<pre class="r"><code>earthquakes_1 &lt;- read_csv(&quot;data/earthquakes-1.csv&quot;)</code></pre>
+<pre><code>## Rows: 123 Columns: 5</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): month, area, region
+## dbl (2): year, day</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>earthquakes_2 &lt;- read_tsv(&quot;data/earthquakes-2.txt&quot;)</code></pre>
+<pre><code>## Rows: 123 Columns: 4</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr (1): month
+## dbl (3): year, day, richter</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>earthquakes_3 &lt;- read_xlsx(&quot;data/earthquakes-3.xlsx&quot;)</code></pre>
 </div>
 <div id="exercise-3" class="section level3">
 <h3>Exercise 3</h3>
-<p>Remove this text, and add your answer for Exercise 3 here.</p>
+</div>
+<div id="half-point-glimpse-useage-half-point-for-difference-descriptions-half-point-for-explanation-of-explicit-coercion-via-coltypes---max-1.5" class="section level3">
+<h3><strong>Half point glimpse useage, half point for difference descriptions, half point for explanation of explicit coercion via coltypes - (MAX 1.5)</strong></h3>
+<pre class="r"><code>glimpse(earthquakes_1); glimpse(earthquakes_2); glimpse(earthquakes_3)</code></pre>
+<pre><code>## Rows: 123
+## Columns: 5
+## $ year   &lt;dbl&gt; 1902, 1902, 1903, 1903, 1905, 1906, 1906, 1906, 1906, 1907, 190…
+## $ month  &lt;chr&gt; &quot;April&quot;, &quot;December&quot;, &quot;April&quot;, &quot;May&quot;, &quot;April&quot;, &quot;January&quot;, &quot;March…
+## $ day    &lt;dbl&gt; 19, 16, 28, 28, 4, 31, 16, 18, 17, 21, 28, 23, 9, 3, 13, 30, 13…
+## $ area   &lt;chr&gt; &quot;Quezaltenango and San Marco&quot;, &quot;Uzbekistan&quot;, &quot;Malazgirt&quot;, &quot;Gole…
+## $ region &lt;chr&gt; &quot;Guatemala&quot;, &quot;Russia&quot;, &quot;Turkey&quot;, &quot;Turkey&quot;, &quot;India&quot;, &quot;Ecuador&quot;, …</code></pre>
+<pre><code>## Rows: 123
+## Columns: 4
+## $ year    &lt;dbl&gt; 1902, 1902, 1903, 1903, 1905, 1906, 1906, 1906, 1906, 1907, 19…
+## $ month   &lt;chr&gt; &quot;April&quot;, &quot;December&quot;, &quot;April&quot;, &quot;May&quot;, &quot;April&quot;, &quot;January&quot;, &quot;Marc…
+## $ day     &lt;dbl&gt; 19, 16, 28, 28, 4, 31, 16, 18, 17, 21, 28, 23, 9, 3, 13, 30, 1…
+## $ richter &lt;dbl&gt; 7.5, 6.4, 7.0, 5.8, 7.5, 8.8, 6.8, 7.7, 8.6, 8.1, 7.2, 7.3, 7.…</code></pre>
+<pre><code>## Rows: 123
+## Columns: 4
+## $ year   &lt;dbl&gt; 1902, 1902, 1903, 1903, 1905, 1906, 1906, 1906, 1906, 1907, 190…
+## $ month  &lt;chr&gt; &quot;April&quot;, &quot;December&quot;, &quot;April&quot;, &quot;May&quot;, &quot;April&quot;, &quot;January&quot;, &quot;March…
+## $ day    &lt;dbl&gt; 19, 16, 28, 28, 4, 31, 16, 18, 17, 21, 28, 23, 9, 3, 13, 30, 13…
+## $ deaths &lt;chr&gt; &quot;2000&quot;, &quot;4700&quot;, &quot;3500&quot;, &quot;1000&quot;, &quot;19000&quot;, &quot;1000&quot;, &quot;1250&quot;, &quot;3000&quot;…</code></pre>
+<p><code>earthquakes_1</code> lacks the deaths and richter variables from the <code>openintro::earthquakes</code> version <code>earthquakes_2</code> lacks the area, region and deaths variables from the <code>openintro::earthquakes</code> version <code>earthquakes_3</code> lacks the area, region, and richter variables from the <code>openintro::earthquakes</code> version.</p>
+<ul>
+<li><code>earthquakes_3</code> also contains a character type <code>deaths</code> variable, rather than numerical type.</li>
+<li>the following code chunk will coerce the fourth column <code>deaths</code> to a numerical type</li>
+</ul>
+<pre class="r"><code>earthquakes_3 &lt;- read_xlsx(&quot;data/earthquakes-3.xlsx&quot;, col_types = c(&quot;numeric&quot;, 
+                                                                    &quot;text&quot;,
+                                                                    &quot;numeric&quot;,
+                                                                    &quot;numeric&quot;))</code></pre>
+<pre><code>## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
+## Expecting numeric in D108 / R108C4: got &#39;NA&#39;</code></pre>
+<pre><code>## Warning in read_fun(path = enc2native(normalizePath(path)), sheet_i = sheet, :
+## Expecting numeric in D110 / R110C4: got &#39;NA&#39;</code></pre>
 </div>
 <div id="exercise-4" class="section level3">
 <h3>Exercise 4</h3>
-<p>Remove this text, and add your answer for Exercise 4 here.</p>
+</div>
+<div id="half-point-for-series-of-left_joins---max-0.5" class="section level3">
+<h3><strong>Half point for series of left_joins - (MAX 0.5)</strong></h3>
+<pre class="r"><code>earthquakes_1 %&gt;% 
+  left_join(earthquakes_2) %&gt;% 
+  left_join(earthquakes_3)</code></pre>
+<pre><code>## Joining, by = c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;)
+## Joining, by = c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;)</code></pre>
+<pre><code>## # A tibble: 129 × 7
+##     year month      day area                        region        richter deaths
+##    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;
+##  1  1902 April       19 Quezaltenango and San Marco Guatemala         7.5   2000
+##  2  1902 December    16 Uzbekistan                  Russia            6.4   4700
+##  3  1903 April       28 Malazgirt                   Turkey            7     3500
+##  4  1903 May         28 Gole                        Turkey            5.8   1000
+##  5  1905 April        4 Kangra                      India             7.5  19000
+##  6  1906 January     31 Esmeraldas (off coast)      Ecuador           8.8   1000
+##  7  1906 March       16 Chia-i                      Taiwan            6.8   1250
+##  8  1906 April       18 San Francisco               United States     7.7   3000
+##  9  1906 August      17 Valparaiso                  Chile             8.6   3882
+## 10  1907 October     21 Central                     Asia              8.1  12000
+## # … with 119 more rows</code></pre>
 </div>
 <div id="exercise-5" class="section level3">
 <h3>Exercise 5</h3>
-<p>Remove this text, and add your answer for Exercise 5 here.</p>
+</div>
+<div id="half-point-for-completing-code---max-0.5" class="section level3">
+<h3><strong>Half point for completing code - (MAX 0.5)</strong></h3>
+<pre class="r"><code>read_csv(&quot;data/earthquakes-badnames-na.csv&quot;) %&gt;% 
+  glimpse()</code></pre>
 </div>
 <div id="exercise-6" class="section level3">
 <h3>Exercise 6</h3>
-<p>Remove this text, and add your answer for Exercise 6 here.</p>
+</div>
+<div id="half-point-for-each-of-adding-na-argument-and-correct-vector-of-bad-values---max-1" class="section level3">
+<h3><strong>Half point for each of adding ‘na’ argument and correct vector of bad values - (MAX 1)</strong></h3>
+<pre class="r"><code>read_csv(&quot;data/earthquakes-badnames-na.csv&quot;, na = c(&quot;.&quot;, &quot;NA&quot;)) </code></pre>
 </div>
 <div id="exercise-7" class="section level3">
 <h3>Exercise 7</h3>
-<p>Remove this text, and add your answer for Exercise 7 here.</p>
+</div>
+<div id="half-point-for-either-janitorclean_names-or-providing-vector-of-names-to-colnames---max-.5" class="section level3">
+<h3><strong>Half point for either janitor::clean_names() or providing vector of names to colnames() - (MAX .5)</strong></h3>
+<pre class="r"><code>read_csv(&quot;data/earthquakes-badnames-na.csv&quot;, na = c(&quot;.&quot;, &quot;NA&quot;)) %&gt;% 
+  janitor::clean_names()</code></pre>
+<pre><code>## # A tibble: 123 × 7
+##     year month      day richter area_within_region          region        total_deaths
+##    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                       &lt;chr&gt;                &lt;dbl&gt;
+##  1  1902 April       19 7.5     Quezaltenango and San Marco Guatemala             2000
+##  2  1902 December    16 6.4     Uzbekistan                  Russia                4700
+##  3  1903 April       28 seven   Malazgirt                   Turkey                3500
+##  4  1903 May         28 5.8     Gole                        Turkey                1000
+##  5  1905 April        4 &lt;NA&gt;    Kangra                      India                19000
+##  6  1906 January     31 8.8     Esmeraldas (off coast)      Ecuador               1000
+##  7  1906 March       16 6.8     Chia-i                      Taiwan                1250
+##  8  1906 April       18 7.7     San Francisco               United States         3000
+##  9  1906 August      17 8.6     Valparaiso                  Chile                 3882
+## 10  1907 October     21 8.1     Central                     Asia                 12000
+## # … with 113 more rows</code></pre>
 </div>
 <div id="exercise-8" class="section level3">
 <h3>Exercise 8</h3>
-<p>Remove this text, and add your answer for Exercise 8 here.</p>
+</div>
+<div id="half-point-for-each-correct-line-of-case_when-assigning-to-numeric-and-wrapping-with-mutate---max-1.5" class="section level3">
+<h3><strong>Half point for each correct line of case_when, assigning to numeric, and wrapping with mutate - (MAX 1.5)</strong></h3>
+<pre class="r"><code>read_csv(&quot;data/earthquakes-badnames-na.csv&quot;, na = c(&quot;.&quot;, &quot;NA&quot;)) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  mutate(richter = case_when(
+    richter == &quot;seven&quot; ~ &quot;7&quot;,
+    TRUE ~ richter),
+    richter = as.numeric(richter)
+    )</code></pre>
+<pre><code>## # A tibble: 123 × 7
+##     year month      day richter area_within_region          region        total_deaths
+##    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt;                &lt;dbl&gt;
+##  1  1902 April       19     7.5 Quezaltenango and San Marco Guatemala             2000
+##  2  1902 December    16     6.4 Uzbekistan                  Russia                4700
+##  3  1903 April       28     7   Malazgirt                   Turkey                3500
+##  4  1903 May         28     5.8 Gole                        Turkey                1000
+##  5  1905 April        4    NA   Kangra                      India                19000
+##  6  1906 January     31     8.8 Esmeraldas (off coast)      Ecuador               1000
+##  7  1906 March       16     6.8 Chia-i                      Taiwan                1250
+##  8  1906 April       18     7.7 San Francisco               United States         3000
+##  9  1906 August      17     8.6 Valparaiso                  Chile                 3882
+## 10  1907 October     21     8.1 Central                     Asia                 12000
+## # … with 113 more rows</code></pre>
 </div>
 <div id="exercise-9" class="section level3">
 <h3>Exercise 9</h3>
-<p>Remove this text, and add your answer for Exercise 8 here.</p>
+</div>
+<div id="half-point-for-using-fct_relevel-assigning-correct-order-of-months-and-adding-count-pipeline-below---max-1.5" class="section level3">
+<h3><strong>Half point for using fct_relevel, assigning correct order of months, and adding count pipeline below - (MAX 1.5)</strong></h3>
+<pre class="r"><code>earthquakes_correct &lt;- read_csv(&quot;data/earthquakes-badnames-na.csv&quot;, na = c(&quot;.&quot;, &quot;NA&quot;)) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  mutate(richter = case_when(
+    richter == &quot;seven&quot; ~ &quot;7&quot;,
+    TRUE ~ richter),
+    richter = as.numeric(richter),
+    month = fct_relevel(month, &quot;January&quot;, &quot;February&quot;, &quot;March&quot;,
+                             &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;,
+                             &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;)
+    )
+
+earthquakes_correct %&gt;% 
+  count(month)</code></pre>
+<pre><code>## # A tibble: 12 × 2
+##    month         n
+##    &lt;fct&gt;     &lt;int&gt;
+##  1 January      11
+##  2 February      9
+##  3 March        17
+##  4 April         7
+##  5 May          14
+##  6 June          8
+##  7 July         10
+##  8 August       12
+##  9 September     9
+## 10 October       8
+## 11 November      6
+## 12 December     12</code></pre>
+</div>
+<div id="exercise-10" class="section level3">
+<h3>Exercise 10</h3>
+</div>
+<div id="half-point-for-correct-write_rds-syntax-and-including-second-pipeline-with-read_rds---max-1" class="section level3">
+<h3><strong>Half point for correct write_rds syntax and including second pipeline with read_rds - (MAX 1)</strong></h3>
+<pre class="r"><code>write_rds(earthquakes_correct, path = &quot;data/earthquakes_correct.rds&quot;)
+
+read_rds(&quot;data/earthquakes_correct.rds&quot;) %&gt;% 
+  count(month)</code></pre>
+<pre><code>## # A tibble: 12 × 2
+##    month         n
+##    &lt;fct&gt;     &lt;int&gt;
+##  1 January      11
+##  2 February      9
+##  3 March        17
+##  4 April         7
+##  5 May          14
+##  6 June          8
+##  7 July         10
+##  8 August       12
+##  9 September     9
+## 10 October       8
+## 11 November      6
+## 12 December     12</code></pre>
 </div>
 </div>
 
