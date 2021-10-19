@@ -161,9 +161,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="packages" class="section level2">
 <h2>Packages</h2>
-<p>We will need <code>dplyr</code> and <code>forcats</code> functions from the tidyverse, and lubridate to fix date variables.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<p>We will need <code>dplyr</code> functions from the tidyverse.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
 <div id="warm-up" class="section level2">
 <h2>Warm up</h2>
@@ -184,6 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Insert and label a code chunk to read in the new <code>.csv</code> file you just wrote out, rather than <code>tornado_path.csv</code>. Add to the <code>read_csv</code> function to fix <code>magnitude</code>. Assign the output to a new object name and add one further line of code to view the new object and confirm the issue with <code>magnitude</code> is resolved.</p></li>
 <li><p>Filter the new data object to only include the states “Kansas” and “Oklahoma”, then pipe the output into ggplot to create a multifaceted scatter plot exploring the relationship between time of day (x axis) and fatalities (y axis). The facets should each correspond to a different magnitude value. Different states (<code>state_name</code>) and the range of tornado widths (<code>width</code>) should be visible with reasonable aesthetic mappings. Improve the clarity of the axes labels using <code>labs</code> and pick a theme layer of your choice. Beneath the output, interpret the plots and write a narrative response about the conditions under which tornado fatalities are generally the highest and any caveats to your interpretation.</p></li>
 </ol>
+<p><strong>Note</strong>: For Exercise 5 you will get credit for every correct line of code, even if your entire plot isn’t perfect or doesn’t plot due to an error. So try to make an attempt at all the steps!</p>
 <p>Great work! You just completed an entire homework without any provided code chunks! You are finished with Homework 5! 🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message.</em></p>
 </div>
 </div>

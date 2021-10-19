@@ -29,11 +29,10 @@ In particular, we will use the `tornado-path.csv` data in which each observation
 
 ## Packages
 
-We will need `dplyr` and `forcats` functions from the tidyverse, and lubridate to fix date variables.
+We will need `dplyr` functions from the tidyverse.
 
 ```{r message = FALSE}
 library(tidyverse)
-library(lubridate)
 ```
 
 ## Warm up
@@ -66,6 +65,9 @@ Before we introduce the data, let's warm up with some simple exercises.
     Different states (`state_name`) and the range of tornado widths (`width`) should be visible with reasonable aesthetic mappings.
     Improve the clarity of the axes labels using `labs` and pick a theme layer of your choice.
     Beneath the output, interpret the plots and write a narrative response about the conditions under which tornado fatalities are generally the highest and any caveats to your interpretation.
+
+**Note**: For Exercise 5 you will get credit for every correct line of code, even if your entire plot isn't perfect or doesn't plot due to an error.
+So try to make an attempt at all the steps!
 
 Great work!
 You just completed an entire homework without any provided code chunks!
