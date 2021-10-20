@@ -24,8 +24,6 @@ library(here)
 ```
 
 
----
-
 class: middle
 
 # Reading rectangular data into R
@@ -259,8 +257,9 @@ read_csv("data/earthquakes-na.csv", col_types = list(col_integer(),
 
 # Data Importing and Recoding Activity
 
-In-person: Work with neighbor(s) on handout
-Remote: Go to Blackboard > Weekly Content > Week 9 for Handout 
+-   In-person: Work with neighbor(s) on handout
+    
+-   Remote: Go to Blackboard > Weekly Content > Week 9 for Handout 
 
 ---
 
