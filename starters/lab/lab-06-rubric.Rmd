@@ -1,0 +1,115 @@
+---
+title: "Lab 06 - Writing functions`"
+author: "Insert your name here"
+date: "Insert date here"
+output: html_document
+---
+
+### Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+```
+
+## Exercises
+
+### Exercise 1
+
+```{r import-data}
+class_survey <- read_csv("data/class-survey.csv")
+```
+
+### Exercise 2
+
+```{r pivot-longer, eval = T}
+class_survey_long <- class_survey %>% 
+  pivot_longer(
+    names_to = "question",
+    values_to = "response",
+    cols = 2:6
+  )
+head(class_survey_long, 10) 
+# the last line will output the first 10 rows for you to view
+```
+
+### Exercise 3
+
+```{r summarize-long-data}
+class_survey_long %>% 
+  group_by(question) %>% 
+  summarize(min = min(response, na.rm = T),
+            median = median(response, na.rm = T),
+            mean = mean(response, na.rm = T),
+            max = max(response, na.rm = T))
+```
+
+### Exercise 4
+
+```{r define-function-body, eval = F}
+min(response, na.rm = T)
+median(response, na.rm = T)
+mean(response, na.rm = T)
+max(response, na.rm = T)
+```
+
+### Exercise 5
+
+Each function requires the input `response` which is equivalent to a vector object because it is a variable from the `class_survey_long` data frame, and variables within data frame are vectors.
+
+```{r update-input-name, eval = F}
+min(response_vector, na.rm = T)
+median(response_vector, na.rm = T)
+mean(response_vector, na.rm = T)
+max(response_vector, na.rm = T)
+```
+
+### Exercise 6
+
+`summarize()` would be a bad name because it over-writes the existing summarize function in dplyr
+
+### Exercise 7
+
+```{r write-compute-summary-stats, eval = T}
+compute_summary_stats <- function(response_vector){
+  
+  min(response_vector, na.rm = T)
+  median(response_vector, na.rm = T)
+  mean(response_vector, na.rm = T)
+  max(response_vector, na.rm = T)
+  
+}
+```
+
+### Exercise 8
+
+```{r test-compute-summary-stats}
+compute_summary_stats(class_survey$pets)
+```
+
+### Exercise 9
+
+Functions return the output of the last line of code in the function body, therefore, we only get the `max()` value for the variable selected.
+
+### Exercise 10
+
+```{r fix-compute-summary-stats, eval = T}
+compute_summary_stats <- function(response_vector){
+  
+  min <- min(response_vector, na.rm = T)
+  median <- median(response_vector, na.rm = T)
+  mean <- mean(response_vector, na.rm = T)
+  max <-max(response_vector, na.rm = T)
+  
+      tibble(
+              "min" = min,
+              "median" = median,
+              "mean" = mean,
+              "max" = max
+  )
+  
+}
+```
+
+```{r test-compute-summary-stats-again}
+compute_summary_stats(class_survey$pets)
+```

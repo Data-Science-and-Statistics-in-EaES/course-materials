@@ -1,0 +1,172 @@
+---
+title: "Lab 06 - Writing Functions"
+output: 
+  tufte::tufte_html:
+    css: ../lab.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+# Learning goals
+
+-   Practice writing functions for simple calculation tasks
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 2, fig.cap = "High functioning cat", eval = TRUE}
+knitr::include_graphics("img/cat-coding.gif")
+```
+
+## Data
+
+For this lab, we will be using the data we generated earlier this semester the class survey.
+We asked you for information on:
+
+-   number of times you have moved house/apartment
+-   number of pets you have owned
+-   number of international flights you've flown
+-   the number of credit hours you're enrolled in
+-   your best guess of the number of moons in the solar system (without Google)
+
+## Packages
+
+Writing functions is a part of `base` R so we don't need to load any extra packages for that, but we will need the `{tidyverse}` for some data wrangling.
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+```
+
+## Warm up
+
+Before we start the lab, let's warm up by changing the YAML in the starter file:
+
+-   Update the YAML, changing the author name to your name, and **knit** the document. 🧶
+-   Commit your changes with a meaningful commit message. ✅
+-   Push your changes to GitHub.️ ⬆️
+-   Go to your repo on GitHub and confirm that your changes are visible in your Rmd files.
+
+# Lab Exercises
+
+## Code-along Exercises
+
+1.  Look in the Lab 6 `/data` sub-directory and identify the name and file type of the dataset we need to load. Then complete the code chunk below in your starter file to load the class survey data and assign the imported data to a new object called `class_survey`. State below your code chunk how many observations there are in the dataset and what the data type of each variable is.
+
+```{r import-data}
+# code goes here
+```
+
+This dataset is tidy because each row is an observation (a student in the class) and each column is a variable.
+However, it is still a "wide" dataset, which makes it a bit more cumbersome to work with.
+
+2.  Copy the code chunk below into Exercise 2 in your starter file and complete the pipline which will turn this dataset into a "long" format. Remember to change `eval` to `T` when you are ready to run the chunk.
+
+```{r pivot-longer, eval = F}
+class_survey_long <- ___ %>% 
+  pivot_longer(
+    names_to = "question",
+    values_to = "response",
+    cols = 2:6
+  )
+head(class_survey_long, 10) 
+# the last line will output the first 10 rows for you to view
+```
+
+To demonstrate the efficiency of tidy data approach, let's first try summarizing the long dataset using `tidyverse` methods and functions you've been learning.
+
+3.  Copy the code chunk below under Exercise 3 in your starter file, and within it write a short pipeline that uses the `group_by()` and `summarize()` functions to compute the min, median, mean, and max values for each question type in `class_survey_long`. You do not need to assign the output of the pipeline to anything, just admire the detailed summary information you've just generated with a few lines of code!
+
+```{r summarize-long-data}
+# code goes here
+```
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+## Independent activities
+
+For the rest of the Lab, you'll be working independently on writing functions.
+We will be recreating the same output as you generated in Exercise 3, but this time you'll write your own function to do this.
+
+## So, how to write a code chunk?
+
+**First, let's define what we want our function to do.**
+
+4.  Copy the code chunk below into Exercise 4 in your starter file. Look at the four calculations you perform within `summarize` in Exercise 3. We have added code for the first function. Remove the comments (`#`) and complete the next three lines yourself. You can leave `eval = F` for this code chunk because we don't need to run it.
+
+```{r define-function-body, eval = F}
+min(response, na.rm = T)
+# a second function
+# a third function
+# a fourth function
+```
+
+**Second, what inputs does the function require?**
+
+5.  State in text narrative what `input` each function requires and why this input is equivalen to a vector. Then copy your code from Exercise 4 into the code chunk provided under Exercise 5 in the starter file, and change the input to a more generic placeholder: `response_vector`. Again, you can leave `eval = F` for this code chunk because we don't need to run it.
+
+**Third, decide on a name for your function.**
+
+Our function is going to compute summary stats.
+It might be tempting to call our function `summarize`.
+
+6.  State in text narrative below Exercise 6 whether you think `summarize` would be a good name, or not, and why.
+
+After much careful deliberation we decided to call our function `compute_summary_stats`.
+Now we have all the pieces together to write our function.
+
+7.  Copy the code chunk below into your starter file under Exercise 7 and complete it to write the function. This time, you will want to change `eval = T` when you're ready.
+
+```{r write-compute-summary-stats, eval = F}
+___ <- function(___){
+  
+  min(response_vector, na.rm = T)
+  median(___, na.rm = T)
+  mean(___, na.rm = T)
+  max(___, na.rm = T)
+  
+}
+```
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+8.  Insert a code chunk under Exerise 8 in your starter file.
+    Label it `test-compute-summary-stats`.
+    Within it, test out the function on one of the variables from the original **wide** form of the dataset.
+    **Remember** you can use `$` after a dataset name to select a particular variable.
+
+9.  Uh oh!
+    What is wrong with your output?
+    State in text narrative below Exercise 9 in your starter file why we only get one output?
+    **Hint**: We covered this in the last couple of lecture slides on Functions.
+
+10. Copy the code below into Exercise 10 in your starter file.
+    Complete it such that it will output a `tibble` that includes all the statistics we computed within the function.
+    Each statistic should get its own named column.
+    Then, insert and label a second code chunk that tests the revised function.
+    Confirm that your output matches the output for the same variable generated in Exercise 3.
+
+```{r fix-compute-summary-stats, eval = F}
+compute_summary_stats <- function(response_vector){
+  
+  min <- min(response_vector, na.rm = T)
+  median <- median(response_vector, na.rm = T)
+  mean <- mean(response_vector, na.rm = T)
+  max <-max(response_vector, na.rm = T)
+  
+      ___(
+              "min" = min,
+              "mean" = __,
+              "___" = median,
+              "___" = ___
+  )
+  
+}
+```
+
+You just designed, wrote and tested your own R functions!
+
+You are finished with Lab 6!
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
