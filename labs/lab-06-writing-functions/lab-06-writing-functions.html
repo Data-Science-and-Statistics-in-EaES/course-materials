@@ -155,7 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </p>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p>For this lab, we will be using the data we generated earlier this semester the class survey. We asked you for information on:</p>
+<p>For this lab, we will be using the data we generated earlier this semester as part of the class survey. We asked you for information on:</p>
 <ul>
 <li>number of times you have moved house/apartment</li>
 <li>number of pets you have owned</li>
@@ -190,13 +190,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code goes here</span></span></code></pre></div>
 <p>This dataset is tidy because each row is an observation (a student in the class) and each column is a variable. However, it is still a “wide” dataset, which makes it a bit more cumbersome to work with.</p>
 <ol start="2" style="list-style-type: decimal">
-<li>Copy the code chunk below into Exercise 2 in your starter file and complete the pipline which will turn this dataset into a “long” format. Remember to change <code>eval</code> to <code>T</code> when you are ready to run the chunk.</li>
+<li>Copy the code chunk below into Exercise 2 in your starter file and complete the pipeline which will turn this dataset into a “long” format. Remember to change <code>eval</code> to <code>T</code> when you are ready to run the chunk.</li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>class_survey_long <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;question&quot;</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> ___<span class="sc">:</span>___</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class_survey_long, <span class="dv">10</span>) </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># the last line will output the first 10 rows for you to view</span></span></code></pre></div>
@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># a fourth function</span></span></code></pre></div>
 <p><strong>Second, what inputs does the function require?</strong></p>
 <ol start="5" style="list-style-type: decimal">
-<li>State in text narrative what <code>input</code> each function requires and why this input is equivalen to a vector. Then copy your code from Exercise 4 into the code chunk provided under Exercise 5 in the starter file, and change the input to a more generic placeholder: <code>response_vector</code>. Again, you can leave <code>eval = F</code> for this code chunk because we don’t need to run it.</li>
+<li>State in text narrative what <code>input</code> each function requires and why this input is a vector. Then copy your code from Exercise 4 into the code chunk provided under Exercise 5 in the starter file, and change the input to a more generic placeholder: <code>response_vector</code>. Again, you can leave <code>eval = F</code> for this code chunk because we don’t need to run it.</li>
 </ol>
 <p><strong>Third, decide on a name for your function.</strong></p>
 <p>Our function is going to compute summary stats. It might be tempting to call our function <code>summarize</code>.</p>
@@ -245,20 +245,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message.</em></p>
 <ol start="8" style="list-style-type: decimal">
 <li><p>Insert a code chunk under Exerise 8 in your starter file. Label it <code>test-compute-summary-stats</code>. Within it, test out the function on one of the variables from the original <strong>wide</strong> form of the dataset. <strong>Remember</strong> you can use <code>$</code> after a dataset name to select a particular variable.</p></li>
-<li><p>Uh oh! What is wrong with your output? State in text narrative below Exercise 9 in your starter file why we only get one output? <strong>Hint</strong>: We covered this in the last couple of lecture slides on Functions.</p></li>
+<li><p>Uh oh! What is wrong with your output? State in text narrative below Exercise 9 in your starter file why we don’t get all the output we expected? <strong>Hint</strong>: We covered this in the last couple of lecture slides on Functions.</p></li>
 <li><p>Copy the code below into Exercise 10 in your starter file. Complete it such that it will output a <code>tibble</code> that includes all the statistics we computed within the function. Each statistic should get its own named column. Then, insert and label a second code chunk that tests the revised function. Confirm that your output matches the output for the same variable generated in Exercise 3.</p></li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>compute_summary_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(response_vector){</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>compute_summary_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(___){</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  min <span class="ot">&lt;-</span> <span class="fu">min</span>(response_vector, <span class="at">na.rm =</span> T)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  median <span class="ot">&lt;-</span> <span class="fu">median</span>(response_vector, <span class="at">na.rm =</span> T)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  ___ <span class="ot">&lt;-</span> <span class="fu">median</span>(response_vector, <span class="at">na.rm =</span> T)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(response_vector, <span class="at">na.rm =</span> T)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  max <span class="ot">&lt;-</span><span class="fu">max</span>(response_vector, <span class="at">na.rm =</span> T)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  max <span class="ot">&lt;-</span> <span class="fu">___</span>(___, <span class="at">na.rm =</span> T)</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">___</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;min&quot;</span> <span class="ot">=</span> min,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;mean&quot;</span> <span class="ot">=</span> __,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;___&quot;</span> <span class="ot">=</span> median,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;median&quot;</span> <span class="ot">=</span> __,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;___&quot;</span> <span class="ot">=</span> mean,</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;___&quot;</span> <span class="ot">=</span> ___</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  </span>

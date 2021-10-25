@@ -22,7 +22,7 @@ knitr::include_graphics("img/cat-coding.gif")
 
 ## Data
 
-For this lab, we will be using the data we generated earlier this semester the class survey.
+For this lab, we will be using the data we generated earlier this semester as part of the class survey.
 We asked you for information on:
 
 -   number of times you have moved house/apartment
@@ -61,14 +61,14 @@ Before we start the lab, let's warm up by changing the YAML in the starter file:
 This dataset is tidy because each row is an observation (a student in the class) and each column is a variable.
 However, it is still a "wide" dataset, which makes it a bit more cumbersome to work with.
 
-2.  Copy the code chunk below into Exercise 2 in your starter file and complete the pipline which will turn this dataset into a "long" format. Remember to change `eval` to `T` when you are ready to run the chunk.
+2.  Copy the code chunk below into Exercise 2 in your starter file and complete the pipeline which will turn this dataset into a "long" format. Remember to change `eval` to `T` when you are ready to run the chunk.
 
 ```{r pivot-longer, eval = F}
 class_survey_long <- ___ %>% 
   pivot_longer(
     names_to = "question",
     values_to = "response",
-    cols = 2:6
+    cols = ___:___
   )
 head(class_survey_long, 10) 
 # the last line will output the first 10 rows for you to view
@@ -104,7 +104,7 @@ min(response, na.rm = T)
 
 **Second, what inputs does the function require?**
 
-5.  State in text narrative what `input` each function requires and why this input is equivalen to a vector. Then copy your code from Exercise 4 into the code chunk provided under Exercise 5 in the starter file, and change the input to a more generic placeholder: `response_vector`. Again, you can leave `eval = F` for this code chunk because we don't need to run it.
+5.  State in text narrative what `input` each function requires and why this input is a vector. Then copy your code from Exercise 4 into the code chunk provided under Exercise 5 in the starter file, and change the input to a more generic placeholder: `response_vector`. Again, you can leave `eval = F` for this code chunk because we don't need to run it.
 
 **Third, decide on a name for your function.**
 
@@ -138,7 +138,7 @@ ___ <- function(___){
 
 9.  Uh oh!
     What is wrong with your output?
-    State in text narrative below Exercise 9 in your starter file why we only get one output?
+    State in text narrative below Exercise 9 in your starter file why we don't get all the output we expected?
     **Hint**: We covered this in the last couple of lecture slides on Functions.
 
 10. Copy the code below into Exercise 10 in your starter file.
@@ -148,17 +148,17 @@ ___ <- function(___){
     Confirm that your output matches the output for the same variable generated in Exercise 3.
 
 ```{r fix-compute-summary-stats, eval = F}
-compute_summary_stats <- function(response_vector){
+compute_summary_stats <- function(___){
   
   min <- min(response_vector, na.rm = T)
-  median <- median(response_vector, na.rm = T)
+  ___ <- median(response_vector, na.rm = T)
   mean <- mean(response_vector, na.rm = T)
-  max <-max(response_vector, na.rm = T)
+  max <- ___(___, na.rm = T)
   
-      ___(
+      tibble(
               "min" = min,
-              "mean" = __,
-              "___" = median,
+              "median" = __,
+              "___" = mean,
               "___" = ___
   )
   
