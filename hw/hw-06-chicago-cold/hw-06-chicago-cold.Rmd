@@ -1,0 +1,182 @@
+---
+title: "HW 06 - Iterating functions on Chicago cold"
+output: 
+  tufte::tufte_html:
+    css: ../hw.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+# Learning goals
+
+-   Write a function in an R script and load it using `source()`
+-   Iterate a function over multiple data structures
+
+## Data
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Chicago temperatures - February 2021", eval = TRUE}
+knitr::include_graphics("img/feb-2021-cold.jpeg")
+```
+
+We will be working with data downloaded from [Weather Underground](https://www.wunderground.com/) for three stations:
+
+-   The Loop - `chicago-loop.csv`
+-   Southloop - `chicago-south-loop.csv`
+-   Oak Park - `chicago-oak-park.csv`
+
+Each dataset has daily min, average, and max temperatures for each day in February 2021.
+This was one of the coldest and snowiest Februarys in recent Chicago history!
+
+## Packages
+
+We will need `{dplyr}` and `{purrr}` package functions from the tidyverse, and date functions from `lubridate`.
+
+```{r message = FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+## Warm up
+
+Before we introduce the data, let's warm up with some simple exercises.
+
+-   Update the YAML, changing the author name to your name, and **knit** the document.
+-   Commit your changes with a meaningful commit message.
+-   Push your changes to GitHub.
+
+## Importing the function
+
+Below is the code we used to create the `convert_temperature()` function.
+Do **not** copy it into the homework 6 starter file.
+Instead, we are going to save our function code in an R script.
+
+1.  Open a new `R Script` (under File \> New File \> R Script) and copy the code to create the function into scripting window. Exclude the top and bottom lines of the chunk (i.e. the lines that start with three back-ticks). Save the R script file as "convert_temperature.R" in the same directory as your starter file .Rmd. Finally, copy the code chunk below titled `import-convert-temperature` into Exercise 1 in your starter file. You will need to change `eval = T`.
+
+```{r write-convert-temperature}
+convert_temperature <- function(temperature_vector){
+  
+  celcius <- (temperature_vector - 32) * (5/9) 
+  kelvin <- celcius + 273.15 
+    
+  tibble("fahrenheit" = temperature_vector,
+         "celcius" = celcius,
+         "kelvin" = kelvin) 
+  
+}
+```
+
+```{r import-convert-temperature, eval = F}
+source("convert_temperatures.R")
+```
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+It is standard practice in R to keep the underlying code for your functions separate from the main RMarkdown file you work within for a project.
+We just created an R script containing the code for `convert_temperature()` and saved it with the name `convert_temperatures.R`.
+When we run the function `source("convert_temperatures.R")`, R executes the code in that R script in our RMarkdown environment and, as a result, creates the function object `convert_temperature()`.
+
+2.  Just as as sanity-check, let's test out the function we just imported. Insert a new labeled code chunk below Exercise 2 in your starter file. Write a single line of code that will test your function with the single Fahrenheit value = `32`.
+
+## Importing and recoding the data
+
+3.  Look at the 3 `.csv` files in your starter directory `/data` folder.
+    Insert a labeled code chunk under Exercise 3 in your starter file that imports each of the three datasets and assigns them to object names of your choice.
+    Remember, you cannot use hyphens (`-`) in object names, but you can use underscores (`_`)!
+    Add a second labeled chunk below the first, that gives you a glimpse of each dataset.
+
+4.  Notice that the `date` column is still as data type `character string`.
+    Copy the first code chunk from Exercise 3, that you used to **import** the data, into Exercise 4 in your starter file.
+    Import the data again, and over-write the same objects, but this time, pass the `col_types` argument within `read_csv()` a vector of `col_type()` functions to correctly read the first column as dates.
+    Remember you will need to change your chunk label.
+    **Then** add a second labeled chunk below the first, that gives you a glimpse of each dataset to confirm that they now have the correct `date` column data type.
+
+If you are struggling with the col_type argument, you can check the syntax in Week 9 slides on Blackboard `importing and recoding data`.
+
+## Wrangling and merging the data
+
+5.  Copy the code chunk below into Exercise 5 in your starter file. Complete it so that each data set is changed in the following ways: 1) `mutate()` is used to create a new column called `neighborhood`; 2) `relocate()` is used to move the new column to the first column position; 3) then, in the fourth pipeline, each data set is joined using `bind_rows()` to create a new data frame object called `chicago_temperatures`. Remember to change `eval = T`.
+
+```{r wrangle-and-merge-data, eval = F}
+loop <- loop %>% 
+  mutate(neighborhood = "loop") %>% 
+  relocate(___)
+
+south_loop <- south_loop %>% 
+  mutate(neighborhood = "___") %>% 
+  ___(neighborhood)
+
+oak_park <- oak_park %>% 
+  mutate(___ = "___") %>% 
+  ___(___)
+
+___ <- loop %>% 
+  bind_rows(south_loop) %>% 
+  bind_rows(oak_park)
+```
+
+## Visualize the data
+
+6.  Let's make a plot to visualize the data and determine which neighborhood was typically the coldest in February 2021.
+    Insert and label a code chunk below Exercise 6 in your starter file that takes `chicago_temperatures` as the input dataset, and maps `date` on the x-axis, `temperature_high` on the y-axis, and maps `neighborhood` to the `color` aesthetic.
+    Pick a geometry that you think allows clear distinction of each neighborhood.
+
+7.  We might hypothesize that proximity to lake water keeps downtown Chicago neighborhoods like the Loop and South Loop a little warmer than inland neighborhoods like Oak Park.
+    Does our average temperature data support this hypothesis?
+    Answer with text narrative under Exercise 7 in your starter file.
+
+## Iterate the conversion function
+
+`map()` iterates functions over elements in a list, however, our data is currently in a data frame.
+
+8.  Copy and complete the code chunk below into Exercise 8 in your starter file. Complete it to create a list of length 3 from the 3 temperature columns in the `chicago_temperatures` data frame object. Remember to change `eval = T`.
+
+```{r create-list, eval = F}
+chicago_temperatures_list <- ___(chicago_temperatures$temperature_high,
+                                  ___$temperature_avg,
+                                  ___$temperature_low)
+```
+
+9.  Write and label a code chunk under Exercise 9 in your starter file that will apply the `convert_temperature()` function to each vector element in your new list object and will combine output together **by row** into a dataframe.
+    (Hint: check the slide or help page on `map()` functions if you're not sure).
+    Assign your output to `chicago_temperatures_converted`.
+
+10. Copy and complete the code below into Exercise 10 of your starter file.
+    Once completed, the code should rejoin the converted temperature data frame to the first two columns of the original `chicago_temperatures` data frame (i.e. `neighborhood` and `date`).
+    Remember to change `eval = T`.
+
+```{r rejoin-data, eval = F}
+___ %>% 
+    pivot_longer(
+    names_to = "measurement",
+    values_to = "fahrenheit",
+    cols = 3:5
+  ) %>% 
+  select(___, ___) %>% 
+  bind_cols(chicago_temperatures_converted)
+```
+
+Great work!
+We just worked through applying our own custom function to a list object.
+This was an improvement over copying and pasting the function multiple times.
+Moreover, knowing how to write your own functions is a valuable R programming skill!
+However, remember that we could have completed this temperature conversion more quickly using tidy data and tidyverse functions.
+Below is an example of a tidyverse pipeline we could have used.
+
+```{r tidyverse-version, eval = F}
+chicago_temperatures %>% 
+  pivot_longer(
+    names_to = "measurement",
+    values_to = "fahrenheit",
+    cols = 3:5
+  ) %>% 
+  mutate(celcius = (fahrenheit - 32) * (5/9),
+         kelvin  = celcius + 273.15)
+```
+
+You are finished with Homework 6!
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*

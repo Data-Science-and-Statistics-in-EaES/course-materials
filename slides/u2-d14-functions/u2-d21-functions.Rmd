@@ -394,7 +394,9 @@ class: middle
 
 ```{r eval=FALSE}
 function([inputs separated by commas]){
-  # what to do with those inputs
+  
+  # what to do with those inputs (function body)
+  
 }
 ```
 
@@ -450,7 +452,6 @@ class: middle
 .midi[
 - Clone `unit-6-YOUR_LAST_NAME` into RStudio
 - Start `lab 06 - writing functions`
-- Complete exercises 1-5
 ]
 ]
 
