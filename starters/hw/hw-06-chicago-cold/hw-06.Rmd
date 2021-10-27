@@ -1,7 +1,7 @@
 ---
-title: "Homework 06 - Iterating functions on Chicago cold"
-author: "RUBRIC"
-date: "RUBRIC"
+title: "Homework 6 - Iterating functions on Chicago cold"
+author: "Insert your name here"
+date: "Insert date here"
 output: html_document
 ---
 
@@ -16,112 +16,40 @@ library(lubridate)
 
 ### Exercise 1
 
-```{r import-convert-temperatures, eval = T}
-source("convert_temperature.R")
-```
+Remove this text, and add your answer for Exercise 1 here.
 
 ### Exercise 2
 
-```{r test-function}
-convert_temperature(32)
-```
+Remove this text, and add your answer for Exercise 2 here.
 
 ### Exercise 3
 
-```{r import-data}
-loop <- read_csv("data/chicago-loop.csv")
-south_loop <- read_csv("data/chicago-south-loop.csv")
-oak_park <- read_csv("data/chicago-oak-park.csv")
-```
-
-```{r glimpse-data}
-glimpse(loop)
-glimpse(south_loop)
-glimpse(oak_park)
-```
+Remove this text, and add your answer for Exercise 3 here.
 
 ### Exercise 4
 
-```{r import-data-fix-dates}
-loop <- read_csv("data/chicago-loop.csv", col_types = list(col_date(), 
-                                                        col_double(), 
-                                                        col_double(),
-                                                        col_double())
-                 )
-south_loop <- read_csv("data/chicago-south-loop.csv", col_types = list(col_date(), 
-                                                        col_double(), 
-                                                        col_double(),
-                                                        col_double())
-                      )
-oak_park <- read_csv("data/chicago-oak-park.csv", col_types = list(col_date(), 
-                                                        col_double(), 
-                                                        col_double(),
-                                                        col_double())
-                    )
-```
-
-```{r glimipse-data-2}
-glimpse(loop)
-glimpse(south_loop)
-glimpse(oak_park)
-```
+Remove this text, and add your answer for Exercise 4 here.
 
 ### Exercise 5
 
-```{r wrangle-and-merge-data}
-loop <- loop %>% 
-  mutate(neighborhood = "loop") %>% 
-  relocate(neighborhood)
-
-south_loop <- south_loop %>% 
-  mutate(neighborhood = "south_loop") %>% 
-  relocate(neighborhood)
-
-oak_park <- oak_park %>% 
-  mutate(neighborhood = "oak_park") %>% 
-  relocate(neighborhood)
-
-chicago_temperatures <- loop %>% 
-  bind_rows(south_loop) %>% 
-  bind_rows(oak_park)
-```
+Remove this text, and add your answer for Exercise 5 here.
 
 ### Exercise 6
 
-```{r plot-neighborhood-temperatures}
-chicago_temperatures %>% 
-  ggplot(aes(x = date, y = temperature_high, color = neighborhood)) +
-  geom_line() +
-  theme_bw()
-```
+Remove this text, and add your answer for Exercise 6 here.
 
 ### Exercise 7
 
-It appears that most of the time, the loop was the coldest neighborhood, which does not support the hypothesis that the lake would keep lakeshore neighborhoods warmer.
+Remove this text, and add your answer for Exercise 7 here.
 
 ### Exercise 8
 
-```{r create-list}
-chicago_temperatures_list <- list(chicago_temperatures$temperature_high,
-                                  chicago_temperatures$temperature_avg,
-                                  chicago_temperatures$temperature_low)
-```
+Remove this text, and add your answer for Exercise 8 here.
 
 ### Exercise 9
 
-```{r apply-convert-temperature}
-chicago_temperatures_converted <- map_df(chicago_temperatures_list, convert_temperature)
-```
+Remove this text, and add your answer for Exercise 9 here.
 
 ### Exercise 10
 
-```{r rejoin-data, eval = T}
-chicago_temperatures %>% 
-    pivot_longer(
-    names_to = "measurement",
-    values_to = "fahrenheit",
-    cols = 3:5
-  ) %>% 
-  select(neighborhood, date) %>% 
-  bind_cols(chicago_temperatures_converted)
-```
+Remove this text, and add your answer for Exercise 10 here.
