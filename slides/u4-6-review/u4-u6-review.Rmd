@@ -121,8 +121,8 @@ We have provided a code chunk to create a vector of 12 calendar months. Each per
 **Include at least one character, numerical, and logical vector type. 
 
 Remember: 
-- everyone, writes their code
-- knit, commit, push
+- everyone, writes their code (**USE UNIQUE CODE CHUNK LABELS**)
+- knit, commit, push  (**Only push the starter .Rmd file!**)
 - create pull request using `Contribute` button
 - **Team Lead**: review, merge
 - after all merges, pull in Rstudio
@@ -135,12 +135,14 @@ Each team member should complete the code chunk provided in Exercise 2 to merge 
 
 ```{r merge-two-vectors, eval = F}
 ___ <- tibble::tibble(
-  month_name = "month_name",
-  ___ = ___
+  "month_name" = month_name,
+  "___" = ___
 )
 ```
 
 **Remember, only add/remove code under your Team Member space, or it will create conflicts**
+  
+(**USE UNIQUE CODE CHUNK LABELS**)
 
 ---
 
@@ -148,13 +150,15 @@ ___ <- tibble::tibble(
 
 Each team member:
 1. Write a code chunk under Exercise 3 that takes as input the data frame containing `month_name` and second column containing a **numerical data type**.
-2. Creates a line plot using ggplot, with `month_name` on the x axis, and the numerical data on the y axis. 
+2. Creates a scatter plot using ggplot, with `month_name` on the x axis, and the numerical data on the y axis. 
 
-Discuss what is wrong with the x axis.
+Discuss what is wrong with the plot?
 
 Each team member:
 1. Write a second code chunk that uses a {forcats} function (e.g., `fct_relevel()`) within mutate to reorder the `month_name` factors before piping into ggplot.
 Does that fix the problem?
+
+(**USE UNIQUE CODE CHUNK LABELS**)
 
 ---
 
@@ -170,6 +174,8 @@ Each team member should write code to:
 6. You should now have a shortened version of the original variable you created.
 
 **Remember, only add/remove code under your Team Member space, or it will create conflicts**
+  
+(**USE UNIQUE CODE CHUNK LABELS**)
 
 ---
 
@@ -179,14 +185,16 @@ Each team member should now complete the following code chunk in their starter f
   
 ```{r try-merge-vectors, eval = F}
 ___ <- tibble::tibble(
-  month_name = "month_name",
-  ___ = ___
+  "month_name" = month_name,
+  "___" = ___
 )
 ```
 
 Set the first code chunk `eval = F` and write a second code chunk that will create a list of the `month_name` and your vector. Discuss why this works and the last code chunk did not!
 
 **Remember, only add/remove code under your Team Member space, or it will create conflicts**
+  
+(**USE UNIQUE CODE CHUNK LABELS**)
 
 ---
 
