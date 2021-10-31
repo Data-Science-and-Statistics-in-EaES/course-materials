@@ -131,8 +131,8 @@ Add your code here.
 
 ```{r try-merge-vectors, eval = F}
 ___ <- tibble::tibble(
-  month_name = "month_name",
-  ___ = ___
+  "month_name" = month_name,
+  "___" = ___
 )
 ```
 
