@@ -1,0 +1,45 @@
+---
+title: "EAES 494 Practice Midterm"
+output: 
+  tufte::tufte_html:
+    css: ../hw.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+## Data
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Chicago temperatures - February 2021", eval = TRUE}
+knitr::include_graphics("img/feb-2021-cold.jpeg")
+```
+
+We will be working with data downloaded from [Weather Underground](https://www.wunderground.com/) for three stations:
+
+-   The Loop - `chicago-loop.csv`
+-   Southloop - `chicago-south-loop.csv`
+-   Oak Park - `chicago-oak-park.csv`
+
+Each dataset has daily min, average, and max temperatures for each day in February 2021.
+This was one of the coldest and snowiest Februarys in recent Chicago history!
+
+## Packages
+
+We will need `{dplyr}` and `{purrr}` package functions from the tidyverse, and date functions from `lubridate`.
+
+```{r message = FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+## Warm up
+
+Before we introduce the data, let's warm up with some simple exercises.
+
+-   Update the YAML, changing the author name to your name, and **knit** the document.
+-   Commit your changes with a meaningful commit message.
+-   Push your changes to GitHub.
