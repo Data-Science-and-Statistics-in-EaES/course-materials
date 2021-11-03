@@ -1,8 +1,8 @@
 ---
-title: "EAES 494 Practice Midterm"
+title: "EAES 494 Practice Midterm Instructions"
 output: 
   tufte::tufte_html:
-    css: ../hw.css
+    css: ../exam.css
     tufte_variant: "envisioned"
     highlight: pygments
 link-citations: yes
@@ -12,34 +12,152 @@ link-citations: yes
 knitr::opts_chunk$set(eval = TRUE)
 ```
 
-## Data
-
-```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Chicago temperatures - February 2021", eval = TRUE}
-knitr::include_graphics("img/feb-2021-cold.jpeg")
-```
-
-We will be working with data downloaded from [Weather Underground](https://www.wunderground.com/) for three stations:
-
--   The Loop - `chicago-loop.csv`
--   Southloop - `chicago-south-loop.csv`
--   Oak Park - `chicago-oak-park.csv`
-
-Each dataset has daily min, average, and max temperatures for each day in February 2021.
-This was one of the coldest and snowiest Februarys in recent Chicago history!
-
-## Packages
-
-We will need `{dplyr}` and `{purrr}` package functions from the tidyverse, and date functions from `lubridate`.
-
-```{r message = FALSE}
-library(tidyverse)
-library(lubridate)
-```
+# ---- Practice Exam Start ----
 
 ## Warm up
 
-Before we introduce the data, let's warm up with some simple exercises.
+Before we start, let's warm up by updating the YAML.
 
--   Update the YAML, changing the author name to your name, and **knit** the document.
--   Commit your changes with a meaningful commit message.
--   Push your changes to GitHub.
+-   Change the author name and date in the starter file YAML.
+-   **Knit** the document. 🧶
+-   **Commit** your changes with a meaningful commit message. ✅
+-   **Push** your changes to GitHub. ⬆️
+
+## Loading packages and Data
+
+We will need `{tidyverse}` packages and functions, and will be using the `earthquakes` dataset from the `{openintro}` package.
+The code chunk below will load the two packages and is also provided in your starter file.
+
+```{r load-packages, message = F}
+library(tidyverse)
+library(openintro)
+```
+
+# Inspecting Data
+
+There are several ways to inspect a data frame.
+One method is to use the `glimpse()` function.
+Other methods include using `View()` or `?` help pages.
+
+1.  **(5 points)** Under Ex. 1 in your starter file, write and label a code chunk that uses `glimpse()` to allow you to inspect the `earthquakes` dataset. After your code chunk, state **(1)** how many rows and variables there are in the `earthquakes` dataset and **(2)**, of the variables, how many are categorical and how many are numerical.
+
+In a tidy data frame, each column is a variable, and each row is an observation.
+
+2.  **(5 points)** Under Ex. 2 in your starter file, write and label a code chunk that uses `names()` to allow you to inspect the variable names in the `earthquakes` dataset. After your code chunk, state two stylistic choices for these variable names that means they accord with good R syntax.
+
+Each row of the `earthquakes` dataset describes the physical characteristics of a 20th century earthquake.
+We might wonder: how many earthquake observations do we have for each `region`?
+
+3.  **(5 points)**
+
+-   Under Ex. 3 in your starter file, write and label a code chunk that uses the `count()` function to output the number of observations (rows) for each `region` in the `earthquakes` database. The output should be arranged in descending order by the number (`n`) of observations.
+-   **Hint:** remember you can use help pages to look at function syntax.
+-   After your code chunk, state the pair of data wrangling functions we could have used instead to generate a similar output.
+
+# Exploratory visualization
+
+Rather than looking at a summary table of region counts, we might want to visualize the number of earthquakes per region for the 5 regions with the most earthquake observations.
+
+4.  **(5 points)**
+
+-   Under Ex. 4 in your starter file, copy and complete the code chunk provided below.
+-   It will first filter the dataset for the 5 regions with the most earthquakes (identified in Ex. 3)
+-   Then it will generate a bar plot of earthquake observations where each bar is a `region`.
+
+```{r visualize-earthquake-regions, eval = F}
+___ %>% 
+  filter(___ %in% c("___", "___", "___", "___", "___")) %>% 
+  ggplot(aes(x = ___)) +
+  geom_bar() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+Histograms also provide useful visualizations of data.
+We might wonder: how has earthquake magnitude varied across the top 5 regions?
+
+5.  **(5 points)**
+
+-   Under Ex. 5 in your starter file, copy and complete the code chunk provided below that will generate histograms of earthquake `richter`.
+-   The histogram facets will be output, one for each of the top 5 regions.
+-   The fill aesthetic of each histogram will also vary with `region.`
+-   Under the completed code chunk, state whether you think the center (average) of richter depends on region or not, and why. you may need to expand the figure to see the results.
+
+```{r visualize-earthquake-richter, eval = F}
+___ %>% 
+  filter(___ %in% c("___", "___", "___", "___", "___")) %>% 
+      ggplot(aes(x = ___, fill = ___)) +
+      geom_histogram() +
+      facet_wrap(~___, 
+             ncol = 3) +
+      theme_classic()
+```
+
+# Wrangling data
+
+We might want to just focus on analyzing deaths and how it varies year, month, and richter.
+
+6.  **(10 points)**
+
+-   Under Ex. 6 in your starter file, write and label a code chunk that takes `earthquakes` as input and uses a pipeline of wrangling functions to:
+-   **select** `richter`, `year`, `month`, and `deaths`
+-   **filter** for *non-NA* values in each variable (using `!is.na(variable_name)`)
+-   **assign** the output to a new data object called `earthquakes_subset`.
+-   Under your code chunk, state how many rows were removed from `earthquakes` by removing NAs.
+
+# Recoding data
+
+The following code chunk, which is also provided for you in the starter file, uses a violin plot to visualize the distribution of deaths by month, from our newly created `earthquakes_subset` object.
+
+```{r visualize-earthquakes-deaths, eval = F}
+earthquakes_subset %>% 
+  ggplot(aes(x = month, y = deaths)) +
+  geom_violin() +
+  theme_classic()
+```
+
+7.  **(5 points)**
+
+-   Under Ex. 7 in your starter file, state why `April` appears on the left, instead of `January`.
+-   In your response, make reference to the data type/class of the `month` variable and the two components that make up that data class.
+-   Then, copy the code chunk below into your starter file, and complete it such that it outputs a violin plot with `January` on the left and the natural ordering of months.
+
+```{r recode-month-levels, eval = F}
+earthquakes_subset %>% 
+  mutate(___ = fct_relevel(___,
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___",
+                             "___")) %>% 
+    ggplot(aes(x = month, y = deaths)) +
+    geom_violin() +
+    theme_classic()
+write_csv(earthquakes, "earthquakes-issues.csv")
+```
+
+# Reading and correcting data
+
+There is a version of `earthquakes` in the `/data` folder within your midterm project.
+Take a look at what it is called.
+There are a few issues with this version of the earthquakes dataset.
+**All the problems with the data are located within the top 5 rows.**
+
+8.  **(10 points)**
+
+-   Write and label a code chunk that will read the problematic dataset from your data folder, into R, and assign the data to the object `earthquakes_with_issues`.
+-   In a second, separate *line of code*, under your read function, use `glimpse()` to view the columns and first few rows of `earthquakes_with_issues`.
+-   Identify and state under your code chunk, the two types of problems with this data set.
+-   Finally, copy and paste your first read code chunk, re-label it.
+-   Edit the second code chunk so that the data is corrected during or after it is read in. (**Hint**: Examine the argument options in the read function help page.)
+
+🧶 ✅ ⬆️ Knit, *commit, and push your final changes to GitHub with an appropriate commit message.*
+
+# ---- Practice Exam Finish ----

@@ -1,15 +1,19 @@
 ---
-title: "EAES 494 Practice Midterm Starter"
+title: "EAES 494 Midterm Starter"
 author: "Enter your name"
 date: "Enter the date"
 output: html_document
 ---
 
+## Academic Honesty Statement
+
+*I, \_\_\_\_\_\_\_\_\_\_\_\_\_, hereby state that I will not communicate with or gain information in any way from my classmates, or copy work from past assignments, during this exam, and that all work is my own.*
+
 ## Load packages
 
 ```{r load-packages, message = F}
 library(tidyverse)
-library(openintro)
+library(palmerpenguins)
 ```
 
 ## Exericses
