@@ -78,6 +78,16 @@ class: middle
 
 - Form groups (max 5 per group)
 - We will provide a numbered list prompt. 
+
+### **Exercise 1**
+### **Member 1 **
+Put your code here
+### **Member 2**
+
+... so on
+ 
+**Sometimes exercises will be different, sometimes the same.**
+
     
 ---
 
@@ -88,7 +98,7 @@ class: middle
     
 - Setting up your group:
     1. Assign yourselves numbers from 1-5 in your group
-    2. Run `sample(1:5, 1)`. That member is the group lead, and they hold the mineral! (The group lead will review and merge all Pull Requests!)
+    2. Run `sample(1:n, 1)` (n = number in group). The number returned is the the group lead, and they hold the mineral! (The group lead will review and merge all Pull Requests!)
     3. **All, fork** `unit-4-6-review-exercises-GROUP#` into your personal GitHub
     4. **All, clone** your personal copy into RStudio
     5. Complete your exercise (e.g., **Member 1, Member 2, Member 3**)

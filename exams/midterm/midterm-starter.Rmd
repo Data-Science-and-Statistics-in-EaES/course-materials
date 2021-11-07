@@ -44,6 +44,13 @@ library(palmerpenguins)
 
 ### Exericse 7
 
+```{r visualize-penguin-flipper-length, eval = F}
+___ %>% 
+  ggplot(aes(x = sex, y = flipper_length_mm)) +
+  geom_violin() +
+  theme_classic()
+```
+
 [Enter code and/or narrative here.]
 
 ### Exericse 8

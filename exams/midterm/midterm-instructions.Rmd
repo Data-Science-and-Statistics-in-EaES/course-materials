@@ -20,7 +20,7 @@ The following statement is provided in your `midterm-starter.Rmd`:
 
 *I, \_\_\_\_\_\_\_\_\_\_\_\_\_, hereby state that I will not communicate with or gain information in any way from my classmates, or copy work from past assignments, during this exam, and that all work is my own.*
 
-Please complete the blank (`___`) with your name.
+Please complete the blank section (`___`) with your name.
 
 ## Warm up
 
@@ -30,6 +30,8 @@ Before we start, let's warm up by updating the YAML.
 -   **Knit** the document. 🧶
 -   **Commit** your changes with a meaningful commit message. ✅
 -   **Push** your changes to GitHub. ⬆️
+
+If you have any problems pushing changes, let us know now!
 
 ## Loading packages and Data
 
@@ -51,7 +53,7 @@ Other methods include using `View()` or `?` help pages.
 
 In a tidy data frame, each column is a variable, and each row is an observation.
 
-2.  **(5 points)** Under Ex. 2 in your starter file, write and label a code chunk that uses `names()` to allow you to inspect the variable names in the `penguins` dataset. After your code chunk, state two stylistic choices for these variable names that means they accord with good R syntax.
+2.  **(5 points)** Under Ex. 2 in your starter file, write and label a code chunk that uses `names()` to allow you to inspect the variable names in the `penguins` dataset. After your code chunk, explain why the names are "good". Think about the things we normally fix when we read data in that contains bad names.
 
 Each row of the `penguins` dataset describes the physical characteristics of a penguin sampled in Antarctica.
 We might wonder: how many observations do we have for each `species`?
@@ -60,9 +62,9 @@ We might wonder: how many observations do we have for each `species`?
 
 # Exploratory visualization
 
-Rather than looking at a summary table of species counts, we might want to visualize the number of penguins of each species, observed for each island studied.
+Rather than looking at a summary table of species counts, we might want to visualize the number of penguins of each species, and the number observed for each island studied.
 
-4.  **(5 points)** Under Ex. 4 in your starter file, copy and complete the code chunk provided below that will generate a bar plot of penguin observations by `island`. The fill aesthetic of each bar will vary with `species`. Under your completed code chunk, for each species of penguin, state which islands they were observed at.
+4.  **(5 points)** Under Ex. 4 in your starter file, copy and complete the code chunk provided below that will generate a bar plot of penguin observations by `island`. The fill aesthetic of each bar will vary with `species`. Under your completed code chunk, state which islands each species of penguins was observed at.
 
 ```{r visualize-penguin-island-species, eval = F}
 ___ %>% 
@@ -71,32 +73,31 @@ ___ %>%
   theme_classic()
 ```
 
-Histograms also provide useful visualizations of data.
-We might wonder: how does penguin body mass vary across the different species?
+Scatter plots also provide useful visualizations of data.
+We might wonder: how does penguin body mass vary with flipper length, for each species?
 
-5.  **(5 points)** Under Ex. 5 in your starter file, copy and complete the code chunk provided below that will generate histograms of penguin `body_mass_g`. Three histogram facets will be output, one for each `species`. The fill aesthetic of each histogram will also vary with `species`. Under the completed code chunk, state whether you think the center (average) of body mass depends on species or not, and why.
+5.  **(5 points)** Under Ex. 5 in your starter file, copy and complete the code chunk provided below that will generate scatter plots of penguin `body_mass_g` (x-axis) against `flipper_length_mm` (y-axis). The color and shape aesthetics of each histogram will vary with `species`. Under the completed code chunk, (1) state whether you think there is an association between the two variables, and (2) make one other observation about what differs between `Gentoo` penguins and the other two species.
 
 ```{r visualize-penguin-body-mass, eval = F}
 ___ %>% 
-  ggplot(aes(x = ___, fill = ___)) +
-  geom_histogram() +
-  facet_wrap(~___, 
-             ncol = 1) +
+  ggplot(aes(x = ___, y = ___, color = ___, shape = ___)) +
+  geom_point() +
   theme_classic()
 ```
 
 # Wrangling data
 
-We might want to just focus on analyzing penguin flipper length and how it varies with the categorical variables.
+We might want to just focus on analyzing penguin flipper length for one species and how it varies with the categorical variables.
 
-6.  **(10 points)** Under Ex. 6 in your starter file, write and label a code chunk that takes `penguins` as input and uses a pipeline of wrangling functions to: (1) **select** `flipper_length_mm` and all the categorical variables; (2) **filter** for *non-NA* values in each variable (using `!is.na(variable_name)`); and (3) assign the output to a new data object called `penguins_flippers`.
+6.  **(10 points)** Under Ex. 6 in your starter file, write and label a code chunk that takes `penguins` as input and uses a pipeline of wrangling functions to: (1) **select** `flipper_length_mm` and all the categorical variables; (2) **filter** for one penguin `species` of your choice; and (3) assign the output to a new data object. You can give the new data object a sensible name of your choosing that follows the guidelines for naming object in R programming.
 
 # Recoding data
 
-The following code chun0k, which is also provided for you in the starter file, uses a violin plot to visualize the distribution of penguin flipper lengths by-species, from our newly created `penguins_flippers` object.
+The following code chunk, which is also provided for you in the starter file, uses a violin plot to visualize the distribution of penguin flipper lengths by penguins sex.
+Note, you will need to add the data object you just created as the input dataset and set `eval = T` to get the chunk to run in your starter file.
 
 ```{r visualize-penguin-flipper-length, eval = F}
-penguins_flippers %>% 
+___ %>% 
   ggplot(aes(x = sex, y = flipper_length_mm)) +
   geom_violin() +
   theme_classic()
@@ -104,12 +105,13 @@ penguins_flippers %>%
 
 7.  **(5 points)**
 
--   Under Ex. 7 in your starter file, state why `female` appears on the left and why `male` appears on the right.
+-   Under Ex. 7 in your starter file, state why `female` appears on the left, `male` appears in the middle, and `NA` appears on the right.
 -   In your response, make reference to the data type/class of the sex `variable` and the two components that make up that data class.
--   Then, copy the code chunk below into your starter file, and complete it such that it outputs a violin plot with `male` on the left and `female` on the right.
+-   Then, copy the code chunk below into your starter file, and complete it such that it outputs a violin plot with `male` on the left and `female` on the right. The code chunk will also filter out the missing `sex` values first.
 
 ```{r recode-sex-levels, eval = F}
 ___ %>% 
+  filter(!is.na(___)) %>% 
   mutate(sex = fct_relevel(sex, "___", "___")) %>% 
     ggplot(aes(x = sex, y = flipper_length_mm)) +
     geom_violin() +
@@ -128,9 +130,13 @@ There are a few issues with this version of the penguins dataset.
 -   Write and label a code chunk that will read the problematic dataset from your data folder, into R, and assign the data to the object `penguins_with_issues`.
 -   In a second, separate *line of code*, under your read function, use `glimpse()` to view the columns and first few rows of `penguins_with_issues`.
 -   Identify and state under your code chunk, the two types of problems with this data set.
--   Finally, copy and paste your first read code chunk, re-label it.
--   Edit the second code chunk so that the data is corrected during or after it is read in. (**Hint**: Examine the argument options in the read function help page.)
+-   Finally, copy and paste your first read code chunk below your narrative response, and give it a unique label.
+-   Edit this second code chunk so that the data is corrected during or after it is read in. (**Hint**: Examine the `name_repair` argument option in the read function help page for one method. Alternatively, pipe the read function output into a line that uses a function from the package `janitor`.)
 
 🧶 ✅ ⬆️ Knit, *commit, and push your final changes to GitHub with an appropriate commit message.*
+
+Great work!
+If you finish early, please respect your class mates by leaving the room quietly.
+See you on Wednesday!
 
 # ---- Exam Finish ----

@@ -20,6 +20,8 @@ library(palmerpenguins)
 
 ### Exericse 1
 
+\*\*(5 points) Deduct a point for
+
 ```{r glimpse-penguins}
 glimpse(penguins)
 ```
@@ -61,30 +63,26 @@ Gentoo penguins were only observed at Torgersen island.
 
 ```{r visualize-penguin-body-mass, eval = T}
 penguins %>% 
-  ggplot(aes(x = body_mass_g, fill = species)) +
-  geom_histogram() +
-  facet_wrap(~species, 
-             ncol = 1) +
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm, color = species, shape = species)) +
+  geom_point() +
   theme_classic()
 ```
 
-The center (average) body mass does appear to depend on species because the center (average) of the Gentoo distribution is farther right / higher / larger.
+There appears to be a positive association between body mass and flipper length.
+The Gentoo penguins tend to be larger (higher mass and/or longer flipper length).
 
 ### Exericse 6
 
 ```{r subset-flipper-data}
-penguins_flippers <- penguins %>% 
+gentoo_flipper_length <- penguins %>% 
   select(flipper_length_mm, sex, island, species) %>% 
-  filter(!is.na(flipper_length_mm),
-         !is.na(sex),
-         !is.na(island),
-         !is.na(species))
+  filter(species == "Gentoo")
 ```
 
 ### Exericse 7
 
-```{r visualize-penguin-flipper-length}
-penguins_flippers %>% 
+```{r visualize-penguin-flipper-length, eval = T}
+gentoo_flipper_length %>% 
   ggplot(aes(x = sex, y = flipper_length_mm)) +
   geom_violin() +
   theme_classic()
@@ -92,10 +90,11 @@ penguins_flippers %>%
 
 The `sex` variable is a factor.
 Factors are composed of a label and a level.
-The factor levels are assigned to labels by default based on alphabetical order (1 = female, then 2 = male).
+The factor levels are assigned to labels by default based on alphabetical order (1 = female, then 2 = male, then 3 = NA).
 
 ```{r recode-sex-levels, eval = T}
-penguins_flippers %>% 
+gentoo_flipper_length %>% 
+  filter(!is.na(sex)) %>% 
   mutate(sex = fct_relevel(sex, "male", "female")) %>% 
     ggplot(aes(x = sex, y = flipper_length_mm)) +
     geom_violin() +
@@ -109,7 +108,7 @@ penguins_with_issues <- read_csv("midterm/data/penguins-issues.csv")
 glimpse(penguins_with_issues)
 ```
 
-The variable names have spaces, and the sex has a bad value "\#" and year has a bad entry "."
+The variable names have spaces, and the sex has a bad value "\#" and year has a bad entry "." causing them to be coerced to character type data.
 
 ```{r read-problematic-data-2}
 penguins_with_issues <- read_csv("midterm/data/penguins-issues.csv", na = c(".", "#"), name_repair = "universal")

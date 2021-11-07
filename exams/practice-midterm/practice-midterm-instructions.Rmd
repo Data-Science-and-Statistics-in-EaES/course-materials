@@ -140,7 +140,6 @@ earthquakes_subset %>%
     ggplot(aes(x = month, y = deaths)) +
     geom_violin() +
     theme_classic()
-write_csv(earthquakes, "earthquakes-issues.csv")
 ```
 
 # Reading and correcting data
