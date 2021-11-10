@@ -1,0 +1,218 @@
+---
+title: "EAES 494 Data Science and Stats"
+subtitle: "<br><br> Starting the Final Projects"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(emo)
+```
+
+class: middle
+
+# Final Project Overview
+
+---
+
+## Why?
+
+- Mimic the project-based work and skills of a real data scientist.  
+- Figure out how to identify a dataset.
+- Apply your skills to a dataset of your choosing, including EAESy data.  
+- Because this should be more useful (and fun?) than a big final exam.
+
+---
+
+## How?
+
+**(1) Pick a dataset and apply the data science work flow**
+
+```{r setup, echo=FALSE, fig.align="middle", out.width="80%"}
+knitr::include_graphics("img/data-science-cycle.001.png")
+```
+
+---
+
+## How?
+
+(1) Pick a dataset and apply the data science work flow
+
+**(2) Conduct a focused (not exhaustive) analysis**
+
+Demonstrate you can...
+1. Ask a question and answer it with the data analysis results
+2. Code in R and can combine code with text to produce .Rmd reports
+3. Interpret and communicate analysis results
+
+---
+
+## How?
+
+(1) Pick a dataset and apply the data science work flow
+
+(2) Conduct a focused (not exhaustive) analysis
+
+**(3) Do whatever you want, but use `tidyverse` packages in R+RStudio**
+
+---
+
+## How?
+
+(1) Pick a dataset and apply the data science work flow
+
+(2) Conduct a focused (not exhaustive) analysis
+
+(3) Do whatever you want, but use `tidyverse` packages in R+RStudio
+
+**(4) Focus on quality, not quantity, in code and results**
+
+---
+
+## How?
+
+(1) Pick a dataset and apply the data science work flow
+
+(2) Conduct a focused (not exhaustive) analysis
+
+(3) Do whatever you want, but use `tidyverse` packages in R+RStudio
+
+(4) Focus on quality, not quantity, in code and results
+
+**(5) Collaboratively, in small groups (Grad students: independent option)**
+
+---
+
+## What?
+
+Each group (or grad student) will complete a:
+ 
+- **Proposal (20 pts)**: One page (max) using RMarkdown describing your (1) dataset, (2) exploratory visualization, and (3) one question you may pose and some tidyverse methods that may help answer it.
+
+- **Presentation (50 pts)**: 5 minutes (max) using RMarkdown and the `xaringan` package. Each group member can contribute (1-2 slides each). Focus on telling the story of your analysis (what choices did you make, and why), not all the different things you tried. 
+
+- **Report (30 pts)**: Provide a brief summary of your project in the README of your Github repo. 
+
+**Style and format does matter, so make sure your code and outputs look good!**
+
+
+---
+
+## When? 
+
+- Proposal (20 pts) **Work on it today: Due next Wednesday at midnight!**
+
+- Presentation (50 pts) **During our "final exam" slot in Finals week: Dec 6-10 (4 weeks away)**
+
+- Report (30 pts) **Due end of finals week at midnight (Friday Dec 10th)**
+
+**Timeline**
+- Week 12: This week!
+- Week 13: Unit 7: Fitting Models
+- Week 14: Unit 8: Hypothesis Testing (+ Thanksgiving!)
+- **Week 15: Work on final projects both days**
+- Week 16: Project presentations; Report due.
+
+**We will also do 15 min group check-ins at the start of class each Wednesday!**
+
+---
+
+class: middle
+
+# Questions?
+
+---
+
+## (1) Let's form groups; pick a name; include any remote classmates!
+
+.pull-left[
+## Group 1
+-
+-
+-
+-
+]
+
+.pull-right[
+## Group 2
+-
+-
+-
+-
+]
+
+.pull-left[
+## Group 3
+-
+-
+-
+-
+]
+
+.pull-right[
+## Group 4
+-
+-
+-
+-
+]
+
+.pull-left[
+## Group 5
+-
+-
+-
+-
+]
+
+.pull-right[
+## Group 6
+-
+-
+-
+-
+]
+
+---
+
+## (2) Pick a dataset with our assistance!
+#### From our options or somewhere else (NASA, NOAA, WMO, Dryad, etc.)
+#### From your own project (grad students only!)
+
+## Discuss your options/interests as a group
+
+---
+
+
+## (3) Self-organize! 
+#### How will you divvy up the proposal? 
+#### How/where/when will you meet outside of class?
+
+## Take 3 minutes to think about 5 "challenges" during this project 
+
+---
+
+
+## (4) Start working on the proposal!
+#### Fork the group repo and familiarize yourselves with the files
+#### Add to your proposal > commit > push > create pull request > merge.
+
+## A reminder: Your proposal will need to include...
+- A description of the dataset including a data dictionary
+- A exploratory visualization figure (with some narrative)
+- A question you could pose and a possible method for answering
+
+
+
+
+
