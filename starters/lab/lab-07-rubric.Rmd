@@ -1,0 +1,84 @@
+---
+title: "Lab 07 - Fitting models`"
+author: "Insert your name here"
+date: "Insert date here"
+output: html_document
+---
+
+### Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+library(tidymodels)
+```
+
+## Exercises
+
+### Exercise 1
+
+```{r import-data}
+fluxes <- read_csv("lab-07-fitting-models-starter/data/us-mms-simple.csv")
+```
+
+### Exercise 2
+
+```{r fix-dates, eval = T}
+fluxes <- fluxes %>% 
+  mutate(date = mdy_hm(date))
+head(fluxes)
+```
+
+```{r subset-fluxes}
+fluxes_subset <- fluxes %>% 
+  filter(date > "2020-07-01" & date < "2020-07-08")
+head(fluxes_subset, 10) 
+```
+
+### Exercise 3
+
+```{r exploratory-vis}
+fluxes_subset %>% 
+  ggplot(aes(evaporation, fco2)) +
+  geom_point()
+```
+
+### Exercise 4
+
+```{r exploratory-vis}
+fluxes_subset %>% 
+  ggplot(aes(evaporation, fco2)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+The grey band corresponds to the uncertainty around the model function / slope.
+
+### Exercise 5
+
+```{r fit-a-model, eval = T}
+linear_reg() %>% 
+  set_engine("lm") %>% 
+  fit(fco2 ~ evaporation, data = fluxes_subset) %>% 
+  tidy()
+```
+
+The first estimate value tells us that the y-intercept of the model is 1.53 (units optional) and the second estimate value tells us that the slope coefficient for the relationship between fco2 and evaporation is -0.061 (negative).
+
+### Exercise 6
+
+```{r create-season, eval = T}
+fluxes <- fluxes %>% 
+     mutate(season = ifelse(date < "2020-04-01", "winter", NA),
+            season = ifelse(date < "2020-07-01" & date > "2020-04-01", "spring", season),
+            season = ifelse(date < "2020-10-01" & date > "2020-07-01", "summer", season),
+            season = ifelse(date < "2020-12-31" & date > "2020-10-01", "fall", season)) %>% 
+     mutate(winter = ifelse(season == "winter", 1, 0))
+```
+
+### Exercise 7
+
+Remove this text, and add your answer for Exercise 7 here.
+
+### Exercise 8
+
+Remove this text, and add your answer for Exercise 8 here.

@@ -1,0 +1,151 @@
+---
+title: "Lab 07 - Fitting Models"
+output: 
+  tufte::tufte_html:
+    css: ../lab.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+# Learning goals
+
+-   Practice fitting bivariate models on ecosystem flux data
+
+## Data
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 2, fig.cap = "Morgan Monroe State Forest", eval = TRUE}
+knitr::include_graphics("img/monroe-summer.jpeg")
+```
+
+For this lab you will be working with half-hourly flux data from the Morgan Monroe State Forest ecosystem flux tower, located in Indiana.
+These data are generated from near-surface meteorological measurements paired with measurements of atmospheric gases including carbon dioxide and water vapour concentrations.
+
+The data are located in your `/data` folder.
+Look in the folder to check the name.
+
+We provide a data dictionary here to give you more information on these variables.
+Don't worry about the details too much!
+The goal of this lab is **not** to become ecosystem scientists :)
+
+**Data Dictionary**
+
+-   date: date and time already in date class
+-   fco2: CO2 flux in nmol m-2 s-1 (positive values = net emission; negative values = net uptake)
+-   turbulence: a measure of air turbulence, related to wind speed in m s-1
+-   air_temperature: air temperature in celcius
+-   evaporation: the energy lost via evaporation of water from the ecosystem in W m-2
+-   incoming_radiation: incoming shortwave solar radiation in W m-2
+-   relative_humidity: the percent (%) saturation of the near surface atmosphere
+-   air_pressure: the barometric air pressure in kilo-Pascals
+
+## Packages
+
+We will need both the `tidyverse` and the `tidymodels` package collections.
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+library(tidymodels)
+```
+
+## Warm up
+
+Before we start the lab, let's warm up by changing the YAML in the starter file:
+
+-   Update the YAML, changing the author name to your name, and **knit** the document. 🧶
+-   Commit your changes with a meaningful commit message. ✅
+-   Push your changes to GitHub.️ ⬆️
+-   Go to your repo on GitHub and confirm that your changes are visible in your Rmd files.
+
+# Lab Exercises
+
+## Importing the data
+
+1.  Look in the Lab 7 `/data` sub-directory and identify the name and file type of the dataset we need to load. Then complete the code chunk below in your starter file to load the ecosystem flux data and assign the imported data to a new object called `fluxes`. State below your code chunk how many observations there are in the dataset and what the data type of each variable is.
+
+```{r import-data}
+# code goes here
+```
+
+This dataset is tidy because each row is an observation (a half-hourly measurement) and each column is a variable, however, the dataset is very long!
+Let's simplify things by subsetting one week of data in July 2020.
+
+## Fixing the date column
+
+Before we subset based on `date`, we need to convert the `date` column into a **date class**.
+Copy the following code chunk into your starter file and run it (also remove eval = F, or set it = T.) **You don't need to do anything else - just look at the code and output and satisfy yourself that you understand why we are using the lubridate function `myd_hm()`. If you're not sure, ask about it!**
+
+```{r fix-dates, eval = T}
+fluxes <- fluxes %>% 
+  mutate(date = mdy_hm(date))
+head(fluxes)
+```
+
+## Filtering for one week in July 2020
+
+2.  Copy the code chunk below into Exercise 2 in your starter file and complete the pipeline which will subset the data for one week in July 2020 (replace the YYYY-MM-DD with a real date range). Remember to change `eval` to `T` when you are ready to run the chunk.
+
+```{r subset-fluxes, eval = F}
+fluxes_subset <- ___ %>% 
+  filter(date > "YYYY-MM-DD" & date < "YYYY-MM-DD")
+head(fluxes_subset, 10) 
+```
+
+### Exploratory visualization of CO2 flux, with a variable you choose
+
+3.  Insert and label a code chunk into your starter file under Exercise 3.
+
+-   The code chunk should take `fluxes_subset` as input, and use ggplot to create a visualization that maps `fco2` (CO2 flux) to the y-axis and an explanatory variable *of your choosing* to the x-axis (but do not use `date`).
+-   Some relationships may not look good when plotted. Keep trying different variables based on your own intuition for what may correlate with CO2 flux, or simple until you find one you think has a reasonable association with `fco2`.
+-   Feel free to clean up your plot with a `theme()` and adding labels with `labs()` - **you will not be graded on plot appearance though!**
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+### Adding a model geom to your plot
+
+4.  Copy your code chunk from Exercise 3 and add a `geom_smooth()` layer to plot that will fit a linear model. You can do this by setting the method argument within `geom_smooth()` equal to "lm". There should be a grey band around the fitted model relationship. Write in text narrative below your code chunk what this grey band corresponds to.
+
+### Fitting a model to the data
+
+5.  Copy and complete the code chunk below in your starter file. The code chunk uses `tidymodels` syntax to fit a model.
+
+-   Complete the code chunk with the explanatory variable that you selected in the previous exercises.
+-   Below your code explain what the `estimate` column values mean with respect to the (1) y-intercept and (2) slope of the model you have fit. And explain what the `std.error` values tell us about each estimate (in general terms).
+
+```{r fit-a-model, eval = F}
+linear_reg() %>% 
+  set_engine("___") %>% 
+  fit(___ ~ ___, data = ___) %>% 
+  tidy()
+```
+
+### Creating a categorical season variable
+
+6.  Copy and complete the code chunk below in your starter file.
+
+-   The code chunk will create a new variable `season` in the original `fluxes` data frame, based on dates of the year in 2020.
+-   Season will be a categorical variable taking on the values of "winter", "spring", "summer", and "fall".
+-   The code chunk will then create a new variable `winter` which will take on the value `1` if the observation occurs in winter, and `0` if not.
+
+```{r create-season, eval = F}
+fluxes <- fluxes %>% 
+     mutate(season = ifelse(date < "2020-04-01", "winter", NA),
+            season = ifelse(date < "2020-07-01" & date > "2020-04-01", "___", season),
+            season = ifelse(date < "2020-10-01" & date > "2020-07-01", "___", season),
+            season = ifelse(date < "2020-12-31" & date > "2020-10-01", "___", season)) %>% 
+     mutate(winter = ifelse(season == "___", ___, ___))
+
+# ifelse syntax is: ifelse( logical operation, value if true, value if false)
+```
+
+### Fitting a model to a categorical variable
+
+You just fit your own models to ecosystem flux data!
+
+You are finished with Lab 7!
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
