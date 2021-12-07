@@ -1,0 +1,66 @@
+---
+title: "us-fires-import"
+author: "Gavin McNicol"
+date: "11/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load the library to work with SQL databases
+
+```{r load-library}
+library("RSQLite")
+library(tidyverse) # for writing csv
+```
+
+## Importing and writing out `fires`
+
+Read in the SQL database, identify which table is `fires`, then save fires as an R data frame, and write it out as a csv.
+
+```{r sql-data-import}
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="/Volumes/Samsung_T5/UIC/FPA_FOD_20170508.sqlite") ## you would have to replace the file path here in yellow with your own local copy of the downloaded dataset
+
+## list all tables
+tables <- dbListTables(con)
+
+## exclude sqlite_sequence (contains table information)
+tables <- tables[tables != "sqlite_sequence"]
+
+## create an empty list to store all the dataframes
+lDataFrames <- vector("list", length=length(tables))
+
+## assign fires table to an R object
+fires <- dbGetQuery(conn=con, statement=paste("SELECT * FROM '", tables[[2]], "'", sep = ""))
+
+# write csv
+write_csv(fires, "kaggle-us-wildfires.csv")
+```
+
+## Re-read fires from .csv
+
+```{r reload-fires}
+fires <- read_csv("kaggle-us-wildfires.csv")
+glimpse(fires)
+```
+
+## Filter for only Californiaand Illinois wildfires to reduce file size
+
+```{r filter-states}
+fires %>% 
+  filter(STATE %in% c("CA", "IL")) %>% 
+  write_csv("kaggle-us-wildfires-small.csv")
+```
+
+## Check nrows
+
+```{r nrows}
+fires %>% 
+  filter(STATE %in% c("CA", "IL")) %>% 
+  nrow()
+```
+
+OK, 191,877 rows is much more manageable than 1.9 million :) The file size is now 50 MB.
