@@ -18,30 +18,30 @@ knitr::opts_chunk$set(eval = TRUE)
 
 ## Data
 
-```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 2, fig.cap = "Morgan Monroe State Forest", eval = TRUE}
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Morgan Monroe State Forest", eval = TRUE}
 knitr::include_graphics("img/monroe-summer.jpeg")
 ```
 
-For this lab you will be working with half-hourly flux data from the Morgan Monroe State Forest ecosystem flux tower, located in Indiana.
+For this lab you will be working with hourly flux data from the Morgan Monroe State Forest ecosystem flux tower, located in Indiana.
 These data are generated from near-surface meteorological measurements paired with measurements of atmospheric gases including carbon dioxide and water vapour concentrations.
 
 The data are located in your `/data` folder.
 Look in the folder to check the name.
 
 We provide a data dictionary here to give you more information on these variables.
-Don't worry about the details too much!
+Don't worry about the details and scientific units!
 The goal of this lab is **not** to become ecosystem scientists :)
 
 **Data Dictionary**
 
--   date: date and time already in date class
--   fco2: CO2 flux in nmol m-2 s-1 (positive values = net emission; negative values = net uptake)
--   turbulence: a measure of air turbulence, related to wind speed in m s-1
--   air_temperature: air temperature in celcius
--   evaporation: the energy lost via evaporation of water from the ecosystem in W m-2
--   incoming_radiation: incoming shortwave solar radiation in W m-2
--   relative_humidity: the percent (%) saturation of the near surface atmosphere
--   air_pressure: the barometric air pressure in kilo-Pascals
+-   **date**: date and time
+-   **fco2** : CO2 flux *positive values = net emission; negative values = net uptake*
+-   **turbulence** : a measure of air turbulence, related to wind speed
+-   **air_temperature** : air temperature in degrees Celcius
+-   **evaporation** : the energy lost via evaporation of water from the ecosystem
+-   **incoming_radiation** : incoming shortwave solar radiation
+-   **relative_humidity** : the percent (%) saturation of the near surface atmosphere
+-   **air_pressure** : the barometric air pressure
 
 ## Packages
 
@@ -50,6 +50,7 @@ We will need both the `tidyverse` and the `tidymodels` package collections.
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(tidymodels)
+library(lubridate)
 ```
 
 ## Warm up
@@ -65,21 +66,24 @@ Before we start the lab, let's warm up by changing the YAML in the starter file:
 
 ## Importing the data
 
-1.  Look in the Lab 7 `/data` sub-directory and identify the name and file type of the dataset we need to load. Then complete the code chunk below in your starter file to load the ecosystem flux data and assign the imported data to a new object called `fluxes`. State below your code chunk how many observations there are in the dataset and what the data type of each variable is.
+1.  Look in the Lab 7 `/data` sub-directory and identify the name and file type of the dataset we need to load. Then complete the code chunk below in your starter file to load the ecosystem flux data and assign the imported data to a new object called `fluxes`. Using a method of your choosing, identify how many observations there are in the dataset and write it below your code chunk.
 
 ```{r import-data}
 # code goes here
 ```
 
-This dataset is tidy because each row is an observation (a half-hourly measurement) and each column is a variable, however, the dataset is very long!
+This dataset is tidy because each row is an observation (an hourly measurement) and each column is a variable, however, the dataset is very long!
 Let's simplify things by subsetting one week of data in July 2020.
 
 ## Fixing the date column
 
-Before we subset based on `date`, we need to convert the `date` column into a **date class**.
-Copy the following code chunk into your starter file and run it (also remove eval = F, or set it = T.) **You don't need to do anything else - just look at the code and output and satisfy yourself that you understand why we are using the lubridate function `myd_hm()`. If you're not sure, ask about it!**
+Before we subset based on `date`, we need to convert the `date` column into a **date class**, otherwise R will treat it like a numerical variable.
+Copy the following code chunk into your starter file and run it to fix the date column (also remove eval = F, or set it = T.)
 
-```{r fix-dates, eval = T}
+You don't need to do anything else - just look at the code and output, and satisfy yourself that you understand why we are using the `{lubridate}` function `myd_hm()`.
+If you're not sure, ask about it!
+
+```{r fix-dates, eval = F}
 fluxes <- fluxes %>% 
   mutate(date = mdy_hm(date))
 head(fluxes)
@@ -87,7 +91,7 @@ head(fluxes)
 
 ## Filtering for one week in July 2020
 
-2.  Copy the code chunk below into Exercise 2 in your starter file and complete the pipeline which will subset the data for one week in July 2020 (replace the YYYY-MM-DD with a real date range). Remember to change `eval` to `T` when you are ready to run the chunk.
+2.  Copy the code chunk below into Exercise 2 in your starter file and complete the pipeline which will subset the data for one week in July 2020 (replace the YYYY-MM-DD with a real date range). Remember to change `eval` to `T` when you are ready to run the chunk. Note that you are creating a new data frame called `fluxes_subset` from this pipeline.
 
 ```{r subset-fluxes, eval = F}
 fluxes_subset <- ___ %>% 
@@ -95,26 +99,28 @@ fluxes_subset <- ___ %>%
 head(fluxes_subset, 10) 
 ```
 
-### Exploratory visualization of CO2 flux, with a variable you choose
+## Exploratory visualization of CO2 flux and a numerical explanatory variable
 
 3.  Insert and label a code chunk into your starter file under Exercise 3.
 
--   The code chunk should take `fluxes_subset` as input, and use ggplot to create a visualization that maps `fco2` (CO2 flux) to the y-axis and an explanatory variable *of your choosing* to the x-axis (but do not use `date`).
--   Some relationships may not look good when plotted. Keep trying different variables based on your own intuition for what may correlate with CO2 flux, or simple until you find one you think has a reasonable association with `fco2`.
--   Feel free to clean up your plot with a `theme()` and adding labels with `labs()` - **you will not be graded on plot appearance though!**
+-   The code chunk should take `fluxes_subset` as input, and use ggplot to create a visualization that maps `fco2` (CO2 flux) to the y-axis and maps an explanatory variable *of your choosing* to the x-axis.
+-   Some relationships may not look good when plotted. Keep trying different variables based on your own intuition for what may correlate with CO2 flux, or simply keep testing variables until you find one you think has a reasonable association with `fco2`.
+-   Feel free to clean up your plot with a `theme()` and adding labels with `labs()` - \*\* however, you will not be graded on plot appearance.\*\*
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
 
-### Adding a model geom to your plot
+## Adding a model geom to your plot
 
-4.  Copy your code chunk from Exercise 3 and add a `geom_smooth()` layer to plot that will fit a linear model. You can do this by setting the method argument within `geom_smooth()` equal to "lm". There should be a grey band around the fitted model relationship. Write in text narrative below your code chunk what this grey band corresponds to.
+4.  Copy your code chunk from Exercise 3 and add a `geom_smooth()` layer to plot that will fit a linear model. You can do this by setting the `method =` argument within `geom_smooth()` equal to "lm".
 
-### Fitting a model to the data
+-   There should be a grey band around the fitted model relationship. State in text narrative below your code chunk what this grey band is showing.
 
-5.  Copy and complete the code chunk below in your starter file. The code chunk uses `tidymodels` syntax to fit a model.
+## Fitting a model to the data
 
--   Complete the code chunk with the explanatory variable that you selected in the previous exercises.
--   Below your code explain what the `estimate` column values mean with respect to the (1) y-intercept and (2) slope of the model you have fit. And explain what the `std.error` values tell us about each estimate (in general terms).
+5.  Copy and complete the code chunk below labeled `fit-a-model` in your starter file. The code chunk uses `tidymodels` syntax to fit a model.
+
+-   Complete the code chunk with `fco2` as the dependent variable and using the same explanatory variable that you selected for the previous exercises.
+-   Below your code explain the following aspects of the output tibble: What the `estimate` column values mean with respect to the (1) y-intercept and (2) slope of the model you have fit; and what does the `std.error` values tell us about each estimate (in general terms).
 
 ```{r fit-a-model, eval = F}
 linear_reg() %>% 
@@ -123,13 +129,13 @@ linear_reg() %>%
   tidy()
 ```
 
-### Creating a categorical season variable
+## Creating a categorical season variable
 
 6.  Copy and complete the code chunk below in your starter file.
 
--   The code chunk will create a new variable `season` in the original `fluxes` data frame, based on dates of the year in 2020.
--   Season will be a categorical variable taking on the values of "winter", "spring", "summer", and "fall".
--   The code chunk will then create a new variable `winter` which will take on the value `1` if the observation occurs in winter, and `0` if not.
+-   The code chunk will create a new variable `season` in the original `fluxes` data frame, based on dates of the year in 2020. If you're not sure how the ifelse functions are working, a comment is provided in the code chunk explaining it, or ask about it.
+-   Season will be a categorical variable taking on the values of "winter", "spring", "summer", or "fall".
+-   The code chunk will then create a new variable `winter` which will take on the value `1` only if an observation occurs in winter `season`, and `0` if it occurs in any other `season`.
 
 ```{r create-season, eval = F}
 fluxes <- fluxes %>% 
@@ -139,13 +145,111 @@ fluxes <- fluxes %>%
             season = ifelse(date < "2020-12-31" & date > "2020-10-01", "___", season)) %>% 
      mutate(winter = ifelse(season == "___", ___, ___))
 
-# ifelse syntax is: ifelse( logical operation, value if true, value if false)
+# ifelse syntax is: ifelse( logical operation, value if TRYE, value if FALSE )
 ```
 
-### Fitting a model to a categorical variable
+## Fitting a model using a categorical explanatory variable with 2 levels
 
-You just fit your own models to ecosystem flux data!
+7.  Copy and complete the code chunk below labeled `fit-a-model-2` in your starter file. The code chunk uses `tidymodels` syntax to fit a second model.
+
+-   Complete the code chunk with `fco2` as the dependent variable but this time use your new `winter` variable as the explanatory variable.
+-   Below your code explain the following aspects of the output tibble: What the `estimate` column values mean with respect to the (1) y-intercept and (2) slope of the model you have fit; and how many possible values of yhat (`predicted fco2`) are there and how does this compare to the possible values for yhat ('predicted fco2\`) for the model you fit in Exercise 6?
+-   (**Hint:** Think about the range of values for the explanatory variables in each model.)
+
+```{r fit-a-model-2, eval = F}
+linear_reg() %>% 
+  set_engine("___") %>% 
+  fit(___ ~ ___, data = ___) %>% 
+  tidy()
+```
+
+## Fitting a model using a categorical explanatory variable with \> 2 levels
+
+8.  Copy and complete the code chunk below labeled `fit-a-model-3` in your starter file. The code chunk uses `tidymodels` syntax to fit a third model.
+
+-   Complete the code chunk with `fco2` as the dependent variable but this time use your `season` variable as the explanatory variable.
+-   Below your code explain the following aspects of the output tibble: What the `estimate` column values mean with respect to the (1) y-intercept and (2) slope of the model you have fit; how many possible values of yhat (`predicted fco2`) are there; and what season is being used as the "baseline" season and why?
+-   (**Hint:** Think about the range of values for the explanatory variables in each model.)
+
+```{r fit-a-model-3, eval = F}
+linear_reg() %>% 
+  set_engine("___") %>% 
+  fit(___ ~ ___, data = ___) %>% 
+  tidy()
+```
+
+Good job!
+You just fit and interpreted three different models based on ecosystem flux data!
 
 You are finished with Lab 7!
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*
+
+## HOMEWORK Exercises
+
+There is no point having you load the data again in a separate homework starter, so this week the homework will just continue in the lab starter file.
+
+-  For Homework 7, add 4 more exercise response spots in your Lab-07 starter file (Exercise 9-12)
+
+## Fitting a model using a numeric and a categorical variable
+
+9.  Copy and complete the code chunk below labeled `fit-a-model-4` in your starter file. The code chunk uses `tidymodels` syntax to fit a fourth model.
+
+-   Complete the code chunk with `fco2` as the dependent variable but this time use both the numerical variable you chose earlier and `winter` variable as the explanatory variable.
+-   Below your code, explain (1) why we have to convert one of the two explanatory variables to a factor first and (2) why the two lines generated by the model function will be parallel,
+-   (Hint: think about what values the `winter` variable can take)
+
+```{r fit-a-model-4, eval = F}
+linear_reg() %>% 
+  set_engine("___") %>% 
+  fit(___ ~ ___ + factor(___), data = ___) %>% 
+  tidy()
+```
+
+## Fitting a model that includes an interaction effect
+
+10. Copy and complete the code chunk below labeled `fit-a-model-5` in your starter file. The code chunk uses `tidymodels` syntax to fit a fifth model.
+
+-   Complete the code chunk with `fco2` as the dependent variable but this time use the numerical variable your chose earlier and your `winter` variable as the explanatory variable.
+-   This time, also include an interaction effect between the two variables.
+-   Below your code, (1) explain why the two lines generated by the model function will not be parallel and (2) state whether you think this model including an interaction better explains the variability in `fco2` than the model in Exercise 9.
+-   (Hint: think about what values the `winter` variable can take)
+
+```{r fit-a-model-5, eval = F}
+linear_reg() %>% 
+  set_engine("___") %>% 
+  fit(___ ~ ___ + factor(___) + ___ * factor(), data = ___) %>% 
+  tidy()
+```
+
+## Fitting two models to objects
+
+11. Copy and complete the code chunk below labeled `fit-two-models-to-objects` in your starter file.
+
+-   The code chunk uses `tidymodels` syntax to assign two models to objects.
+-   The two model formulas should be identical to the completed code chunks for exercise 9 and 10. State under your completed code which of the two models includes an interaction effect.
+
+```{r fit-two-models-to-objects, eval = F}
+fco2_fit_main <- linear_reg() %>% 
+  set_engine("___") %>% 
+  fit(___ ~ ___ + factor(___), data = ___) %>% 
+  tidy()
+
+fco2_fit_int <- linear_reg() %>% 
+  set_engine("___") %>% 
+  fit(___ ~ ___ + factor(___) + ___ * factor(), data = ___) %>% 
+  tidy()
+```
+
+## Evaluating models using adjusted R-squared
+
+12. Copy and complete the code chunk below labeled `compare-two-fits` in your starter file.
+
+-   The code should use the `glimpse()` function to view the `adj.r.squared` variable in the fitted model object (i.e. the objects you just created above)
+-   State in text narrative below your code chunk what the dollar sign (`$`) is doing in the code chunk.
+-   State in text narrative below your code chunk whether the adjusted R-squared values supports your conclusion about which model was better in Exercise 10. (Hint: if you're struggling with the )
+
+```{r compare-two-fits, eval = F}
+glimpse(fco2_fit_main)$___
+glimpse(fco2_fit_int)$___
+```

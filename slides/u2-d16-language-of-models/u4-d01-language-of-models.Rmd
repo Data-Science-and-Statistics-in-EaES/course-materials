@@ -19,6 +19,8 @@ library(tidyverse)
 library(tidymodels)
 library(lubridate)
 set.seed(1234)
+theme_bw <- theme_bw() + theme(axis.text=element_text(size=20),
+                               axis.title = element_text(size = 20))
 ```
 
 class: middle
@@ -146,18 +148,18 @@ monroe_fluxes %>%
   ggplot(aes(fco2)) +
   geom_histogram() + 
   labs(x = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw() 
+  theme_bw 
 ```
 
 ---
 # What does CO2 flux look like in our Morgan Monroe State Forest?
 
-```{r histogram-2, echo = F, out.width="50%"}
+```{r histogram-2, echo = F, fig.width=12, fig.height=6, warning = F, message = F}
 monroe_fluxes %>% 
   ggplot(aes(fco2)) +
   geom_histogram() + 
   labs(x = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw() 
+  theme_bw 
 ```
 
 
@@ -184,19 +186,19 @@ monroe_fluxes %>%
   mutate(sign = ifelse(fco2 >= 0, "net emission", "net uptake")) %>% 
   ggplot(aes(date, fco2, color = sign)) +
   geom_point() +
-  theme_bw() +
+  theme_bw +
   labs(y = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("red", "dark green"))
 ```
 ---
 # What does an ecosystem's breathing look like in our Morgan Monroe State Forest?
 
-```{r plot-gpp-2, warning = F, echo = F}
+```{r plot-gpp-2, warning = F, echo = F, fig.width=12, fig.height=6}
 monroe_fluxes %>% 
   mutate(sign = ifelse(fco2 >= 0, "net emission", "net uptake")) %>% 
   ggplot(aes(date, fco2, color = sign)) +
   geom_point() +
-  theme_bw() +
+  theme_bw +
   labs(y = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("red", "dark green"))
 ```
@@ -210,7 +212,7 @@ monroe_fluxes %>%
   mutate(sign = ifelse(fco2 >= 0, "net emission", "net uptake")) %>% 
   ggplot(aes(date, fco2, color = sign)) +
   geom_point() +
-  theme_bw() +
+  theme_bw +
   labs(y = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("red", "dark green"))
 ```
@@ -225,7 +227,7 @@ monroe_fluxes %>%
   mutate(sign = ifelse(fco2 >= 0, "net emission", "net uptake")) %>% 
   ggplot(aes(date, fco2, color = sign)) +
   geom_point() +
-  theme_bw() +
+  theme_bw +
   labs(y = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("red", "dark green"))
 ```
@@ -243,7 +245,7 @@ monroe_fluxes %>%
   geom_hline(yintercept = 0) +
   geom_point() +
   geom_line(aes(date, fco2)) +
-  theme_bw() +
+  theme_bw +
   labs(y = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("red", "dark green"))
 ```
@@ -258,7 +260,7 @@ monroe_fluxes %>%
   geom_hline(yintercept = 0) +
   geom_point() +
   geom_line(aes(date, fco2)) +
-  theme_bw() +
+  theme_bw +
   labs(y = expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("red", "dark green"))
 ```
@@ -288,6 +290,23 @@ class: middle
 
 ---
 
+## fco2 as a function of incoming solar radiation
+
+```{r co2-flux-plot-2, echo = F}
+monroe_fluxes %>% 
+  filter(date > "2020-07-01" & date < "2020-07-05") %>%  #<<
+  ggplot(aes(x = sw_in, y = fco2)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Half-hourly CO2 flux vs. incoming solar radiation",
+    subtitle = "For 2020, at Morgan Monroe State Forest",
+    x = expression("Radiation (W m"^{-2}*")"),
+    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
+  theme_bw
+```
+
+---
 
 ## fco2 as a function of incoming solar radiation
 
@@ -302,27 +321,26 @@ monroe_fluxes %>%
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
 
-## fco2 as a function of incoming solar radiation
+## ... without the measure of uncertainty
 
-```{r co2-flux-plot-2}
+```{r co2-flux-plot-no-se-2, warning=FALSE, echo = F}
 monroe_fluxes %>% 
-  filter(date > "2020-07-01" & date < "2020-07-05") %>%  #<<
+  filter(date > "2020-07-01" & date < "2020-07-05") %>% 
   ggplot(aes(x = sw_in, y = fco2)) +
   geom_point() +
-  geom_smooth(method = "lm") +
+  geom_smooth(method = "lm", se = FALSE) + #<<
   labs(
     title = "Half-hourly CO2 flux vs. incoming solar radiation",
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
-
 
 ---
 
@@ -339,25 +357,26 @@ monroe_fluxes %>%
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
-## ... without the measure of uncertainty
 
+## ... with different cosmetic choices
 
-```{r co2-flux-plot-no-se-2, warning=FALSE}
+```{r co2-flux-plot-cosmetics-2, warning=FALSE, echo = F}
 monroe_fluxes %>% 
   filter(date > "2020-07-01" & date < "2020-07-05") %>% 
   ggplot(aes(x = sw_in, y = fco2)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE) + #<<
+  geom_smooth(method = "lm", se = FALSE,
+              color = "purple", linetype = 2, size = 3) + #<<
   labs(
     title = "Half-hourly CO2 flux vs. incoming solar radiation",
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
@@ -376,25 +395,26 @@ monroe_fluxes %>%
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
-## ... with different cosmetic choices
 
-```{r co2-flux-plot-cosmetics-2, warning=FALSE}
+## Other smoothing methods: gam
+
+```{r co2-flux-plot-gam-2,  warning=FALSE, echo = F}
 monroe_fluxes %>% 
   filter(date > "2020-07-01" & date < "2020-07-05") %>% 
   ggplot(aes(x = sw_in, y = fco2)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE,
-              color = "purple", linetype = 2, size = 3) + #<<
+  geom_smooth(method = "gam", se = FALSE, #<<
+              color = "purple") + 
   labs(
     title = "Half-hourly CO2 flux vs. incoming solar radiation",
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
@@ -413,26 +433,26 @@ monroe_fluxes %>%
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
 
-## Other smoothing methods: gam
+## Other smoothing methods: loess
 
-```{r co2-flux-plot-gam-2,  warning=FALSE}
+```{r co2-flux-plot-loess-2, warning=FALSE, echo = F}
 monroe_fluxes %>% 
   filter(date > "2020-07-01" & date < "2020-07-05") %>% 
   ggplot(aes(x = sw_in, y = fco2)) +
   geom_point() +
-  geom_smooth(method = "gam", se = FALSE, #<<
+  geom_smooth(method = "loess", se = FALSE, #<<
               color = "purple") + 
   labs(
     title = "Half-hourly CO2 flux vs. incoming solar radiation",
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
@@ -451,26 +471,7 @@ monroe_fluxes %>%
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
-```
-
----
-
-## Other smoothing methods: loess
-
-```{r co2-flux-plot-loess-2, fig.show="hide", warning=FALSE}
-monroe_fluxes %>% 
-  filter(date > "2020-07-01" & date < "2020-07-05") %>% 
-  ggplot(aes(x = sw_in, y = fco2)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = FALSE, #<<
-              color = "purple") + 
-  labs(
-    title = "Half-hourly CO2 flux vs. incoming solar radiation",
-    subtitle = "For 2020, at Morgan Monroe State Forest",
-    x = expression("Radiation (W m"^{-2}*")"),
-    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
@@ -490,6 +491,34 @@ monroe_fluxes %>%
 - **Residuals:** A measure of how far each case is from its predicted value (based on a particular model)
   - Residual = Observed value - Predicted value
   - Tells how far above/below the expected value each case is
+
+---
+
+## Residuals
+
+```{r co2-flux-plot-residuals-2,  warning=FALSE, echo = F}
+co2_flux_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in, data = filter(monroe_fluxes, date > "2020-07-01" & date < "2020-07-05"))
+
+co2_flux_fit_tidy <- tidy(co2_flux_fit$fit) 
+co2_flux_fit_aug  <- augment(co2_flux_fit$fit) %>%
+  mutate(res_cat = ifelse(.resid > 0, TRUE, FALSE))
+
+ggplot(data = co2_flux_fit_aug) +
+  geom_point(aes(x = sw_in, y = fco2, color = res_cat)) +
+  geom_line(aes(x = sw_in, y = .fitted), size = 0.75, color = "#8E2C90") + 
+    labs(
+    title = "Half-hourly CO2 flux vs. incoming solar radiation",
+    subtitle = "For 2020, at Morgan Monroe State Forest",
+    x = expression("Radiation (W m"^{-2}*")"),
+    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
+  guides(color = FALSE) +
+  scale_color_manual(values = c("#260b27", "#e6b0e7")) +
+  geom_text(aes(x = 0, y = 20), label = "Positive residual", color = "#e6b0e7", hjust = 0, size = 8) +
+  geom_text(aes(x = 150, y = -30), label = "Negative residual", color = "#260b27", hjust = 0, size = 8) +
+  theme_bw
+```
 
 ---
 
@@ -516,37 +545,8 @@ ggplot(data = co2_flux_fit_aug) +
   scale_color_manual(values = c("#260b27", "#e6b0e7")) +
   geom_text(aes(x = 0, y = 20), label = "Positive residual", color = "#e6b0e7", hjust = 0, size = 8) +
   geom_text(aes(x = 150, y = -30), label = "Negative residual", color = "#260b27", hjust = 0, size = 8) +
-  theme_bw()
+  theme_bw
 ```
-
----
-
-## Residuals
-
-```{r co2-flux-plot-residuals-2, fig.show="hide", warning=FALSE, echo = F}
-co2_flux_fit <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(fco2 ~ sw_in, data = filter(monroe_fluxes, date > "2020-07-01" & date < "2020-07-05"))
-
-co2_flux_fit_tidy <- tidy(co2_flux_fit$fit) 
-co2_flux_fit_aug  <- augment(co2_flux_fit$fit) %>%
-  mutate(res_cat = ifelse(.resid > 0, TRUE, FALSE))
-
-ggplot(data = co2_flux_fit_aug) +
-  geom_point(aes(x = sw_in, y = fco2, color = res_cat)) +
-  geom_line(aes(x = sw_in, y = .fitted), size = 0.75, color = "#8E2C90") + 
-    labs(
-    title = "Half-hourly CO2 flux vs. incoming solar radiation",
-    subtitle = "For 2020, at Morgan Monroe State Forest",
-    x = expression("Radiation (W m"^{-2}*")"),
-    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  guides(color = FALSE) +
-  scale_color_manual(values = c("#260b27", "#e6b0e7")) +
-  geom_text(aes(x = 0, y = 20), label = "Positive residual", color = "#e6b0e7", hjust = 0, size = 8) +
-  geom_text(aes(x = 150, y = -30), label = "Negative residual", color = "#260b27", hjust = 0, size = 8) +
-  theme_bw()
-```
-
 
 ---
 
@@ -565,7 +565,7 @@ monroe_fluxes %>%
     subtitle = "For 2020, at Morgan Monroe State Forest",
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
-  theme_bw()
+  theme_bw
 ```
 
 ---
@@ -595,19 +595,30 @@ knitr::include_graphics("img/monroe-fall.jpeg")
 
 ## Multiple explanatory variables
 
-.panelset[
-.panel[.panel-name[Plot]
-.pull-left-narrow[
-.question[
-How might the relationship between sunlight and CO2 flux be affected by the season of the year?
-]
-]
-.pull-right-wide[
-```{r ref.label = "co2-flux-seasonality", echo = FALSE, warning = FALSE, out.width = "40%"}
+```{r co2-flux-seasonality-2, warning=FALSE, echo = F}
+monroe_fluxes %>% 
+  filter(date > "2020-01-01" & date < "2021-01-01") %>%  
+  mutate(season = ifelse(date < "2020-04-01", "Winter", NA),
+         season = ifelse(date < "2020-07-01" & date > "2020-04-01", "Spring", season),
+         season = ifelse(date < "2020-10-01" & date > "2020-07-01", "Summer", season),
+         season = ifelse(date < "2020-12-31" & date > "2020-10-01", "Fall", season)) %>% 
+  filter(season %in% c("Winter", "Summer")) %>% #<< (sorry T Swift!)
+  ggplot( aes(x = sw_in, y = fco2, color = factor(season))) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Half-hourly CO2 flux vs. incoming solar radiation",
+    subtitle = "For 2020, at Morgan Monroe State Forest",
+    x = expression("Radiation (W m"^{-2}*")"),
+    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
+  scale_color_manual(values = c("dark green", "light blue")) +
+  theme_bw
 ```
-]
-]
-.panel[.panel-name[Code]
+
+---
+
+## Multiple explanatory variables
+
 ```{r co2-flux-seasonality, fig.show="hide", warning=FALSE}
 monroe_fluxes %>% 
   filter(date > "2020-01-01" & date < "2021-01-01") %>%  
@@ -625,21 +636,38 @@ monroe_fluxes %>%
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("dark green", "light blue")) +
-  theme_bw()
+  theme_bw
 ```
-]
-]
+
 
 ---
 
 ## Extending regression lines
 
-.panelset[
-.panel[.panel-name[Plot]
-```{r ref.label = "extrapolation", echo = FALSE, warning = FALSE, out.width = "40%"}
+```{r extrapolation-2, warning=FALSE, echo = F}
+monroe_fluxes %>% 
+  filter(date > "2020-01-01" & date < "2021-01-01") %>%  
+  mutate(season = ifelse(date < "2020-04-01", "Winter", NA),
+         season = ifelse(date < "2020-07-01" & date > "2020-04-01", "Spring", season),
+         season = ifelse(date < "2020-10-01" & date > "2020-07-01", "Summer", season),
+         season = ifelse(date < "2020-12-31" & date > "2020-10-01", "Fall", season)) %>% 
+  filter(season %in% c("Winter", "Summer")) %>% 
+  ggplot( aes(x = sw_in, y = fco2, color = factor(season))) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) + #<<
+  labs(
+    title = "Half-hourly CO2 flux vs. incoming solar radiation",
+    subtitle = "For 2020, at Morgan Monroe State Forest",
+    x = expression("Radiation (W m"^{-2}*")"),
+    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
+  scale_color_manual(values = c("dark green", "light blue")) +
+  theme_bw
 ```
-]
-.panel[.panel-name[Code]
+
+---
+
+## Extending regression lines
+
 ```{r extrapolation, fig.show="hide", warning=FALSE}
 monroe_fluxes %>% 
   filter(date > "2020-01-01" & date < "2021-01-01") %>%  
@@ -657,10 +685,8 @@ monroe_fluxes %>%
     x = expression("Radiation (W m"^{-2}*")"),
     y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
   scale_color_manual(values = c("dark green", "light blue")) +
-  theme_bw()
+  theme_bw
 ```
-]
-]
 
 ---
 
@@ -686,3 +712,14 @@ is just as important as the model, if not more!
 
 - Explanation: Characterize the relationship between $y$ and $x$ via *slopes* for numerical explanatory variables or *differences* for categorical explanatory variables
 - Prediction: Plug in $x$, get the predicted $y$
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]
+
+

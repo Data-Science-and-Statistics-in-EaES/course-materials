@@ -1,0 +1,88 @@
+---
+title: "Unit 1 - 3 Review Starter"
+author: "Insert your group number here"
+date: "Insert date here"
+output: html_document
+---
+
+### Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse) 
+```
+
+```{r load-data, message=FALSE}
+sites <- read_csv("data/sand-minerals.csv")
+location_descriptions <- read_csv("data/location-descriptions.csv")
+density <- read_csv("data/density.csv")
+solubility_hardness <- read_csv("data/solubility-hardness.csv")
+```
+
+## Exercises
+
+### Exercise 1
+
+Remove this text, and add your answer for Exercise 1 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 2
+
+Remove this text, and add your answer for Exercise 2 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 3
+
+Remove this text, and add your answer for Exercise 3 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 4
+
+Remove this text, and add your answer for Exercise 4 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 5
+
+Remove this text, and add your answer for Exercise 5 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 6
+
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+## Part II - Data Visualization
+
+`starwars` is already loaded within the `dplyr` package (within `tidyverse`)
+
+### Exercise 7
+
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 8
+
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.
+
+### Exercise 9
+
+Remove this text, and add your answer for Exercise 6 here.
+Add code chunks as needed.
+Don't forget to label your code chunk.
+Do not use spaces in code chunk labels.

@@ -283,29 +283,37 @@ class: middle
 .small[
 ```{r echo=FALSE}
 monroe_fluxes %>% 
+  filter(date > "2020-01-01" & date < "2021-01-01") %>% 
     mutate(season = ifelse(date < "2020-04-01", "winter", NA),
          season = ifelse(date < "2020-07-01" & date > "2020-04-01", "spring", season),
          season = ifelse(date < "2020-10-01" & date > "2020-07-01", "summer", season),
          season = ifelse(date < "2020-12-31" & date > "2020-10-01", "fall", season)) %>% 
-  filter(season %in% c("winter", "summer")) %>% 
-  select(date, fco2, season) %>%
-  print(n = 20)
+  mutate(winter = ifelse(season == "winter", 1, 0)) %>% 
+  select(date, fco2, season, winter) %>%
+  print(n = 5)
 ```
-]
-]
-.pull-right-wide[
-- `season = 0`: Summer
-- `season = 1`: Winter
-]
 
 ```{r echo=FALSE}
 monroe_fluxes <- monroe_fluxes %>% 
+    filter(date > "2020-01-01" & date < "2021-01-01") %>% 
     mutate(season = ifelse(date < "2020-04-01", "winter", NA),
          season = ifelse(date < "2020-07-01" & date > "2020-04-01", "spring", season),
          season = ifelse(date < "2020-10-01" & date > "2020-07-01", "summer", season),
          season = ifelse(date < "2020-12-31" & date > "2020-10-01", "fall", season)) %>% 
   mutate(winter = ifelse(season == "winter", 1, 0))
 ```
+
+```{r echo = F}
+monroe_fluxes %>% 
+  count(season, winter)
+```
+
+]
+]
+.pull-right-wide[
+- `winter = 0`: any other season
+- `winter = 1`: winter
+]
 
 ---
 
@@ -314,13 +322,22 @@ monroe_fluxes <- monroe_fluxes %>%
 ```{r ht-lands-fit}
 linear_reg() %>%
   set_engine("lm") %>%
-  fit(fco2 ~ factor(winter), data = filter(monroe_fluxes, season %in% c("summer", "winter"))) %>%
+  fit(fco2 ~ factor(winter), data = monroe_fluxes) %>%
   tidy()
 ```
+  
+  
+  
+.large[
+$$\widehat{fco2} = -5.223 - 3.562 \times winter$$
+]
+
 
 ---
 
 ## CO2 flux and winter (vs. summer) season
+
+### How do we interpret this?
 
 $$\widehat{fco2} = -5.223133 + 3.562131~winter$$
 
@@ -388,10 +405,10 @@ dummy_df %>%
 ```{r ref.label="co2-flux-season", echo=FALSE}
 ```
 
-- **Fall season** CO2 fluxes are expected, on average, to be 0.8394269 nmol m-2 s-1.
-- **Spring season** CO2 fluxes are expected, on average, to be 3.0774139 nmol m-2 s-1 more negative than in Fall.
-- **Summer season** CO2 fluxes are expected, on average, to be 6.0625599 nmol m-2 s-1 more negative than in Fall.
-- **Winter season** CO2 fluxes are expected, on average, to be 2.5004288 nmol m-2 s-1 more negative than in Fall.
+- **Fal ** CO2 fluxes are expected, on average, to be 0.8394269 nmol m-2 s-1.
+- **Spring** CO2 fluxes are expected, on average, to be 3.0774139 nmol m-2 s-1 more negative than in Fall.
+- **Summer** CO2 fluxes are expected, on average, to be 6.0625599 nmol m-2 s-1 more negative than Fall.
+- **Winter** CO2 fluxes are expected, on average, to be 0.2359090 nmol m-2 s-1 more positive than Fall.
 
 ]
 ---

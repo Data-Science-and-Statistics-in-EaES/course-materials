@@ -1,0 +1,456 @@
+---
+title: "Models with multiple predictors"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(patchwork)
+library(lubridate)
+library(ggtext)
+library(knitr)
+library(kableExtra)
+set.seed(1234)
+options(dplyr.print_min = 10, dplyr.print_max = 6)
+theme_bw <- theme_bw() + 
+  theme(axis.text=element_text(size=20),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 15), 
+        legend.title = element_text(size = 20),
+        title = element_text(size = 15))
+```
+
+class: middle
+
+# The linear model with multiple predictors
+
+---
+
+## Data: Morgan-Monroe State Forest Carbon Uptake
+
+```{r message=FALSE}
+monroe_fluxes <- read_csv("data/amf-us-mms.csv", na = c("-9999"), skip = 2) 
+```
+
+```{r echo = F, message = F}
+monroe_fluxes <- monroe_fluxes %>% 
+  select(timestamp = TIMESTAMP_END, 
+         fco2 = FC_1_1_1,
+         ustar = USTAR_1_1_1, 
+         ta = TA_1_1_1, 
+         le = LE_1_1_1,
+         p = P_1_1_1,
+         sw_in = SW_IN_1_1_1,
+         rh = RH_1_1_1,
+         pa = PA_1_1_1,
+      ) 
+
+monroe_fluxes <- monroe_fluxes %>% 
+  mutate(date = ymd_hm(timestamp)) %>%
+  relocate(date) %>% 
+  select(-timestamp)
+
+monroe_fluxes <- monroe_fluxes %>% 
+      mutate(season = ifelse(date < "2020-04-01", "winter", NA),
+         season = ifelse(date < "2020-07-01" & date > "2020-04-01", "spring", season),
+         season = ifelse(date < "2020-10-01" & date > "2020-07-01", "summer", season),
+         season = ifelse(date < "2020-12-31" & date > "2020-10-01", "fall", season))
+```
+
+Filter for only 2020 "winter" and "summer" data:
+
+```{r}
+monroe_fluxes <- monroe_fluxes %>%
+  filter(date >= "2020-01-01" & date < "2021-01-01") %>% 
+  filter(season %in% c("winter", "summer")) %>% 
+  mutate(winter = ifelse(season == "winter", 1, 0))
+```
+```{r}
+monroe_fluxes %>% 
+  select(date, fco2, sw_in, season, winter) %>% 
+head(5)
+```
+
+---
+
+## Recap: CO2 flux vs. radiation in 2020
+
+We can visualize a linear model fit using geom_smooth
+
+```{r fco2-plot, echo=FALSE, warning=FALSE, fig.height = 6}
+monroe_fluxes %>% 
+  ggplot(aes(x = sw_in, y = fco2)) +
+  geom_point() +
+  geom_smooth(method = "lm", size = 2) +
+  labs(
+    title = "Half-hourly CO2 flux vs. incoming solar radiation",
+    subtitle = "For 2020, at Morgan Monroe State Forest",
+    x = expression("Radiation (W m"^{-2}*")"),
+    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
+  theme_bw
+```
+
+---
+
+## Recap: CO2 flux vs. radiation in 2020
+
+And we can fit a model to get the coefficients for the linear function.
+
+```{r}
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in, data = monroe_fluxes) %>%
+  tidy()
+```
+
+Gives us the b0 and b1 coefficients:
+
+$$\hat{y}_{i} = b_0 + b_1~x_{i}$$
+
+.large[
+$$\widehat{fco2}_{i} = 1.641 - 0.0224 \times sw.in_{i}$$
+]
+
+---
+
+## Fitting with two variables
+
+We can visualize a model for winter and summer...
+...by mapping a winter season variable to the color aesthetic
+
+```{r out.width = "50%", echo = FALSE, warning = F, message = F}
+monroe_fluxes %>% 
+  ggplot(aes(x = sw_in, y = fco2, color = factor(winter))) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, size = 2) +
+  labs(
+    title = "Half-hourly CO2 flux vs. incoming solar radiation and season",
+    subtitle = "For 2020, at Morgan Monroe State Forest",
+    x = expression("Radiation (W m"^{-2}*")"),
+    y =  expression("Net CO"[2]*" Flux (nmol m"^{-2}*" s"^{-1}*")")) +
+  theme_bw +
+  theme(legend.position = "bottom") +
+  scale_color_manual(values = c("brown", "light green", "dark green", "blue"))
+```
+
+---
+
+## Fitting with two variables
+
+How do we get the coefficients for these two lines? Do we just add `factor(winter)` to our model formula?
+
+```{r}
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter), data = monroe_fluxes) %>% #<<
+  tidy()
+```
+
+Gives us b0, b1, and b2:
+
+$$\hat{y}_{i} = b_0 + b_1~x_{1i} + b_2~x_{2i}$$
+
+.large[
+$$\widehat{fco2}_{i} = -0.328 - 0.021 \times sw.in_{i} + 3.417 \times factor(winter)_{i}$$
+]
+
+Will this give us the two lines from the last slide? Think about what values `winter` can have?
+
+---
+
+## Main vs. interaction effects
+
+
+A **main** effect is where an explanatory variable changes the predicted value of a dependent variable in a constant way that is not affected by other variables. For example, `sw_in` and `factor(winter)` both had main effects in the previous example.
+
+A **interaction** effect is where an explanatory variable changes the predicted value of a dependent variable in a way that is altered by other variables. For example, if `sw_in` had a stronger effect (steeper slope) on `fco2` in summer than in winter.
+
+
+---
+
+```{r fco2-main-int, echo=FALSE, out.width="65%", fig.asp = 0.8}
+fco2_main_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter), data = monroe_fluxes)
+fco2_main_fit_aug <- augment(fco2_main_fit$fit)
+
+fco2_int_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter) + sw_in*factor(winter), data = monroe_fluxes)
+fco2_int_fit_aug <- augment(fco2_int_fit$fit)
+
+p_main <- ggplot() +
+  geom_point(fco2_main_fit_aug, 
+             mapping = aes(x = sw_in, y = fco2, color = `factor(winter)`, shape = `factor(winter)`), alpha = 0.7) +
+  geom_line(fco2_main_fit_aug, 
+            mapping = aes(x = sw_in, y = .fitted, color = `factor(winter)`, size = 2)) +
+  labs(title = "Main effects, parallel slopes", 
+       subtitle = "fco2-hat = sw_in + factor(winter)") +
+  scale_color_manual(values = c("#E48957", "#071381")) +
+  theme_bw
+
+p_int <- ggplot() +
+  geom_point(fco2_int_fit_aug, 
+             mapping = aes(x = sw_in, y = fco2, color = `factor(winter)`, shape = `factor(winter)`), alpha = 0.7) +
+  geom_line(fco2_int_fit_aug, 
+            mapping = aes(x = sw_in, y = .fitted, color = `factor(winter)`, size = 2)) +
+  labs(title = "Interaction effects, not parallel slopes", 
+       subtitle = "fco2-hat = sw_in + factor(winter) + sw_in * factor(winter)") +
+  scale_color_manual(values = c("#E48957", "#071381")) +
+  theme_bw
+```
+
+.pull-left[
+```{r echo = F}
+p_main
+```
+]
+
+.pull-right[
+```{r echo = F}
+p_int
+```
+]
+
+
+
+---
+
+## In pursuit of Occam's razor
+
+- Occam's Razor states that among competing hypotheses that predict equally well, the one with the fewest assumptions should be selected.
+
+--
+- We only want to add another variable to the model if the addition of that variable brings something valuable in terms of predictive power to the model.
+
+--
+- In other words, we prefer the simplest best model, i.e. **parsimonious** model.
+
+---
+
+## Visually, which of the two models is preferable under Occam's razor?
+
+.pull-left[
+```{r echo = F}
+p_main 
+```
+]
+.pull-right[
+```{r echo = F}
+p_int  
+```
+]
+
+---
+
+## Interacting explanatory variables
+
+- Including an interaction effect in the model allows for different slopes, i.e. 
+nonparallel lines.
+- This implies that the regression coefficient for an explanatory variable would 
+change as another explanatory variable changes.
+- This can be accomplished by adding an interaction variable: the product of two 
+explanatory variables.
+
+---
+
+## Adding interacting explanatory variables
+
+```{r}
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter) + sw_in * factor(winter), data = monroe_fluxes) %>% #<<
+  tidy()
+```
+
+--
+
+- When solar radiation is zero, co2 flux is 1.545
+
+- The slope of the linear fit with `sw_in` is **-0.028**
+
+- The effect of being in `winter` is **-0.729**
+
+- **During the winter, the slope of the linear fit with `sw_in` is -0.028 + 0.031 = 0.03 (~zero)**
+
+---
+
+## Should the slope be close to zero in winter?
+
+.pull-left[
+```{r echo = F}
+p_main 
+```
+]
+.pull-right[
+```{r echo = F}
+p_int  
+```
+]
+
+---
+
+## R-squared
+
+- $R^2$ is the percentage of variability in the response variable explained by 
+the regression model.
+- It is one statistical (rather than visual) tool to decide between models 
+
+**Fit two models, one with an interaction...**
+
+```{r}
+fco2_main_fit <- linear_reg() %>% 
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter), data = monroe_fluxes)
+```
+
+```{r}
+fco2_int_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter) + sw_in*factor(winter), data = monroe_fluxes)
+```
+
+---
+
+## R-squared
+
+**... then compare the R-squared of each model**
+
+
+```{r}
+glance(fco2_main_fit)$r.squared
+glance(fco2_int_fit)$r.squared
+```
+
+--
+- Clearly the model with interactions has a higher $R^2$.
+
+--
+- However using $R^2$ for model selection in models with multiple explanatory variables is not a good idea as $R^2$ increases when **any** variable is added to the model.
+
+---
+
+## Adjusted R-squared
+
+... a (more) objective measure for model selection
+
+- Adjusted $R^2$ doesn't increase if the new variable does not provide any new 
+information or is completely unrelated, as it applies a penalty for number of 
+variables included in the model.
+- This makes adjusted $R^2$ a preferable metric for model selection in multiple
+regression models.
+
+---
+
+## Comparing models
+
+.pull-left[
+```{r}
+glance(fco2_main_fit)$r.squared
+glance(fco2_int_fit)$r.squared
+```
+]
+.pull-right[
+```{r}
+glance(fco2_main_fit)$adj.r.squared
+glance(fco2_int_fit)$adj.r.squared
+```
+]
+
+--
+
+.pull-left-wide[
+.small[
+- Is R-sq higher for int model?
+```{r}
+glance(fco2_int_fit)$r.squared > glance(fco2_main_fit)$r.squared 
+```
+
+- Is R-sq adj. higher for int model?
+
+```{r}
+glance(fco2_int_fit)$adj.r.squared > glance(fco2_main_fit)$adj.r.squared
+```
+]
+]
+
+---
+
+# Summary 1 
+## Fit a model with a two numerical variables
+
+```{r}
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + le, data = monroe_fluxes) %>%
+  tidy()
+```
+
+---
+
+# Summary 2 
+## Fit a model with a numerical and a categorical variable
+
+```{r}
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter), data = monroe_fluxes) %>%
+  tidy()
+```
+---
+
+# Summary 3 
+## Fit a model with a numerical and a categorical variable **and** and interaction effect
+
+```{r}
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter) + sw_in * factor(winter), data = monroe_fluxes) %>%
+  tidy()
+```
+
+---
+
+# Summary 4
+## Assign your model fits to objects, and check the adjusted R2 to compare
+
+```{r}
+fco2_main_fit <- linear_reg() %>% 
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter), data = monroe_fluxes)
+```
+
+```{r}
+fco2_int_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fco2 ~ sw_in + factor(winter) + sw_in*factor(winter), data = monroe_fluxes)
+```
+
+.pull-left[
+```{r}
+glance(fco2_main_fit)$adj.r.squared
+glance(fco2_int_fit)$adj.r.squared
+```
+]
+
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

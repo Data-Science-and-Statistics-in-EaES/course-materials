@@ -1,0 +1,170 @@
+---
+title: "Lab 08 - Quantifying Uncertainty"
+output: 
+  tufte::tufte_html:
+    css: ../lab.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+# Learning goals
+
+-   Practice bootstrapping to estimate population parameters
+
+## Data
+
+```{r photo, fig.margin = TRUE, echo = FALSE, fig.width = 3, fig.cap = "Morgan Monroe State Forest", eval = TRUE}
+knitr::include_graphics("img/monroe-summer.jpeg")
+```
+
+For this lab you will again be working with hourly flux data from the Morgan Monroe State Forest ecosystem flux tower, located in Indiana.
+These data are generated from near-surface meteorological measurements paired with measurements of atmospheric gases including carbon dioxide and water vapour concentrations.
+
+The data are located in your `/data` folder.
+Look in the folder to check the name.
+
+We provide a data dictionary here to give you more information on these variables.
+Don't worry about the details and scientific units!
+The goal of this lab is **not** to become ecosystem scientists :)
+
+**Data Dictionary**
+
+-   **date**: date and time
+-   **fco2** : CO2 flux *positive values = net emission; negative values = net uptake*
+-   **turbulence** : a measure of air turbulence, related to wind speed
+-   **air_temperature** : air temperature in degrees Celcius
+-   **precipitation**: rainfall in millimeters
+-   **evaporation** : the energy lost via evaporation of water from the ecosystem
+-   **incoming_radiation** : incoming shortwave solar radiation
+-   **relative_humidity** : the percent (%) saturation of the near surface atmosphere
+-   **air_pressure** : the barometric air pressure
+
+## Packages
+
+We will need both the `tidyverse`, `lubridate`, and the `tidymodels` packages
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+library(tidymodels)
+library(lubridate)
+```
+
+## Warm up
+
+Before we start the lab, let's warm up by changing the YAML in the starter file:
+
+-   Update the YAML, changing the author name to your name, and **knit** the document. 🧶
+-   Commit your changes with a meaningful commit message. ✅
+-   Push your changes to GitHub.️ ⬆️
+-   Go to your repo on GitHub and confirm that your changes are visible in your Rmd files.
+
+# Lab Exercises
+
+## Importing the data
+
+1.  Look in the Lab 8 `/data` sub-directory and identify the name and file type of the dataset we need to load. Then complete the code chunk below in your starter file to load the ecosystem flux data and assign the imported data to a new object called `fluxes`.
+
+```{r import-data}
+# code goes here
+```
+
+## Fixing the date column
+
+Before we subset based on `date`, we need to convert the `date` column into a **date class**, otherwise R will treat it like a numerical variable.
+The following code chunk is in your starter file.
+Run it to fix the date column (also remove eval = F, or set it = T.)
+
+You don't need to do anything else - just look at the code and output, and satisfy yourself that you understand why we are using the `{lubridate}` function `myd_hm()`.
+If you're not sure, ask about it!
+
+```{r fix-dates, eval = F}
+fluxes <- fluxes %>% 
+  mutate(date = mdy_hm(date))
+head(fluxes)
+```
+
+## Filtering for a summer month, and a numerical explanatory variable of interest
+
+2.  Copy the code chunk below into Exercise 2 in your starter file and complete the pipeline which will subset the data **one month in summer in 2020** (June, July or August) and will use select to pick a numerical variable you found to be interesting in Lab 7 (or another of interest!).
+
+-   Remember to change `eval` to `T` when you are ready to run the chunk. Note that you are creating a new data frame called `fluxes_subset` from this pipeline.
+
+```{r subset-fluxes, eval = F}
+fluxes_subset <- ___ %>% 
+  filter(date > "YYYY-MM-DD" & date < "YYYY-MM-DD") %>% 
+  select(date, fco2, ___)
+head(fluxes_subset, 10) 
+```
+
+## Checking our dimensions
+
+3.  Before we generate many random samples from our month of flux data. Let's double check the dimensions of our dataset. Insert and label a code chunk into your starter file under Exercise 3 or use in-line code to state how many observations (rows) of data you have for the month you selected.
+
+-   Also state what each row represents
+
+4.  If we defined our underlying population as **summertime** `fco2` fluxes, would our sample be a good sample of a single month of that population? Explain why or why not?
+
+## Computing our sample slope by fitting a model
+
+4.  Insert and label a code chunk that fits a linear model between `fco2` and your chosen explanatory variable.
+
+-   State in text narrative under your code how we interpret the model estimate values (i.e. by much does `fco2` change with a unit increase in the explanatory variable?)
+-   You can refer back to your code from lab 7 to write this answer.
+
+## Simulating a subsample
+
+In our case, we have all the flux data for the month you selected.
+In a sense, therefore, we do roughly have a sense of the underlying "population".
+More often in science, we only have a few samples from a much larger population.
+So in the next exercises we will randomly sub-sample our month of data to simulate this more common scenario.
+
+5.  Copy and complete the code chunk below that will randomize the order of the observations (rows) in your month of data, then slice (retain) only the first 20% of the data. You can manually calculate how many rows that corresponds to by referring back to your answer for Exercise 3.
+
+-   The new data object should be called `monroe_MONTH_subsample` (insert your month at MONTH) State under the chunk what each row of the code is doing.
+-   Note here we are not yet generating bootstrap samples, so we use `replace  = F`.
+-   Make sure you understand what this code is doing before moving on.
+
+```{r randomoize-and-slice, eval = F}
+___ <- fluxes_subset %>% 
+  mutate(row = 1:n(),
+         rrow = sample(row, size = n(), replace  = F)) %>% 
+  arrange(rrow) %>% 
+  slice_head(___)
+```
+
+## Bootstrap sampling your data
+
+We will now step you through generating bootstrap samples.
+
+6.  Take 1000 bootstrap samples. Call your new object `monroe_MONTH_boot`
+
+```{r create-bootstraps, eval = F}
+___ <- bootstraps(___, times = 1000)
+```
+
+7.  For each sample: fit a model and save output in model column. Tidy model output and save in coef_info column. Call your new model object `monroe_MONTH_models`.
+
+```{r fit-models, eval = F}
+___ <- ___ %>%
+  mutate(
+    model = map(___, ~ lm(___ ~ ___, data = .)),
+    coef_info = map(model, tidy)
+  )
+```
+8.  For each model: unnest (extract) the slope coefficients. Save the object as `monroe_MONTH_coef` and output the percentiles:
+
+```{r get-slope-range, eval = F}
+___ <- monroe_MONTH_models %>%
+  unnest(coef_info)
+
+int_pctl(monroe_MONTH_models, coef_info)
+```
+
+In the homework exercises we will visualize these ranges.
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message.*

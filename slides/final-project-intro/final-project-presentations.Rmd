@@ -1,0 +1,32 @@
+---
+title: "EAES 494: Course Wrap-up"
+subtitle: "<br><br> Course Feedback & Review Exercises"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# Possible presentation elements:
+  
+.pull-left[
+## Order
+1. Group 4
+2. Kelsey F.
+3. Group 3
+4. Judy M.
+5. Frank Z.
+6. Sarah K.
+7. Group 1
+8. Group 2
+]
+
+
+---
