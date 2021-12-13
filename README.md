@@ -12,4 +12,6 @@ Weekly Coursework:
 -   Readings
 -   DataCamp Tutorials (chapters or courses)
 
+The full syllabus is found at this [link](EAES%20494%20Syllabus.pdf).
+
 Thi course was built from the [datasciencebox.org](https://datasciencebox.org/) project template.

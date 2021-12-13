@@ -1,0 +1,116 @@
+---
+title: "EAES 494 Midterm Starter"
+author: "RUBRIC"
+date: "RUBRIC"
+output: html_document
+---
+
+## Academic Honesty Statement
+
+*I, RUBRIC, hereby state that I will not communicate with or gain information in any way from my classmates, or copy work from past assignments, during this exam, and that all work is my own.*
+
+## Load packages
+
+```{r load-packages, message = F}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## Exericses
+
+### Exericse 1
+
+\*\*(5 points) Deduct a point for
+
+```{r glimpse-penguins}
+glimpse(penguins)
+```
+
+There are 344 rows and 8 variables in the dataset.
+Three of the variable are categorical, and five are numerical.
+
+### Exericse 2
+
+```{r names-penguins}
+names(penguins)
+```
+
+All the names are lower case and snake case (no spaces in names).
+
+### Exericse 3
+
+```{r penguins-species-count}
+penguins %>% 
+  count(species)
+```
+
+We could have used `group_by()` and `summarize()` to sum the number of observations (rows) by `species` group.
+
+### Exericse 4
+
+```{r visualize-penguin-island-species, eval = T}
+penguins %>% 
+  ggplot(aes(x = island, fill = species)) +
+  geom_bar() +
+  theme_classic()
+```
+
+Adelie penguins were observed at all three islands.
+Chinstrap penguins were only observed at Dream island.
+Gentoo penguins were only observed at Torgersen island.
+
+### Exericse 5
+
+```{r visualize-penguin-body-mass, eval = T}
+penguins %>% 
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm, color = species, shape = species)) +
+  geom_point() +
+  theme_classic()
+```
+
+There appears to be a positive association between body mass and flipper length.
+The Gentoo penguins tend to be larger (higher mass and/or longer flipper length).
+
+### Exericse 6
+
+```{r subset-flipper-data}
+gentoo_flipper_length <- penguins %>% 
+  select(flipper_length_mm, sex, island, species) %>% 
+  filter(species == "Gentoo")
+```
+
+### Exericse 7
+
+```{r visualize-penguin-flipper-length, eval = T}
+gentoo_flipper_length %>% 
+  ggplot(aes(x = sex, y = flipper_length_mm)) +
+  geom_violin() +
+  theme_classic()
+```
+
+The `sex` variable is a factor.
+Factors are composed of a label and a level.
+The factor levels are assigned to labels by default based on alphabetical order (1 = female, then 2 = male, then 3 = NA).
+
+```{r recode-sex-levels, eval = T}
+gentoo_flipper_length %>% 
+  filter(!is.na(sex)) %>% 
+  mutate(sex = fct_relevel(sex, "male", "female")) %>% 
+    ggplot(aes(x = sex, y = flipper_length_mm)) +
+    geom_violin() +
+    theme_classic()
+```
+
+### Exericse 8
+
+```{r read-problematic-data}
+penguins_with_issues <- read_csv("midterm/data/penguins-issues.csv")
+glimpse(penguins_with_issues)
+```
+
+The variable names have spaces, and the sex has a bad value "\#" and year has a bad entry "." causing them to be coerced to character type data.
+
+```{r read-problematic-data-2}
+penguins_with_issues <- read_csv("midterm/data/penguins-issues.csv", na = c(".", "#"), name_repair = "universal")
+glimpse(penguins_with_issues)
+```
