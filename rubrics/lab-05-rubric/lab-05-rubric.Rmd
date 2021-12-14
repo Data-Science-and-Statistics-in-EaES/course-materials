@@ -1,0 +1,135 @@
+---
+title: "Lab 05 - Importing and Recoding `earthquakes`"
+author: "RUBRIC"
+date: "RUBRIC"
+output: html_document
+---
+
+### Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+library(readxl)
+library(openintro)
+library(skimr)
+library(janitor)
+```
+
+## Exercises
+
+### Exercise 1
+
+### **Half point for identifying that it is loaded with a package - (MAX 0.5)**
+
+We don't need to use a read function to import `earthquakes` because this is a dataset that is already available to us via the `openintro` package, which we loaded.
+
+### Exercise 2
+
+### **Half point for each import - (MAX 1.5)**
+
+```{r read-data, eval=T}
+earthquakes_1 <- read_csv("data/earthquakes-1.csv")
+earthquakes_2 <- read_tsv("data/earthquakes-2.txt")
+earthquakes_3 <- read_xlsx("data/earthquakes-3.xlsx")
+```
+
+### Exercise 3
+
+### **Half point glimpse useage, half point for difference descriptions, half point for explanation of explicit coercion via coltypes - (MAX 1.5)**
+
+```{r glimpse-datasets, message = F, warning = F}
+glimpse(earthquakes_1); glimpse(earthquakes_2); glimpse(earthquakes_3)
+```
+
+`earthquakes_1` lacks the deaths and richter variables from the `openintro::earthquakes` version `earthquakes_2` lacks the area, region and deaths variables from the `openintro::earthquakes` version `earthquakes_3` lacks the area, region, and richter variables from the `openintro::earthquakes` version.
+
+-   `earthquakes_3` also contains a character type `deaths` variable, rather than numerical type.
+-   the following code chunk will coerce the fourth column `deaths` to a numerical type
+
+```{r coerce-earthquakes-3}
+earthquakes_3 <- read_xlsx("data/earthquakes-3.xlsx", col_types = c("numeric", 
+                                                                    "text",
+                                                                    "numeric",
+                                                                    "numeric"))
+```
+
+### Exercise 4
+
+### **Half point for series of left_joins - (MAX 0.5)**
+
+```{r join-earthquakes-data}
+earthquakes_1 %>% 
+  left_join(earthquakes_2) %>% 
+  left_join(earthquakes_3)
+```
+
+### Exercise 5
+
+### **Half point for completing code - (MAX 0.5)**
+
+```{r read-inspect, eval = F}
+read_csv("data/earthquakes-badnames-na.csv") %>% 
+  glimpse()
+```
+
+### Exercise 6
+
+### **Half point for each of adding 'na' argument and correct vector of bad values - (MAX 1)**
+
+```{r fix-nas, eval = F}
+read_csv("data/earthquakes-badnames-na.csv", na = c(".", "NA")) 
+```
+
+### Exercise 7
+
+### **Half point for either janitor::clean_names() or providing vector of names to colnames() - (MAX .5)**
+
+```{r fix-names, message = F, warning = F}
+read_csv("data/earthquakes-badnames-na.csv", na = c(".", "NA")) %>% 
+  janitor::clean_names()
+```
+
+### Exercise 8
+
+### **Half point for each correct line of case_when, assigning to numeric, and wrapping with mutate - (MAX 1.5)**
+
+```{r fix-richter, message = F, warning = F}
+read_csv("data/earthquakes-badnames-na.csv", na = c(".", "NA")) %>% 
+  janitor::clean_names() %>% 
+  mutate(richter = case_when(
+    richter == "seven" ~ "7",
+    TRUE ~ richter),
+    richter = as.numeric(richter)
+    )
+```
+
+### Exercise 9
+
+### **Half point for using fct_relevel, assigning correct order of months, and adding count pipeline below - (MAX 1.5)**
+
+```{r relevel-month, message = F, warning = F}
+earthquakes_correct <- read_csv("data/earthquakes-badnames-na.csv", na = c(".", "NA")) %>% 
+  janitor::clean_names() %>% 
+  mutate(richter = case_when(
+    richter == "seven" ~ "7",
+    TRUE ~ richter),
+    richter = as.numeric(richter),
+    month = fct_relevel(month, "January", "February", "March",
+                             "April", "May", "June", "July", "August",
+                             "September", "October", "November", "December")
+    )
+
+earthquakes_correct %>% 
+  count(month)
+```
+
+### Exercise 10
+
+### **Half point for correct write_rds syntax and including second pipeline with read_rds - (MAX 1)**
+
+```{r write-read-rds, message = F, warning = F}
+write_rds(earthquakes_correct, path = "data/earthquakes_correct.rds")
+
+read_rds("data/earthquakes_correct.rds") %>% 
+  count(month)
+```

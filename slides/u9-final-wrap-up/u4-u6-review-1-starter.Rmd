@@ -1,0 +1,157 @@
+---
+title: "Unit 4 - 6 Review Starter"
+author: "Insert your group number and name here"
+date: "Insert date here"
+output: html_document
+---
+
+### Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse) 
+library(lubridate)
+library(janitor)
+```
+
+## Exercises
+
+# Part I - Data Types and Classes
+
+## Exercise 1 - Create some vectors
+
+```{r month-name-vector}
+month_name <- c("January", 
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December")
+```
+
+#### Member 1
+
+Add your code here.
+
+#### Member 2
+
+Add your code here.
+
+#### Member 3
+
+Add your code here.
+
+#### Member 4
+
+Add your code here.
+
+#### Member 5
+
+Add your code here.
+
+## Exercise 2 - Combine into a data frame
+
+```{r merge-two-vectors, eval = F}
+___ <- tibble::tibble(
+  "month_name" = month_name,
+  "___" = ___
+)
+```
+
+#### Member 1
+
+Add your code here.
+
+#### Member 2
+
+Add your code here.
+
+#### Member 3
+
+Add your code here.
+
+#### Member 4
+
+Add your code here.
+
+#### Member 5
+
+Add your code here.
+
+## Exercise 3 - Try plotting with `month_name` on the x axis, then recode factors
+
+#### Member 1
+
+Add your code here.
+
+#### Member 2
+
+Add your code here.
+
+#### Member 3
+
+Add your code here.
+
+#### Member 4
+
+Add your code here.
+
+#### Member 5
+
+Add your code here.
+
+## Exercise 4 - Join all the data frames, filter randomly, and over-write vector
+
+#### Member 1
+
+Add your code here.
+
+#### Member 2
+
+Add your code here.
+
+#### Member 3
+
+Add your code here.
+
+#### Member 4
+
+Add your code here.
+
+#### Member 5
+
+Add your code here.
+
+## Exercise 5 - Try to recombine as a data frame, instead use list
+
+```{r try-merge-vectors, eval = F}
+___ <- tibble::tibble(
+  "month_name" = month_name,
+  "___" = ___
+)
+```
+
+#### Member 1
+
+Add your code here.
+
+#### Member 2
+
+Add your code here.
+
+#### Member 3
+
+Add your code here.
+
+#### Member 4
+
+Add your code here.
+
+#### Member 5
+
+Add your code here.

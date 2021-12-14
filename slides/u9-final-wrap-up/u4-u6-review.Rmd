@@ -1,0 +1,249 @@
+---
+title: "EAES 494: Course Wrap-up"
+subtitle: "<br><br> Course Feedback & Review Exercises"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# Possible presentation elements:
+  
+1. Introduction to your Project
+  
+2. Importing and Tidying Data
+  
+3. Developing your Question (exploratory viz./analysis)
+  
+4. Results (1-2 recommended) (figures and/or models and/or hypothesis tests)
+  
+5. Conclusions (and next steps for grad students)
+
+---
+
+```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(emo)
+library(openintro)
+library(palmerpenguins)
+```
+
+class: middle
+
+```{r echo = F, out.width = "70%"}
+knitr::include_graphics("img/data-science-cycle.001.png")  
+```
+
+---
+
+# Units and topics we covered
+
+1. Intro to Data Science            (R/RStudio, Git/GitHub; RMarkdown) {tidyverse}  
+
+--
+  
+2. Data Visualization with          {ggplot2}  
+  
+--
+
+3. Data Wrangling with              {dplyr} 
+  
+--
+
+4. Data Types and Classes           {forcats} {lubridate}  
+ 
+--
+ 
+5. Importing and Recoding Data      {readr}  
+  
+--
+
+6. Functions and Iteration  
+  
+--
+
+7. Fitting Models in R              {tidymodels}  
+  
+--
+
+8. Uncertainty and Hypothesis Testing
+
+---
+
+# Data we worked with:
+
+## dplyr::starwars
+
+```{r warning = F}
+head(dplyr::starwars, 3)
+```
+---
+
+# Data we worked with:
+
+## palmerpenguins::penguins
+
+```{r warning = F}
+head(palmerpenguins::penguins, 3)
+```
+
+---
+
+# Data we worked with:
+
+## openintro::earthquakes
+
+```{r warning = F}
+head(openintro::earthquakes, 3)
+```
+
+---
+
+# Data we worked with:
+
+## Plastic waste
+
+[Our World in Data](https://ourworldindata.org/plastic-pollution)
+
+```{r warning = F, message = F}
+read_csv("data/plastic-waste.csv") %>% 
+  head(3)
+```
+
+---
+
+# Data we worked with:
+
+## Water and Sanitation Access
+
+[Our World in Data](https://ourworldindata.org/water-sanitation-2020-update)
+
+```{r warning = F, message = F}
+read_csv("data/water-and-sanitation.csv") %>% 
+  head(3)
+```
+
+---
+
+# Data we worked with:
+
+## Great Lakes Fishing and Stocking
+
+[Great Lakes Fish Stocking database](http://www.glfc.org/fishstocking/index.htm)
+
+```{r warning = F, message = F}
+read_csv("data/great-lakes-fish-stock.csv") %>% 
+  head(3)
+```
+
+---
+
+# Data we worked with:
+
+## US Tornado Paths and Damage
+
+[NOAA Severe Storm Database](https://www.kaggle.com/atinakarim/noaa-severe-storm-database)
+
+```{r warning = F, message = F}
+read_csv("data/tornado-path.csv") %>% 
+  head(3)
+```
+
+---
+
+# Data we worked with:
+
+## Chicago Winter 2021 Cold
+
+[Weather Underground](https://www.wunderground.com/)
+
+```{r warning = F, message = F}
+read_csv("data/chicago-loop.csv") %>% 
+  head(3)
+```
+
+---
+
+# Data we worked with:
+
+## Morgan Monroe State Forest Ecosystem Exchange
+
+[AmeriFlux Network](https://ameriflux.lbl.gov/)
+
+```{r warning = F, message = F}
+read_csv("data/us-mms-simple.csv") %>% 
+  head(3)
+```
+
+---
+
+class: middle
+
+# Continuing with R
+
+---
+
+### Textbooks
+[Hands-on Programming in R](https://rstudio-education.github.io/hopr/) FREE online. May seem basic after this class.
+  
+[R for Data Science](https://r4ds.had.co.nz/index.html) FREE online! (used in this class). Ideal for coming out of this class.
+
+[Advanced R](https://adv-r.hadley.nz) For **programming**
+
+[Tidy Modeling with R](https://tmwr.org) For **modelling**
+
+### Other things!
+
+- [TidyTuesday](https://github.com/rfordatascience/tidytuesday) Weekly tidy data activities with new data
+  
+- [rweekly.org](https://rweekly.org) (one weekly email)
+
+### Other useful packages
+
+- Geospatial analysis with {sf} and {raster}
+  
+- Machine learning with {caret}
+
+---
+
+## What else?
+
+Graduate level courses:
+
+**EAES 577** Prof. Berkelhammer - Climate and Land Surface Processes (this semester)
+  
+**EAES 579** (my class) - Climate Change and Ecosystem Science (Spring 2022)
+
+---
+
+class: middle
+
+## Thank you!
+
+.pull-left[
+```{r echo = F, out.width = "70%"}
+knitr::include_graphics("img/hex-australia.png")  
+```
+]
+
+.pull-right[
+Class materials will be shared on EAES Organization, and my personal, Github
+
+**Please take the last 5-10 minutes to complete your course evaluation.**
+]
+---
+
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]

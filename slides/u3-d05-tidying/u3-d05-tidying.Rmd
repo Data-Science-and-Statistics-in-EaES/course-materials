@@ -1,0 +1,397 @@
+---
+title: "Tidying data"
+subtitle: "<br><br> Data Science & Statistics"
+author: "Gavin McNicol"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+options(
+  dplyr.print_min = 10, 
+  dplyr.print_max = 10
+  )
+```
+
+class: middle
+
+# .hand[We...]
+
+.huge[.green[have]] .hand[data organised in an unideal way for our analysis]
+
+.huge[.pink[want]] .hand[to reorganise the data to carry on with our analysis]
+
+---
+
+## Data: Sales
+
+```{r include=FALSE}
+customers <- read_csv("data/sales/customers.csv")
+prices <- read_csv("data/sales/prices.csv")
+```
+
+
+<br>
+
+.pull-left[
+### .green[We have...]
+```{r echo=FALSE}
+customers
+```
+]
+
+--
+.pull-right[
+### .pink[We want...]
+```{r echo=FALSE}
+customers %>%
+  pivot_longer(cols = item_1:item_3, names_to = "item_no", values_to = "item")
+```
+]
+
+---
+
+## A grammar of data tidying
+
+.pull-left[
+```{r dplyr-part-of-tidyverse, echo=FALSE, out.width="60%", caption = "tidyr is part of the tidyverse"}
+include_graphics("img/tidyr-part-of-tidyverse.png")
+```
+]
+.pull-right[
+The goal of tidyr is to help you tidy your data via
+
+- pivoting for going between wide and long data
+- splitting and combining character columns
+- nesting and unnesting columns
+- clarifying how `NA`s should be treated
+]
+
+---
+
+class: middle
+
+# Pivoting data
+
+---
+
+## Not this...
+
+```{r echo=FALSE,out.width="70%"}
+include_graphics("img/pivot.gif")
+```
+
+---
+
+## but this!
+
+.center[
+```{r echo=FALSE, out.width="45%", out.extra ='style="background-color: #FDF6E3"'}
+include_graphics("img/tidyr-longer-wider.gif")
+```
+]
+
+---
+
+## Wider vs. longer
+
+.pull-left[
+### .green[wider]
+more columns
+```{r echo=FALSE}
+customers
+```
+]
+
+--
+.pull-right[
+### .pink[longer]
+more rows
+```{r echo=FALSE}
+customers %>%
+  pivot_longer(cols = item_1:item_3, names_to = "item_no", values_to = "item")
+```
+]
+
+---
+
+## `pivot_longer()`
+
+.pull-left[
+- `data` (as usual)
+]
+.pull-right[
+```{r eval=FALSE}
+pivot_longer(
+  data, #<<
+  cols, 
+  names_to = "name", 
+  values_to = "value"
+  )
+```
+]
+
+---
+
+## `pivot_longer()`
+
+.pull-left[
+- `data` (as usual)
+- `cols`: columns to pivot into longer format 
+]
+.pull-right[
+```{r eval=FALSE}
+pivot_longer(
+  data, 
+  cols, #<<
+  names_to = "name", 
+  values_to = "value"
+  )
+```
+]
+
+---
+
+## `pivot_longer()`
+
+.pull-left[
+- `data` (as usual)
+- `cols`: columns to pivot into longer format 
+- `names_to`: name of the column where column names of pivoted variables go (character string)
+]
+.pull-right[
+```{r eval=FALSE}
+pivot_longer(
+  data, 
+  cols, 
+  names_to = "name", #<<
+  values_to = "value"
+  )
+```
+]
+
+---
+
+## `pivot_longer()`
+
+.pull-left[
+- `data` (as usual)
+- `cols`: columns to pivot into longer format 
+- `names_to`: name of the column where column names of pivoted variables go (character string)
+- `values_to`: name of the column where data in pivoted variables go (character string)
+]
+.pull-right[
+```{r eval=FALSE}
+pivot_longer(
+  data, 
+  cols, 
+  names_to = "name", 
+  values_to = "value" #<<
+  )
+```
+]
+
+---
+
+## Customers $\rightarrow$ purchases
+
+```{r}
+purchases <- customers %>%
+  pivot_longer( #<<
+    cols = item_1:item_3,  # variables item_1 to item_3 #<<
+    names_to = "item_no",  # column names -> new column called item_no #<<
+    values_to = "item"     # values in columns -> new column called item #<<
+    ) #<<
+
+purchases
+```
+
+---
+
+## Why pivot?
+
+Most likely, because the next step of your analysis needs it
+
+--
+
+.pull-left[
+```{r}
+prices
+```
+]
+.pull-right[
+```{r}
+purchases %>%
+  left_join(prices) #<<
+```
+]
+
+---
+
+## Purchases $\rightarrow$ customers
+
+.pull-left-narrow[
+- `data` (as usual)
+- `names_from`: which column in the long format contains the what should be column names in the wide format
+- `values_from`: which column in the long format contains the what should be values in the new columns in the wide format
+]
+.pull-right-wide[
+```{r}
+purchases %>%
+  pivot_wider( #<<
+    names_from = item_no, #<<
+    values_from = item #<<
+  ) #<<
+```
+]
+
+---
+
+class: top
+
+# Case study: Deforestation rates in Brazil
+
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/deforestation.jpeg")
+```
+
+---
+
+```{r echo=FALSE, out.width="90%"}
+knitr::include_graphics("img/deforestation-trends-brazil.png")
+```
+
+.footnote[
+Source: [Our World in Data](https://ourworldindata.org/forests-and-deforestation/)
+]
+
+---
+
+## Data
+
+```{r include=FALSE}
+brazil_loss <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/brazil_loss.csv')
+```
+
+```{r}
+brazil_loss
+```
+
+---
+
+## Goal
+
+```{r echo=FALSE, out.width="50%"}
+brazil_loss %>% 
+  pivot_longer(
+    4:14,
+    names_to = "fate",
+    values_to = "area"
+  ) %>% 
+   ggplot(aes(year, area, color = fate)) +
+  geom_line() +
+  labs( 
+    x = "Year", y = "Area Deforested", 
+    color = NULL, 
+    title = "What are the causes of deforestation?", 
+    subtitle = "Loss of Brazilian forest due to specific types", 
+    caption = "Source: Our World in Data" 
+  ) + 
+  theme_minimal() 
+```
+
+---
+
+## Pivot
+
+```{r output.lines=11}
+brazil_loss_longer <- brazil_loss %>%  
+  pivot_longer( #<<
+    4:14, #<<
+    names_to = "fate", #<<
+    values_to = "area" #<< 
+  ) #<<
+
+brazil_loss_longer
+```
+
+---
+
+## Plot
+
+```{r fig.asp = 0.5}
+ggplot(brazil_loss_longer,#<<
+       aes(x = year, y = area, color = fate)) + #<<
+  geom_line()  #<<
+```
+
+---
+
+.panelset[
+
+.panel[.panel-name[Code]
+```{r "brazil-plot", fig.show="hide"}
+ggplot(brazil_loss_longer, aes(year, area, color = fate)) +
+  geom_line() +
+  labs(  #<<
+    x = "Year", y = "Area Deforested",  #<<
+    color = NULL,  #<<
+    title = "What are the causes of deforestation?",  #<<
+    subtitle = "Loss of Brazilian forest due to specific types",  #<<
+    caption = "Source: Our World in Data"  #<<
+  )  #<<
+```
+]
+
+.panel[.panel-name[Plot]
+```{r ref.label="brazil-plot", echo = FALSE, out.width="30%"}
+```
+]
+
+]
+
+---
+
+.panelset[
+
+.panel[.panel-name[Code]
+```{r "brazil-plot-2", fig.show="hide"}
+ggplot(brazil_loss_longer, aes(year, area, color = fate)) +
+  geom_line() +
+  labs( 
+    x = "Year", y = "Area Deforested", 
+    color = NULL, 
+    title = "What are the causes of deforestation?", 
+    subtitle = "Loss of Brazilian forest due to specific types", 
+    caption = "Source: Our World in Data" 
+  ) + 
+  theme_minimal() #<<
+```
+]
+
+.panel[.panel-name[Plot]
+```{r ref.label="brazil-plot-2", echo = FALSE, out.width="30%", fig.width=6}
+```
+]
+
+]
+
+---
+
+.center[
+.large[
+This class content was built from the Data Science in a Box source materials.
+https://datasciencebox.org/index.html
+]
+]
+
