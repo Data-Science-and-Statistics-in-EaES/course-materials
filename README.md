@@ -12,4 +12,6 @@ Weekly Coursework:
 -   Readings
 -   DataCamp Tutorials (chapters or courses)
 
+Materials can be downloaded from **Code** > **Download ZIP** or can be cloned into an RStudio project.
+
 This course was built from the [datasciencebox.org](https://datasciencebox.org/) project template.
