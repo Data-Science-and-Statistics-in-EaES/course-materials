@@ -2,58 +2,57 @@
 
 ## Outline
 
-The course is divided into three parts. Part 1 is on exploratory data analysis, part 2 is making rigorous conclusions via statistical tools like modeling and inference, and part 3 includes four topics (that could easily be swapped with others or taught in any order) that are designed to inspire students to learn more data science and statistics.
+The course is divided into 8 units:
 
-### Part 1: Exploring data
+### Unit 1: Introduction to Data Science
 
-- p1_d01: Welcome to Data Science
-- p1_d02: Introduction to R/RStudio + git/GitHub
-- p1_d03: Fundamentals of data + data visualization
-- p1_d04: Tidy data + data wrangling
-- p1_d05: Types of variables
-- p1_d06: Recoding and transforming variables
-- p1_d07: Data Visualization and Exploration, Pt 1
-- p1_d08: Data Visualization and Exploration, Pt 2
-- p1_d09: Visualizing data over time and space
-- p1_d10: Confounding variables and Simpson's paradox
-- p1_d11: Case studies: SAT scores and smoking
+-   u1-d01: Welcome to Data Science
+-   u1_d02: Introduction to the Toolkit: R/RStudio
+-   u1_d03: Introduction to the Toolkit: git/Github
 
-### Part 2: Making rigorous conclusions
+### Unit 2: Data Visualization
 
-- p2_d01: The language of models
-- p2_d02: Formalizing linear models
-- p2_d03: Multiple linear regression
-- p2_d04: Model selection
-- p2_d05: Case study: Model selection for Paris Paintings
-- p2_d06: Prediction and model validation
-- p2_d07: Estimation via bootstrapping
-- p2_d08: Hypothesis testing via simulation methods
-- p2_d09: Inference overview
-- p2_d10: Inference for regression
-- p2_d11: Central Limit Theorem and CLT based inference
-- p2_d12Case study: Inferring from the General Social Survey
+-   u2_d01: Introduction to Data Viz
+-   u2_d02: ggplot2: the grammar of graphics
+-   p2_d03: Visualizing Numerical Data
+-   p2_d04: Visualizing Categorical Data
 
-### Part 3: Looking forward
+### Unit 3: Data Wrangling
 
-- p3_d01: Web scraping
-- p3_d02: Functions and automation
-- p3_d03: Interactive visualizations with Shiny
-- p3_d04: Bayesian inference
+-   u3_d01: Tidy Data
+-   u3_d02: The Grammar of Wrangling
+-   u3_d03: Wrangling a Single Dataframe
+-   u3_d04: Wrangling Multiple Dataframes
+-   u3_d05: Data Tidying
 
-## Toolkit
+#### Unit 1-3 Review
 
-Slides are built in using the **xaringan** package. See [here](https://github.com/yihui/xaringan) for more info on xaringan. There are two main reasons for choosing this format:
+### Unit 4: Data Types & Classes
 
-1. `xaringan` slides are R Markdown based, meaning code, output, and narrative can all live in one place and compiling the slides will run the R code as well.
-2. Slide output is mobile friendly.
+-   u4_d01: Data Types
+-   u4_d02: Data Classes
 
-### Instructions
+### Unit 5: Importing & Recoding Data
 
-- Each slide deck is in its own folder, and one level above there is a custom css file. To compile the slides use `xaringan::inf_mr(cast_from = "..")`. This will launch the slides in the Viewer, and it will get updated as you edit and save your work.
+-  u5_d01: Importing Data
 
+### Unit 6: Functions & Iteration
 
+-   u6_d01: Functions
+-   u6_d02: Iteration
 
-to live preview the slides (every time you update and save the Rmd document, the slides will be automatically reloaded; make sure the Rmd document is on focus when you click the addin)
+#### Unit 4-6 Review
 
+### Unit 7: Fitting Models in R
 
+-   u7_d01: The Language of Models
+-   u7_d02: Fitting Models
+-   u7_d03: Models with Multiple Predictors
 
+### Unit 8: Uncertainty and Hypothesis Testing
+
+-   u8_d01: Quantifying Uncertainty
+-   u8_d02: Bootstrapping
+-   u8_d03: Hypothesis Testing
+
+#### Wrap-up and Final Project Introduction
